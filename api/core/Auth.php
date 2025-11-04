@@ -1,31 +1,41 @@
 <?php
 
-namespace App\Core;
-
 /**
  * Authentication & Session Management
+ * Compatible with PHP 5.6+ and Hostinger shared hosting
  */
 class Auth
 {
-    private static ?array $currentUser = null;
+    private static $currentUser = null;
 
     /**
      * Start session
      */
-    public static function initSession(): void
+    public static function initSession()
     {
         if (session_status() === PHP_SESSION_NONE) {
             $config = require __DIR__ . '/../config/app.php';
             $session = $config['session'];
 
-            session_set_cookie_params([
-                'lifetime' => $session['lifetime'],
-                'path' => '/',
-                'domain' => '',
-                'secure' => $session['secure'],
-                'httponly' => $session['httponly'],
-                'samesite' => $session['samesite']
-            ]);
+            // For PHP 5.6 compatibility
+            if (PHP_VERSION_ID >= 70300) {
+                session_set_cookie_params(array(
+                    'lifetime' => $session['lifetime'],
+                    'path' => '/',
+                    'domain' => '',
+                    'secure' => $session['secure'],
+                    'httponly' => $session['httponly'],
+                    'samesite' => isset($session['samesite']) ? $session['samesite'] : 'Lax'
+                ));
+            } else {
+                session_set_cookie_params(
+                    $session['lifetime'],
+                    '/',
+                    '',
+                    $session['secure'],
+                    $session['httponly']
+                );
+            }
 
             session_name($session['cookie_name']);
             session_start();
@@ -35,25 +45,25 @@ class Auth
     /**
      * Register new user
      */
-    public static function register(array $data): array
+    public static function register($data)
     {
         // Validate
         if (empty($data['email']) || empty($data['password']) || empty($data['full_name'])) {
-            throw new \Exception('Email, şifre ve ad soyad gerekli');
+            throw new Exception('Email, şifre ve ad soyad gerekli');
         }
 
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            throw new \Exception('Geçerli bir email adresi girin');
+            throw new Exception('Geçerli bir email adresi girin');
         }
 
         if (strlen($data['password']) < 6) {
-            throw new \Exception('Şifre en az 6 karakter olmalı');
+            throw new Exception('Şifre en az 6 karakter olmalı');
         }
 
         // Check if email exists
-        $existing = Database::queryOne('SELECT id FROM users WHERE email = ?', [$data['email']]);
+        $existing = Database::queryOne('SELECT id FROM users WHERE email = ?', array($data['email']));
         if ($existing) {
-            throw new \Exception('Bu email adresi zaten kullanılıyor');
+            throw new Exception('Bu email adresi zaten kullanılıyor');
         }
 
         // Hash password
@@ -63,50 +73,50 @@ class Auth
         $sql = "INSERT INTO users (email, password, full_name, title, specialty, hospital, phone)
                 VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        Database::execute($sql, [
+        Database::execute($sql, array(
             $data['email'],
             $hashedPassword,
             $data['full_name'],
-            $data['title'] ?? null,
-            $data['specialty'] ?? 'Alerji & İmmünoloji',
-            $data['hospital'] ?? null,
-            $data['phone'] ?? null
-        ]);
+            isset($data['title']) ? $data['title'] : null,
+            isset($data['specialty']) ? $data['specialty'] : 'Alerji & İmmünoloji',
+            isset($data['hospital']) ? $data['hospital'] : null,
+            isset($data['phone']) ? $data['phone'] : null
+        ));
 
         $userId = Database::lastInsertId();
 
         // Get created user
-        return Database::queryOne('SELECT id, email, full_name, title, specialty, hospital, phone, created_at FROM users WHERE id = ?', [$userId]);
+        return Database::queryOne('SELECT id, email, full_name, title, specialty, hospital, phone, created_at FROM users WHERE id = ?', array($userId));
     }
 
     /**
      * Login user
      */
-    public static function login(string $email, string $password, bool $remember = false): array
+    public static function login($email, $password, $remember = false)
     {
         if (empty($email) || empty($password)) {
-            throw new \Exception('Email ve şifre gerekli');
+            throw new Exception('Email ve şifre gerekli');
         }
 
         // Get user
-        $user = Database::queryOne('SELECT * FROM users WHERE email = ?', [$email]);
+        $user = Database::queryOne('SELECT * FROM users WHERE email = ?', array($email));
 
         if (!$user) {
-            throw new \Exception('Email veya şifre hatalı');
+            throw new Exception('Email veya şifre hatalı');
         }
 
         // Verify password
         if (!password_verify($password, $user['password'])) {
-            throw new \Exception('Email veya şifre hatalı');
+            throw new Exception('Email veya şifre hatalı');
         }
 
         // Check if active
         if (!$user['is_active']) {
-            throw new \Exception('Hesabınız aktif değil');
+            throw new Exception('Hesabınız aktif değil');
         }
 
         // Update last login
-        Database::execute('UPDATE users SET last_login_at = NOW() WHERE id = ?', [$user['id']]);
+        Database::execute('UPDATE users SET last_login_at = NOW() WHERE id = ?', array($user['id']));
 
         // Create session
         self::initSession();
@@ -119,13 +129,13 @@ class Auth
 
         Database::execute(
             'INSERT INTO user_sessions (user_id, token, ip_address, user_agent, expires_at) VALUES (?, ?, ?, ?, ?)',
-            [
+            array(
                 $user['id'],
                 $token,
-                $_SERVER['REMOTE_ADDR'] ?? null,
-                $_SERVER['HTTP_USER_AGENT'] ?? null,
+                isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null,
+                isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : null,
                 $expiresAt
-            ]
+            )
         );
 
         // Log activity
@@ -141,7 +151,7 @@ class Auth
     /**
      * Logout user
      */
-    public static function logout(): void
+    public static function logout()
     {
         self::initSession();
 
@@ -149,7 +159,7 @@ class Auth
             $userId = $_SESSION['user_id'];
 
             // Remove all sessions
-            Database::execute('DELETE FROM user_sessions WHERE user_id = ?', [$userId]);
+            Database::execute('DELETE FROM user_sessions WHERE user_id = ?', array($userId));
 
             // Log activity
             self::logActivity($userId, 'logout', null, 'Kullanıcı çıkış yaptı');
@@ -161,7 +171,7 @@ class Auth
     /**
      * Get current logged in user
      */
-    public static function user(): ?array
+    public static function user()
     {
         if (self::$currentUser !== null) {
             return self::$currentUser;
@@ -175,17 +185,17 @@ class Auth
 
         $user = Database::queryOne(
             'SELECT id, email, full_name, title, specialty, hospital, phone, profile_image, created_at FROM users WHERE id = ? AND is_active = 1',
-            [$_SESSION['user_id']]
+            array($_SESSION['user_id'])
         );
 
-        self::$currentUser = $user ?: null;
+        self::$currentUser = $user ? $user : null;
         return self::$currentUser;
     }
 
     /**
      * Check if user is logged in
      */
-    public static function check(): bool
+    public static function check()
     {
         return self::user() !== null;
     }
@@ -193,7 +203,7 @@ class Auth
     /**
      * Require authentication (throw exception if not logged in)
      */
-    public static function require(): void
+    public static function requireAuth()
     {
         if (!self::check()) {
             Response::unauthorized('Bu işlem için giriş yapmalısınız');
@@ -203,11 +213,11 @@ class Auth
     /**
      * Verify token (for API requests)
      */
-    public static function verifyToken(string $token): ?array
+    public static function verifyToken($token)
     {
         $session = Database::queryOne(
             'SELECT * FROM user_sessions WHERE token = ? AND expires_at > NOW()',
-            [$token]
+            array($token)
         );
 
         if (!$session) {
@@ -216,24 +226,24 @@ class Auth
 
         return Database::queryOne(
             'SELECT id, email, full_name, title, specialty, hospital, phone, profile_image FROM users WHERE id = ? AND is_active = 1',
-            [$session['user_id']]
+            array($session['user_id'])
         );
     }
 
     /**
      * Log user activity
      */
-    public static function logActivity(int $userId, string $activityType, ?string $moduleName = null, ?string $description = null): void
+    public static function logActivity($userId, $activityType, $moduleName = null, $description = null)
     {
         Database::execute(
             'INSERT INTO user_activities (user_id, activity_type, module_name, description, ip_address) VALUES (?, ?, ?, ?, ?)',
-            [
+            array(
                 $userId,
                 $activityType,
                 $moduleName,
                 $description,
-                $_SERVER['REMOTE_ADDR'] ?? null
-            ]
+                isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null
+            )
         );
     }
 }

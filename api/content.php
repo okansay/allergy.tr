@@ -11,9 +11,6 @@
 require_once __DIR__ . '/core/Database.php';
 require_once __DIR__ . '/core/Response.php';
 
-use App\Core\Database;
-use App\Core\Response;
-
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
@@ -43,7 +40,7 @@ try {
 
         case 'favorites':
             // Get user favorites (requires auth)
-            Response::success([]);
+            Response::success(array());
             break;
 
         case 'modules':
@@ -56,7 +53,7 @@ try {
         default:
             if ($id) {
                 // Get specific content by ID
-                $content = Database::queryOne('SELECT * FROM content WHERE id = ? AND is_published = 1', [$id]);
+                $content = Database::queryOne('SELECT * FROM content WHERE id = ? AND is_published = 1', array($id));
                 if (!$content) {
                     Response::notFound('İçerik bulunamadı');
                 }

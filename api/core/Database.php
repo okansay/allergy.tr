@@ -1,22 +1,18 @@
 <?php
 
-namespace App\Core;
-
-use PDO;
-use PDOException;
-
 /**
  * Database Connection Handler
+ * Compatible with PHP 5.6+ and Hostinger shared hosting
  */
 class Database
 {
-    private static ?PDO $connection = null;
-    private static array $config;
+    private static $connection = null;
+    private static $config;
 
     /**
      * Get database connection (Singleton)
      */
-    public static function getConnection(): PDO
+    public static function getConnection()
     {
         if (self::$connection === null) {
             self::connect();
@@ -27,7 +23,7 @@ class Database
     /**
      * Establish database connection
      */
-    private static function connect(): void
+    private static function connect()
     {
         self::$config = require __DIR__ . '/../config/database.php';
 
@@ -47,14 +43,14 @@ class Database
             );
         } catch (PDOException $e) {
             error_log("Database connection failed: " . $e->getMessage());
-            throw new \Exception("Veritabanı bağlantısı kurulamadı. Lütfen sistem yöneticisiyle iletişime geçin.");
+            throw new Exception("Veritabanı bağlantısı kurulamadı. Lütfen sistem yöneticisiyle iletişime geçin.");
         }
     }
 
     /**
      * Execute a query and return all results
      */
-    public static function query(string $sql, array $params = []): array
+    public static function query($sql, $params = array())
     {
         $stmt = self::getConnection()->prepare($sql);
         $stmt->execute($params);
@@ -64,18 +60,18 @@ class Database
     /**
      * Execute a query and return first result
      */
-    public static function queryOne(string $sql, array $params = []): ?array
+    public static function queryOne($sql, $params = array())
     {
         $stmt = self::getConnection()->prepare($sql);
         $stmt->execute($params);
         $result = $stmt->fetch();
-        return $result ?: null;
+        return $result ? $result : null;
     }
 
     /**
      * Execute an insert/update/delete query
      */
-    public static function execute(string $sql, array $params = []): bool
+    public static function execute($sql, $params = array())
     {
         $stmt = self::getConnection()->prepare($sql);
         return $stmt->execute($params);
@@ -84,7 +80,7 @@ class Database
     /**
      * Get last inserted ID
      */
-    public static function lastInsertId(): string
+    public static function lastInsertId()
     {
         return self::getConnection()->lastInsertId();
     }
@@ -92,7 +88,7 @@ class Database
     /**
      * Begin transaction
      */
-    public static function beginTransaction(): bool
+    public static function beginTransaction()
     {
         return self::getConnection()->beginTransaction();
     }
@@ -100,7 +96,7 @@ class Database
     /**
      * Commit transaction
      */
-    public static function commit(): bool
+    public static function commit()
     {
         return self::getConnection()->commit();
     }
@@ -108,7 +104,7 @@ class Database
     /**
      * Rollback transaction
      */
-    public static function rollback(): bool
+    public static function rollback()
     {
         return self::getConnection()->rollBack();
     }

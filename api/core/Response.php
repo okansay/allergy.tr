@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Core;
-
 /**
  * API Response Helper
+ * Compatible with PHP 5.6+ and Hostinger shared hosting
  */
 class Response
 {
     /**
      * Send JSON response
      */
-    public static function json(mixed $data, int $statusCode = 200): void
+    public static function json($data, $statusCode = 200)
     {
         http_response_code($statusCode);
         header('Content-Type: application/json; charset=utf-8');
@@ -21,31 +20,31 @@ class Response
     /**
      * Send success response
      */
-    public static function success(mixed $data = null, string $message = 'İşlem başarılı', int $statusCode = 200): void
+    public static function success($data = null, $message = 'İşlem başarılı', $statusCode = 200)
     {
-        self::json([
+        self::json(array(
             'success' => true,
             'message' => $message,
             'data' => $data
-        ], $statusCode);
+        ), $statusCode);
     }
 
     /**
      * Send error response
      */
-    public static function error(string $message = 'Bir hata oluştu', int $statusCode = 400, mixed $errors = null): void
+    public static function error($message = 'Bir hata oluştu', $statusCode = 400, $errors = null)
     {
-        self::json([
+        self::json(array(
             'success' => false,
             'message' => $message,
             'errors' => $errors
-        ], $statusCode);
+        ), $statusCode);
     }
 
     /**
      * Send unauthorized response
      */
-    public static function unauthorized(string $message = 'Yetkisiz erişim'): void
+    public static function unauthorized($message = 'Yetkisiz erişim')
     {
         self::error($message, 401);
     }
@@ -53,7 +52,7 @@ class Response
     /**
      * Send forbidden response
      */
-    public static function forbidden(string $message = 'Bu işlem için yetkiniz yok'): void
+    public static function forbidden($message = 'Bu işlem için yetkiniz yok')
     {
         self::error($message, 403);
     }
@@ -61,7 +60,7 @@ class Response
     /**
      * Send not found response
      */
-    public static function notFound(string $message = 'Kaynak bulunamadı'): void
+    public static function notFound($message = 'Kaynak bulunamadı')
     {
         self::error($message, 404);
     }
@@ -69,7 +68,7 @@ class Response
     /**
      * Send validation error response
      */
-    public static function validationError(array $errors, string $message = 'Doğrulama hatası'): void
+    public static function validationError($errors, $message = 'Doğrulama hatası')
     {
         self::error($message, 422, $errors);
     }
