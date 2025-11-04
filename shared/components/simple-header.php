@@ -46,39 +46,7 @@
                 'GRAD' 0,
                 'opsz' 24
         }
-        .group .material-symbols-outlined.rotate-icon {
-            transition: transform 0.2s ease-in-out;
-        }
-        .group[aria-expanded="true"] .material-symbols-outlined.rotate-icon {
-            transform: rotate(90deg);
-        }
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* Loading spinner */
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #135bec;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Alpine cloak */
-        [x-cloak] {
-            display: none !important;
-        }
     </style>
 
 </head>
-<body class="font-display bg-background-light dark:bg-background-dark" x-data="appState" x-cloak>
+<body class="font-display bg-background-light dark:bg-background-dark">

@@ -1,7 +1,7 @@
 <?php
 $pageTitle = 'Kayıt Ol - Allergy.tr';
 ?>
-<?php include __DIR__ . '/../shared/components/header.php'; ?>
+<?php include __DIR__ . '/../shared/components/simple-header.php'; ?>
 
 <div class="min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-md" x-data="registerForm()">
@@ -120,9 +120,12 @@ $pageTitle = 'Kayıt Ol - Allergy.tr';
     </div>
 </div>
 
+<!-- Alpine.js -->
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 <script>
-    function registerForm() {
-        return {
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('registerForm', () => ({
             form: {
                 full_name: '',
                 title: '',
@@ -166,8 +169,8 @@ $pageTitle = 'Kayıt Ol - Allergy.tr';
                     this.loading = false;
                 }
             }
-        }
-    }
+        }));
+    });
 </script>
 
 </body>
