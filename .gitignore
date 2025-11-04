@@ -1,0 +1,53 @@
+# Environment files
+.env
+.env.local
+.env.production
+
+# Sensitive config files (if you change to .env approach)
+api/config/database.php
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+error_log
+debug.log
+
+# Cache
+cache/
+*.cache
+
+# Uploaded files
+public/uploads/
+public/assets/images/profiles/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Node modules (if you add npm later)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Vendor (if you add Composer later)
+vendor/
+
+# Session files
+sessions/
+
+# Database backups
+*.sql
+*.sql.gz
+database/backups/
+
+# Test files (optional - remove if you want to commit tests)
+test-*.php
+check-*.php
