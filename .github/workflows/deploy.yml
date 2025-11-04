@@ -1,0 +1,35 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ
+      - main
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy to Hostinger via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOSTINGER_HOST }}
+        username: ${{ secrets.HOSTINGER_USERNAME }}
+        password: ${{ secrets.HOSTINGER_PASSWORD }}
+        port: 22
+        script: |
+          cd ${{ secrets.HOSTINGER_PATH }}
+
+          # Pull latest changes
+          git pull origin claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ || git clone -b claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ https://github.com/okansay/allergy.tr.git .
+
+          # Ensure correct permissions
+          chmod -R 755 public_html
+          chmod -R 644 public_html/*.php
+
+          echo "✅ Deployment completed successfully!"

@@ -55,3 +55,6 @@ database/backups/
 # Test files (optional - remove if you want to commit tests)
 test-*.php
 check-*.php
+
+# Deployment config (contains credentials)
+.deploy-config
