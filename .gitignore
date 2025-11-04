@@ -43,10 +43,14 @@ vendor/
 # Session files
 sessions/
 
-# Database backups
+# Database backups and SQL dumps
 *.sql
 *.sql.gz
 database/backups/
+
+# But allow migration and seed SQL files
+!database/migrations/*.sql
+!database/seeds/*.sql
 
 # Test files (optional - remove if you want to commit tests)
 test-*.php
