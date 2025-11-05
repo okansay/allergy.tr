@@ -23,23 +23,48 @@ jobs:
         password: ${{ secrets.HOSTINGER_PASSWORD }}
         port: ${{ secrets.HOSTINGER_PORT }}
         script: |
+          echo "🚀 Starting deployment..."
           cd ${{ secrets.HOSTINGER_PATH }}
 
-          # Pull latest changes
-          git pull origin claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ || git clone -b claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ https://github.com/okansay/allergy.tr.git .
+          # Check if git repository exists
+          if [ ! -d ".git" ]; then
+              echo "📦 Cloning repository..."
+              git clone -b claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ https://github.com/okansay/allergy.tr.git .
+          else
+              echo "📥 Pulling latest changes..."
+              git fetch origin
+              git reset --hard origin/claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ
+          fi
 
-          # Remove symlink if exists and copy files to public_html
+          echo "📂 Current directory: $(pwd)"
+          echo "📋 Files in public directory:"
+          ls -la public/ || echo "❌ public/ directory not found!"
+
+          # Remove symlink if exists
           if [ -L "public_html" ]; then
+              echo "🔗 Removing old symlink..."
               rm public_html
           fi
 
-          # Create public_html directory if it doesn't exist
+          # Remove old public_html directory if it exists
+          if [ -d "public_html" ] && [ ! -L "public_html" ]; then
+              echo "🗑️  Cleaning old public_html directory..."
+              rm -rf public_html
+          fi
+
+          # Create fresh public_html directory
+          echo "📁 Creating public_html directory..."
           mkdir -p public_html
 
           # Copy all files from public to public_html
+          echo "📋 Copying files with rsync..."
           rsync -av --delete public/ public_html/
 
+          echo "📋 Files in public_html after rsync:"
+          ls -la public_html/
+
           # Ensure correct permissions
+          echo "🔐 Setting permissions..."
           chmod -R 755 public_html
           find public_html -name "*.php" -exec chmod 644 {} \;
 
