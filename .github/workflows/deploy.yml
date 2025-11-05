@@ -21,15 +21,20 @@ jobs:
         host: ${{ secrets.HOSTINGER_HOST }}
         username: ${{ secrets.HOSTINGER_USERNAME }}
         password: ${{ secrets.HOSTINGER_PASSWORD }}
-        port: 22
+        port: ${{ secrets.HOSTINGER_PORT }}
         script: |
           cd ${{ secrets.HOSTINGER_PATH }}
 
           # Pull latest changes
           git pull origin claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ || git clone -b claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ https://github.com/okansay/allergy.tr.git .
 
+          # Ensure public_html symlink exists
+          if [ ! -L "public_html" ]; then
+              ln -sf public public_html
+          fi
+
           # Ensure correct permissions
-          chmod -R 755 public_html
-          chmod -R 644 public_html/*.php
+          chmod -R 755 public
+          find public -name "*.php" -exec chmod 644 {} \;
 
           echo "✅ Deployment completed successfully!"
