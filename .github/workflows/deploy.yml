@@ -28,13 +28,19 @@ jobs:
           # Pull latest changes
           git pull origin claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ || git clone -b claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ https://github.com/okansay/allergy.tr.git .
 
-          # Ensure public_html symlink exists
-          if [ ! -L "public_html" ]; then
-              ln -sf public public_html
+          # Remove symlink if exists and copy files to public_html
+          if [ -L "public_html" ]; then
+              rm public_html
           fi
 
+          # Create public_html directory if it doesn't exist
+          mkdir -p public_html
+
+          # Copy all files from public to public_html
+          rsync -av --delete public/ public_html/
+
           # Ensure correct permissions
-          chmod -R 755 public
-          find public -name "*.php" -exec chmod 644 {} \;
+          chmod -R 755 public_html
+          find public_html -name "*.php" -exec chmod 644 {} \;
 
           echo "✅ Deployment completed successfully!"
