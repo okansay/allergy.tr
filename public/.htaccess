@@ -9,8 +9,8 @@
     # RewriteCond %{HTTPS} off
     # RewriteRule ^(.*)$ https://%{HTTP_HOST%}/$1 [R=301,L]
 
-    # API Routes - redirect to /api folder
-    RewriteRule ^api/(.*)$ ../api/$1 [L]
+    # API Routes - now inside public_html, no redirect needed
+    # RewriteRule ^api/(.*)$ ../api/$1 [L]  # Disabled - api is now in public_html
 
     # Remove .php extension
     RewriteCond %{REQUEST_FILENAME} !-d
