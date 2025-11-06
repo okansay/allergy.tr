@@ -120,10 +120,8 @@ $pageTitle = 'Kayıt Ol - Allergy.tr';
     </div>
 </div>
 
-<!-- Alpine.js -->
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
 <script>
+    // Define registerForm before Alpine loads
     document.addEventListener('alpine:init', () => {
         Alpine.data('registerForm', () => ({
             form: {
@@ -172,6 +170,9 @@ $pageTitle = 'Kayıt Ol - Allergy.tr';
         }));
     });
 </script>
+
+<!-- Alpine.js - Load AFTER data definition -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 </body>
 </html>
