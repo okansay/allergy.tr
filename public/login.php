@@ -1,7 +1,7 @@
 <?php
 $pageTitle = 'Giriş Yap - Allergy.tr';
 ?>
-<?php include __DIR__ . '/../shared/components/simple-header.php'; ?>
+<?php include __DIR__ . '/shared/components/simple-header.php'; ?>
 
 <div class="min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-md" x-data="loginForm()">

@@ -4,7 +4,7 @@
  * Main Application Entry Point
  */
 
-require_once __DIR__ . '/../api/core/Auth.php';
+require_once __DIR__ . '/api/core/Auth.php';
 
 // Start session
 Auth::initSession();
@@ -15,11 +15,11 @@ $user = Auth::user();
 $pageTitle = 'Allergy.tr - Alerji & İmmünoloji Portalı';
 
 ?>
-<?php include __DIR__ . '/../shared/components/header.php'; ?>
+<?php include __DIR__ . '/shared/components/header.php'; ?>
 
 <div class="flex min-h-screen w-full">
     <!-- Sidebar -->
-    <?php include __DIR__ . '/../shared/components/sidebar.php'; ?>
+    <?php include __DIR__ . '/shared/components/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="flex-1 flex flex-col pb-16 lg:pb-0">
@@ -175,4 +175,4 @@ $pageTitle = 'Allergy.tr - Alerji & İmmünoloji Portalı';
 </div>
 
 <!-- Footer -->
-<?php include __DIR__ . '/../shared/components/footer.php'; ?>
+<?php include __DIR__ . '/shared/components/footer.php'; ?>
