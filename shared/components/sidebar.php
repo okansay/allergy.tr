@@ -1,123 +1,81 @@
-<aside :class="sidebarOpen ? 'w-64' : 'w-20'"
-       class="hidden lg:flex flex-shrink-0 bg-white dark:bg-background-dark dark:border-r dark:border-gray-800 p-4 flex-col justify-between transition-all duration-300">
-    <div class="flex flex-col gap-8">
-        <!-- Logo -->
-        <div class="flex items-center gap-2 px-2 h-10">
-            <span class="material-symbols-outlined text-primary text-3xl">health_and_safety</span>
-            <h1 :class="!sidebarOpen && 'opacity-0 scale-0'"
-                class="text-xl font-bold text-gray-900 dark:text-white transition-all duration-200 whitespace-nowrap">
-                Allergy.tr
-            </h1>
-        </div>
-
-        <!-- Navigation -->
-        <nav class="flex flex-col gap-1">
-            <!-- Ana Sayfa -->
-            <a @click.prevent="navigateTo('dashboard')"
-               :class="currentRoute === 'dashboard' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
-               class="flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer"
-               href="#dashboard">
-                <span class="material-symbols-outlined">home</span>
-                <span :class="!sidebarOpen && 'opacity-0 scale-0'"
-                      class="text-sm font-medium transition-all duration-200 whitespace-nowrap">Ana Sayfa</span>
-            </a>
-
-            <!-- İlaç Alerjileri -->
-            <div class="group" x-data="{ open: false }">
-                <button @click="open = !open"
-                        class="flex w-full items-center justify-between gap-3 px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                    <div class="flex items-center gap-3">
-                        <span class="material-symbols-outlined">vaccines</span>
-                        <span :class="!sidebarOpen && 'opacity-0 scale-0'"
-                              class="text-sm font-medium transition-all duration-200 whitespace-nowrap">İlaç Alerjileri</span>
-                    </div>
-                    <span :class="!sidebarOpen && 'opacity-0 scale-0'"
-                          class="material-symbols-outlined rotate-icon text-base transition-all duration-200">chevron_right</span>
-                </button>
-                <div class="pl-6 pt-1 overflow-hidden" x-collapse x-show="open && sidebarOpen">
-                    <a @click.prevent="navigateTo('desensitization')"
-                       class="flex items-center gap-3 px-3 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md whitespace-nowrap cursor-pointer"
-                       href="#desensitization">İlaç Desensitizasyonu</a>
-                    <a class="flex items-center gap-3 px-3 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md whitespace-nowrap"
-                       href="#">Beta-laktamlar</a>
-                    <a class="flex items-center gap-3 px-3 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md whitespace-nowrap"
-                       href="#">Protokoller</a>
-                </div>
-            </div>
-
-            <!-- İmmün Yetmezlikler -->
-            <div class="group" x-data="{ open: false }">
-                <button @click="open = !open"
-                        class="flex w-full items-center justify-between gap-3 px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                    <div class="flex items-center gap-3">
-                        <span class="material-symbols-outlined">bloodtype</span>
-                        <span :class="!sidebarOpen && 'opacity-0 scale-0'"
-                              class="text-sm font-medium transition-all duration-200 whitespace-nowrap">İmmün Yetmezlikler</span>
-                    </div>
-                    <span :class="!sidebarOpen && 'opacity-0 scale-0'"
-                          class="material-symbols-outlined rotate-icon text-base transition-all duration-200">chevron_right</span>
-                </button>
-                <div class="pl-6 pt-1 overflow-hidden" x-collapse x-show="open && sidebarOpen">
-                    <a @click.prevent="navigateTo('immune-deficiencies')"
-                       class="flex items-center gap-3 px-3 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md whitespace-nowrap cursor-pointer"
-                       href="#immune-deficiencies">Genel Bakış</a>
-                    <a class="flex items-center gap-3 px-3 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md whitespace-nowrap"
-                       href="#">Lenfosit Alt Grupları</a>
-                    <a class="flex items-center gap-3 px-3 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md whitespace-nowrap"
-                       href="#">Tanı Kriterleri</a>
-                </div>
-            </div>
-
-            <!-- Laboratuvar -->
-            <a @click.prevent="navigateTo('laboratory')"
-               :class="currentRoute === 'laboratory' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
-               class="flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer"
-               href="#laboratory">
-                <span class="material-symbols-outlined">science</span>
-                <span :class="!sidebarOpen && 'opacity-0 scale-0'"
-                      class="text-sm font-medium transition-all duration-200 whitespace-nowrap">Laboratuvar</span>
-            </a>
-
-            <!-- Rehberler -->
-            <a @click.prevent="navigateTo('guides')"
-               :class="currentRoute === 'guides' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
-               class="flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer"
-               href="#guides">
-                <span class="material-symbols-outlined">article</span>
-                <span :class="!sidebarOpen && 'opacity-0 scale-0'"
-                      class="text-sm font-medium transition-all duration-200 whitespace-nowrap">Rehberler</span>
-            </a>
-        </nav>
+<div class="flex flex-col p-4">
+    <!-- Logo Section -->
+    <div class="flex items-center gap-2 mb-8 px-2">
+        <span class="material-symbols-outlined text-primary text-3xl">health_and_safety</span>
+        <h2 class="text-lg font-bold text-slate-800 dark:text-slate-200">Allergy.tr</h2>
     </div>
 
-    <!-- Bottom Section -->
-    <div class="flex flex-col gap-4">
-        <!-- Ayarlar -->
-        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-           href="#">
-            <span class="material-symbols-outlined">settings</span>
-            <span :class="!sidebarOpen && 'opacity-0 scale-0'"
-                  class="text-sm font-medium transition-all duration-200 whitespace-nowrap">Ayarlar</span>
+    <!-- Navigation List -->
+    <nav class="flex flex-col gap-1">
+        <a
+            @click.prevent="navigateTo('dashboard')"
+            href="#dashboard"
+            :class="currentRoute === 'dashboard' ? 'bg-primary text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
+            class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer transition-colors"
+        >
+            <span class="material-symbols-outlined text-xl">dashboard</span>
+            <p class="text-sm font-semibold truncate">Ana Sayfa</p>
         </a>
 
-        <!-- User Profile -->
-        <div class="border-t border-gray-200 dark:border-gray-800 pt-4">
-            <div class="flex items-center gap-3" x-show="user">
-                <div class="bg-primary/20 rounded-full size-10 flex items-center justify-center flex-shrink-0">
-                    <span class="material-symbols-outlined text-primary">person</span>
-                </div>
-                <div :class="!sidebarOpen && 'opacity-0 scale-0'"
-                     class="flex flex-col transition-all duration-200 whitespace-nowrap">
-                    <h2 class="text-gray-900 dark:text-white text-sm font-semibold" x-text="user?.full_name"></h2>
-                    <p class="text-gray-500 dark:text-gray-400 text-xs" x-text="user?.specialty"></p>
-                </div>
-            </div>
-            <button @click="logout"
-                    x-show="user"
-                    class="mt-2 w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg">
-                <span class="material-symbols-outlined text-base">logout</span>
-                <span :class="!sidebarOpen && 'opacity-0 scale-0'" class="transition-all duration-200">Çıkış</span>
-            </button>
+        <a
+            @click.prevent="navigateTo('desensitization')"
+            href="#desensitization"
+            :class="currentRoute === 'desensitization' ? 'bg-primary text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
+            class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer transition-colors"
+        >
+            <span class="material-symbols-outlined text-xl">pill</span>
+            <p class="text-sm font-semibold truncate">İlaç Alerjileri</p>
+        </a>
+
+        <a
+            @click.prevent="navigateTo('immune-deficiencies')"
+            href="#immune-deficiencies"
+            :class="currentRoute === 'immune-deficiencies' ? 'bg-primary text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
+            class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer transition-colors"
+        >
+            <span class="material-symbols-outlined text-xl">shield</span>
+            <p class="text-sm font-semibold truncate">İmmün Yetmezlikler</p>
+        </a>
+
+        <a
+            @click.prevent="navigateTo('food-allergies')"
+            href="#food-allergies"
+            :class="currentRoute === 'food-allergies' ? 'bg-primary text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
+            class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer transition-colors"
+        >
+            <span class="material-symbols-outlined text-xl">bakery_dining</span>
+            <p class="text-sm font-semibold truncate">Gıda Alerjileri</p>
+        </a>
+
+        <a
+            @click.prevent="navigateTo('asthma-rhinitis')"
+            href="#asthma-rhinitis"
+            :class="currentRoute === 'asthma-rhinitis' ? 'bg-primary text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
+            class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer transition-colors"
+        >
+            <span class="material-symbols-outlined text-xl">air</span>
+            <p class="text-sm font-semibold truncate">Astım ve Rinit</p>
+        </a>
+
+        <a
+            @click.prevent="navigateTo('calculators')"
+            href="#calculators"
+            :class="currentRoute === 'calculators' ? 'bg-primary text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
+            class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer transition-colors"
+        >
+            <span class="material-symbols-outlined text-xl">calculate</span>
+            <p class="text-sm font-semibold truncate">Hesaplayıcılar</p>
+        </a>
+
+        <!-- Logout -->
+        <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+            <a
+                href="/api/auth.php?action=logout"
+                class="flex h-12 items-center gap-4 rounded-lg px-4 hover:bg-red-100 dark:hover:bg-red-900/20 cursor-pointer transition-colors text-red-600 dark:text-red-400"
+            >
+                <span class="material-symbols-outlined text-xl">logout</span>
+                <p class="text-sm font-semibold truncate">Çıkış Yap</p>
+            </a>
         </div>
-    </div>
-</aside>
+    </nav>
+</div>

@@ -19,51 +19,70 @@ $pageTitle = 'Allergy.tr - Alerji & İmmünoloji Portalı';
 ?>
 <?php include __DIR__ . '/shared/components/header.php'; ?>
 
-<div class="flex min-h-screen w-full">
-    <!-- Sidebar -->
-    <?php include __DIR__ . '/shared/components/sidebar.php'; ?>
+<div x-data="{ menuOpen: false }" class="flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark">
 
-    <!-- Main Content -->
-    <div class="flex-1 flex flex-col pb-16 lg:pb-0">
-        <!-- Mobile Header -->
-        <header class="lg:hidden sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-white/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
-            <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-primary text-3xl">health_and_safety</span>
-                <h1 class="text-xl font-bold text-gray-900 dark:text-white">Allergy.tr</h1>
+    <!-- Top App Bar -->
+    <header class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-20 border-b border-slate-200/80 dark:border-slate-800/80">
+        <button
+            @click="menuOpen = !menuOpen"
+            class="text-slate-800 dark:text-slate-200 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 lg:hidden">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+
+        <h1 class="text-slate-900 dark:text-slate-50 text-lg font-bold leading-tight tracking-tight flex-1 text-center lg:text-left lg:pl-4">
+            <span x-show="!user">Allergy.tr</span>
+            <span x-show="user">A&I Toolkit</span>
+        </h1>
+
+        <div class="flex items-center gap-2">
+            <!-- User Profile (when logged in) -->
+            <div x-show="user" class="hidden lg:flex items-center gap-2">
+                <span x-text="user?.full_name" class="text-sm text-slate-600 dark:text-slate-400"></span>
+                <div class="size-8 rounded-full bg-primary/20 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary text-lg">person</span>
+                </div>
             </div>
-            <button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
-                <span class="material-symbols-outlined text-gray-600 dark:text-gray-300">search</span>
-            </button>
-        </header>
+        </div>
+    </header>
 
-        <!-- Mobile Navigation -->
-        <nav class="lg:hidden sticky top-[61px] z-10 flex items-center gap-2 px-4 py-2 bg-white dark:bg-background-dark border-b border-gray-200 dark:border-gray-800 overflow-x-auto no-scrollbar">
-            <a @click.prevent="navigateTo('dashboard')"
-               :class="currentRoute === 'dashboard' ? 'bg-primary text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
-               class="flex-shrink-0 px-3 py-1.5 rounded-full text-sm font-medium cursor-pointer"
-               href="#dashboard">Ana Sayfa</a>
-            <a @click.prevent="navigateTo('desensitization')"
-               :class="currentRoute === 'desensitization' ? 'bg-primary text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
-               class="flex-shrink-0 px-3 py-1.5 rounded-full text-sm font-medium cursor-pointer"
-               href="#desensitization">İlaç Alerjileri</a>
-            <a @click.prevent="navigateTo('immune-deficiencies')"
-               :class="currentRoute === 'immune-deficiencies' ? 'bg-primary text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
-               class="flex-shrink-0 px-3 py-1.5 rounded-full text-sm font-medium cursor-pointer"
-               href="#immune-deficiencies">İmmün Yetmezlikler</a>
-            <a @click.prevent="navigateTo('laboratory')"
-               :class="currentRoute === 'laboratory' ? 'bg-primary text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
-               class="flex-shrink-0 px-3 py-1.5 rounded-full text-sm font-medium cursor-pointer"
-               href="#laboratory">Laboratuvar</a>
-            <a @click.prevent="navigateTo('guides')"
-               :class="currentRoute === 'guides' ? 'bg-primary text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
-               class="flex-shrink-0 px-3 py-1.5 rounded-full text-sm font-medium cursor-pointer"
-               href="#guides">Rehberler</a>
-        </nav>
+    <!-- Navigation Drawer (Mobile Overlay) -->
+    <div
+        x-show="menuOpen"
+        @click.away="menuOpen = false"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-40 bg-black/40 dark:bg-black/60 lg:hidden"
+        style="display: none;"
+    >
+        <div
+            @click.stop
+            x-transition:enter="transition ease-out duration-300 transform"
+            x-transition:enter-start="-translate-x-full"
+            x-transition:enter-end="translate-x-0"
+            x-transition:leave="transition ease-in duration-200 transform"
+            x-transition:leave-start="translate-x-0"
+            x-transition:leave-end="-translate-x-full"
+            class="flex h-full w-10/12 max-w-sm flex-col gap-4 bg-background-light dark:bg-background-dark p-4 shadow-xl"
+        >
+            <?php include __DIR__ . '/shared/components/mobile-menu.php'; ?>
+        </div>
+    </div>
 
-        <!-- Main Content Area -->
-        <main id="main-content" class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+    <!-- Desktop Sidebar + Content Layout -->
+    <div class="flex flex-1 overflow-hidden">
+        <!-- Desktop Sidebar (Hidden on mobile) -->
+        <aside class="hidden lg:block w-64 border-r border-slate-200 dark:border-slate-800 overflow-y-auto">
+            <?php include __DIR__ . '/shared/components/sidebar.php'; ?>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto">
             <!-- Welcome Screen (Not Logged In) -->
-            <div x-show="!user && !loading" class="flex items-center justify-center min-h-full">
+            <div x-show="!user && !loading" class="flex items-center justify-center min-h-full p-4">
                 <div class="max-w-4xl mx-auto text-center py-12 px-4">
                     <!-- Logo -->
                     <div class="mb-8">
@@ -124,39 +143,9 @@ $pageTitle = 'Allergy.tr - Alerji & İmmünoloji Portalı';
                 </div>
             </div>
 
-            <!-- Logged In Content -->
-            <div x-show="user && !loading">
-                <!-- Desktop Header -->
-                <div class="hidden lg:flex items-center justify-between mb-8">
-                    <div class="flex items-center gap-2">
-                        <button @click="sidebarOpen = !sidebarOpen"
-                                class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
-                            <span :class="!sidebarOpen && 'rotate-180'"
-                                  class="material-symbols-outlined text-gray-600 dark:text-gray-300 transition-transform duration-300">menu_open</span>
-                        </button>
-                        <div>
-                            <h1 class="text-gray-900 dark:text-white text-3xl font-bold tracking-tight">
-                                Tekrar hoş geldiniz, <span x-text="user?.title + ' ' + user?.full_name?.split(' ').pop()"></span>!
-                            </h1>
-                            <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">İhtiyacınız olan araçlar ve bilgiler parmaklarınızın ucunda.</p>
-                        </div>
-                    </div>
-                    <div class="relative w-full max-w-sm">
-                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
-                        <input class="w-full pl-10 pr-4 py-2 bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-800 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
-                               placeholder="Portalda ara..."
-                               type="text"/>
-                    </div>
-                </div>
-
-                <!-- Mobile Header -->
-                <div class="mb-6 lg:hidden">
-                    <h1 class="text-gray-900 dark:text-white text-2xl font-bold leading-tight">
-                        Tekrar hoş geldiniz, <span x-text="user?.title + ' ' + user?.full_name?.split(' ').pop()"></span>!
-                    </h1>
-                </div>
-
-                <!-- Dashboard Content (default) -->
+            <!-- Dashboard Content (Logged In) -->
+            <div x-show="user && !loading" class="p-4 sm:p-6 lg:p-8">
+                <!-- Dashboard -->
                 <div x-show="currentRoute === 'dashboard'">
                     <?php include __DIR__ . '/dashboard.php'; ?>
                 </div>
@@ -170,7 +159,7 @@ $pageTitle = 'Allergy.tr - Alerji & İmmünoloji Portalı';
 
             <!-- Loading State -->
             <div x-show="loading" class="flex items-center justify-center py-20">
-                <div class="spinner"></div>
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             </div>
         </main>
     </div>
