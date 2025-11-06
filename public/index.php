@@ -19,7 +19,7 @@ $pageTitle = 'Allergy.tr - Alerji & İmmünoloji Portalı';
 ?>
 <?php include __DIR__ . '/shared/components/header.php'; ?>
 
-<div x-data="{ menuOpen: false }" class="flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark">
+<div class="flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark">
 
     <!-- Top App Bar -->
     <header class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-20 border-b border-slate-200/80 dark:border-slate-800/80">
