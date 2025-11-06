@@ -56,9 +56,20 @@ jobs:
           echo "📁 Creating public_html directory..."
           mkdir -p public_html
 
-          # Copy all files from public to public_html
+          # Copy all necessary folders to public_html
           echo "📋 Copying files with rsync..."
+
+          # Copy public/ contents to root of public_html/
           rsync -av --delete public/ public_html/
+
+          # Copy api/ folder into public_html/
+          rsync -av --delete api/ public_html/api/
+
+          # Copy shared/ folder into public_html/
+          rsync -av --delete shared/ public_html/shared/
+
+          # Copy database/ folder into public_html/ (for migrations)
+          rsync -av --delete database/ public_html/database/
 
           echo "📋 Files in public_html after rsync:"
           ls -la public_html/
