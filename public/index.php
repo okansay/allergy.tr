@@ -4,6 +4,8 @@
  * Main Application Entry Point
  */
 
+require_once __DIR__ . '/api/core/Database.php';
+require_once __DIR__ . '/api/core/Response.php';
 require_once __DIR__ . '/api/core/Auth.php';
 
 // Start session
