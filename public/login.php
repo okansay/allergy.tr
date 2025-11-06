@@ -64,9 +64,9 @@ $pageTitle = 'Giriş Yap - Allergy.tr';
 
                     <button type="submit"
                             :disabled="loading"
-                            class="w-full py-3 px-4 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 focus:ring-4 focus:ring-primary/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
-                        <span x-show="!loading">Giriş Yap</span>
-                        <span x-show="loading">Giriş yapılıyor...</span>
+                            class="w-full py-3 px-4 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 focus:ring-4 focus:ring-primary/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                            x-text="loading ? 'Giriş yapılıyor...' : 'Giriş Yap'">
+                        Giriş Yap
                     </button>
                 </div>
             </form>

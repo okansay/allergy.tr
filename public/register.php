@@ -103,9 +103,9 @@ $pageTitle = 'Kayıt Ol - Allergy.tr';
 
                     <button type="submit"
                             :disabled="loading"
-                            class="w-full py-3 px-4 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 focus:ring-4 focus:ring-primary/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
-                        <span x-show="!loading">Kayıt Ol</span>
-                        <span x-show="loading">Kayıt yapılıyor...</span>
+                            class="w-full py-3 px-4 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 focus:ring-4 focus:ring-primary/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                            x-text="loading ? 'Kayıt yapılıyor...' : 'Kayıt Ol'">
+                        Kayıt Ol
                     </button>
                 </div>
             </form>
