@@ -1,2 +1,5 @@
-# Deny all access to config files
-Deny from all
+# Allow PHP to include these files, but deny direct web access to non-PHP files
+<Files ~ "\.(ini|json|yaml|yml|txt)$">
+    Order allow,deny
+    Deny from all
+</Files>

@@ -1,2 +1,5 @@
-# Deny all access to database files
-Deny from all
+# Allow PHP to include these files, but deny direct web access to SQL files
+<Files ~ "\.(sql|txt)$">
+    Order allow,deny
+    Deny from all
+</Files>
