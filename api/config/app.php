@@ -21,9 +21,9 @@ return array(
     ),
 
     'paths' => array(
-        'root' => dirname(__DIR__, 2),
+        'root' => dirname(dirname(__DIR__)),
         'api' => dirname(__DIR__),
-        'public' => dirname(__DIR__, 2) . '/public',
+        'public' => dirname(dirname(__DIR__)) . '/public',
         'modules' => dirname(__DIR__) . '/modules',
     )
 );
