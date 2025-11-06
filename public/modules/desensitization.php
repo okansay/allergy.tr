@@ -79,7 +79,7 @@
                         step="0.1">
                 </div>
 
-                <div id="adminRoute" style="display: none;">
+                <div id="adminRouteSection" style="display: none;">
                     <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Uygulama Yolu</label>
                     <select id="adminRoute"
                         class="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"

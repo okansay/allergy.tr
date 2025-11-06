@@ -36,11 +36,6 @@ function resetForm() {
 }
 
 function selectProtocolType(type) {
-    if (type === 'castells') {
-        window.location.href = 'castells.php';
-        return;
-    }
-
     activeProtocolType = type;
     activeStepCount = null;
 
@@ -63,11 +58,12 @@ function selectProtocolType(type) {
         const castellsOptions = document.getElementById('castellsOptions');
         const customProtocol = document.getElementById('customProtocol');
         const adminRoute = document.getElementById('adminRoute');
+        const adminRouteSection = document.getElementById('adminRouteSection');
         const ivType = document.getElementById('ivType');
 
         // Hide route and type selections but set their values
         document.getElementById('ivTypeSection').style.display = 'none';
-        adminRoute.closest('.form-group').style.display = 'none';
+        if (adminRouteSection) adminRouteSection.style.display = 'none';
 
         // Set values automatically
         adminRoute.value = 'iv';
@@ -90,9 +86,10 @@ function selectProtocolType(type) {
     } else {
         const castellsOptions = document.getElementById('castellsOptions');
         const customProtocol = document.getElementById('customProtocol');
+        const adminRouteSection = document.getElementById('adminRouteSection');
 
         document.getElementById('ivTypeSection').style.display = 'none';
-        document.getElementById('adminRoute').parentElement.style.display = 'block';
+        if (adminRouteSection) adminRouteSection.style.display = 'block';
 
         if (castellsOptions) castellsOptions.style.display = 'none';
         if (customProtocol) customProtocol.style.display = 'block';
