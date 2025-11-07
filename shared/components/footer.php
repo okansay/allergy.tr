@@ -35,6 +35,10 @@
 <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+<!-- Desensitization Module Scripts -->
+<script src="/modules/js/desensitization/protocol.js"></script>
+<script src="/modules/js/desensitization/ui.js"></script>
+
 <!-- Alpine.js App State -->
 <script>
     document.addEventListener('alpine:init', () => {

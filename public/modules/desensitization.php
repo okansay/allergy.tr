@@ -147,10 +147,6 @@
     </div>
 </div>
 
-<!-- Load JavaScript -->
-<script src="/modules/js/desensitization/protocol.js"></script>
-<script src="/modules/js/desensitization/ui.js"></script>
-
 <style>
 /* Custom styles for desensitization module */
 .btn-protocol.active[data-type="castells"] {
