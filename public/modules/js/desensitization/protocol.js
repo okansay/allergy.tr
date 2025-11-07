@@ -513,7 +513,7 @@ function calculateBolusProtocol() {
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="6">Toplam Doz: ${cumulativeDose.toFixed(3)} ${unit} / Toplam Süre: ${totalTime} dakika</td>
+                    <td colspan="6">Toplam Doz: ${cumulativeDose.toFixed(3)} ${unit} / Toplam Süre: ${formatTime(totalTime)}</td>
                 </tr>
             </tfoot>
         </table>
@@ -609,7 +609,7 @@ function calculateSubcutanProtocol() {
             <tfoot>
                 <tr>
                     <td colspan="7">
-                        Toplam Süre: ${totalTime} dakika<br>
+                        Toplam Süre: ${formatTime(totalTime)}<br>
                         Verilen Dozlar Toplamı: ${formatNumber(cumulativeDose, 3)} ${unit}<br>
                         Hedef Doz: ${formatNumber(targetDose, 3)} ${unit}
                     </td>
@@ -688,6 +688,22 @@ function formatNumber(number, decimals = 5) {
     return formatted.includes(".") ? formatted : formatted + ".0";
 }
 
+function formatTime(totalMinutes) {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = Math.floor(totalMinutes % 60);
+    const seconds = Math.round((totalMinutes % 1) * 60);
+
+    let result = `${totalMinutes.toFixed(2)} dakika`;
+    if (hours > 0 || minutes > 0) {
+        result += ` (${hours} saat ${minutes} dakika`;
+        if (seconds > 0) {
+            result += ` ${seconds} saniye`;
+        }
+        result += ')';
+    }
+    return result;
+}
+
 function addExportButtons() {
     const resultSection = document.getElementById('resultSection');
     if (!resultSection) return;
@@ -703,12 +719,122 @@ function addExportButtons() {
             <button type="button" class="btn-export" style="background-color: #3B82F6;" onclick="exportToWord()">
                 📄 Word İndir
             </button>
-            <button type="button" class="btn-export" style="background-color: #8B5CF6;" onclick="window.print()">
+            <button type="button" class="btn-export" style="background-color: #8B5CF6;" onclick="printResults()">
                 🖨️ Yazdır
             </button>
         </div>`;
 
     resultSection.innerHTML += buttonsHTML;
+}
+
+function printResults() {
+    const resultSection = document.getElementById('resultSection');
+    if (!resultSection) {
+        alert('Sonuç bulunamadı.');
+        return;
+    }
+
+    const drugName = document.getElementById('drugName')?.value || 'İlaç Desensitizasyon Protokolü';
+
+    // Create a new window for printing
+    const printWindow = window.open('', '_blank', 'width=800,height=600');
+
+    // Write the HTML content
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <title>Desensitizasyon Protokolü - ${drugName}</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 20px;
+                    color: #000;
+                }
+                h2, h3 {
+                    text-align: center;
+                    color: #2d3748;
+                    margin-bottom: 20px;
+                }
+                .info {
+                    margin: 10px 0;
+                    font-size: 14px;
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 20px 0;
+                }
+                th, td {
+                    border: 1px solid #000;
+                    padding: 8px;
+                    text-align: center;
+                    font-size: 12px;
+                }
+                th {
+                    background-color: #4a5568;
+                    color: white;
+                    font-weight: bold;
+                }
+                tr:nth-child(even) {
+                    background-color: #f7fafc;
+                }
+                tfoot td {
+                    background-color: #e2e8f0;
+                    font-weight: 600;
+                    text-align: left;
+                }
+                .warning {
+                    margin-top: 20px;
+                    padding-top: 10px;
+                    border-top: 1px solid #cbd5e0;
+                    font-size: 10px;
+                    color: #666;
+                }
+                @media print {
+                    body {
+                        margin: 10px;
+                    }
+                    .no-print {
+                        display: none;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <h2>İlaç Desensitizasyon Protokolü</h2>
+            <div class="info"><strong>İlaç:</strong> ${drugName}</div>
+            <div class="info"><strong>Tarih:</strong> ${new Date().toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+            <div class="info"><strong>Hazırlayan:</strong> Allergy.tr Desensitizasyon Hesaplayıcı</div>
+            ${resultSection.innerHTML}
+            <div class="warning">
+                <p><strong>Uyarı:</strong> Bu protokol eğitim amaçlıdır. Klinik uygulamada güncel kılavuzlara ve kurumsal protokollere başvurunuz.</p>
+                <p><strong>Referanslar:</strong></p>
+                <ul>
+                    <li>Castells MC, et al. Hypersensitivity drug reactions and desensitization protocols. Med Clin North Am. 2020</li>
+                    <li>Wong JT, Long A. Desensitization for immediate hypersensitivity: state of the art. Ann Allergy Asthma Immunol. 2018</li>
+                </ul>
+            </div>
+        </body>
+        </html>
+    `);
+
+    printWindow.document.close();
+
+    // Wait for content to load then print
+    printWindow.onload = function() {
+        // Remove export buttons from print content
+        const exportButtons = printWindow.document.querySelector('.export-buttons');
+        if (exportButtons) {
+            exportButtons.remove();
+        }
+
+        setTimeout(function() {
+            printWindow.print();
+            printWindow.close();
+        }, 250);
+    };
 }
 
 function generateSolutionFields(count) {
@@ -904,7 +1030,7 @@ function calculateOralProtocol() {
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="6">Toplam Doz: ${formatNumber(cumulativeDose, 3)} ${unit} / Toplam Süre: ${totalTime} dakika</td>
+                    <td colspan="6">Toplam Doz: ${formatNumber(cumulativeDose, 3)} ${unit} / Toplam Süre: ${formatTime(totalTime)}</td>
                 </tr>
             </tfoot>
         </table>
@@ -1003,6 +1129,9 @@ function generateStepFields() {
             updateStepCalculations(i);
         }
     }
+
+    // Now calculate the last step after all previous steps are done
+    updateStepCalculations(count);
 }
 
 function calculateInfusionProtocol() {
@@ -1092,7 +1221,7 @@ function calculateInfusionProtocol() {
             <tfoot>
                 <tr>
                     <td colspan="7">
-                        Toplam Süre: ${totalTime} dakika<br>
+                        Toplam Süre: ${formatTime(totalTime)}<br>
                         Verilen Toplam Doz: ${formatNumber(cumulativeDose, 3)} ${unit}<br>
                         Hedef Doz: ${formatNumber(targetDose, 3)} ${unit}
                     </td>

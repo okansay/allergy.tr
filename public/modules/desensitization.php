@@ -320,13 +320,56 @@
 }
 
 @media print {
+    /* Hide everything except the results table */
+    body > *:not(#resultSection) {
+        display: none !important;
+    }
+
+    /* Hide all siblings and parents of resultSection */
+    .space-y-6 > *:not(#resultSection) {
+        display: none !important;
+    }
+
+    /* Hide specific elements */
     .btn-container,
     .export-buttons,
     #commonFields,
     #solutionFields,
     #stepFields,
-    #submitContainer {
+    #submitContainer,
+    header,
+    nav,
+    aside,
+    footer,
+    .bg-slate-50,
+    .border.border-slate-200 {
         display: none !important;
+    }
+
+    /* Make sure resultSection is visible and full width */
+    #resultSection {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 20px !important;
+    }
+
+    /* Ensure results section content is visible */
+    #resultSection * {
+        display: revert !important;
+    }
+
+    /* Table styling for print */
+    #stepsTable {
+        page-break-inside: avoid;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #stepsTable th,
+    #stepsTable td {
+        border: 1px solid #000;
+        padding: 8px;
     }
 }
 </style>
