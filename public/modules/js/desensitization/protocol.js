@@ -911,7 +911,155 @@ function generateStepFields() {
         alert('Lütfen geçerli bir basamak sayısı girin.');
         return;
     }
-    // Add step generation logic here.  This will depend on the specific requirements for step fields.
+
+    const useCustomUnit = document.getElementById('useCustomUnit').checked;
+    const unit = useCustomUnit ? document.getElementById('customUnit').value : 'mg';
+
+    stepCount = count;
+    let html = '<div class="step-section">';
+    html += '<div class="section-title">İnfüzyon Basamak Detayları</div>';
+
+    for (let i = 1; i <= count; i++) {
+        const defaultRate = i * 2;
+        const defaultTime = i === count ? '' : 15;
+        const defaultSolution = Math.ceil(i / 4);
+        const isLastStep = i === count;
+
+        html += `
+        <div class="mb-4">
+            <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Basamak ${i}</label>
+            <div class="step-inputs">
+                <div>
+                    <label>Solüsyon</label>
+                    <select class="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white" id="step${i}Solution" required onchange="updateStepCalculations(${i})">
+                        <option value="">Seçin</option>`;
+
+        for (let j = 1; j <= solutionCount; j++) {
+            html += `<option value="${j}" ${j === defaultSolution ? 'selected' : ''}>Solüsyon ${j}</option>`;
+        }
+
+        html += `
+                    </select>
+                </div>
+                <div>
+                    <label>Hız (mL/saat)</label>
+                    <input type="number" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white" id="step${i}Rate"
+                        value="${defaultRate}"
+                        step="0.1" onchange="updateStepCalculations(${i})" required>
+                </div>
+                <div>
+                    <label>Süre (dakika)</label>
+                    <input type="number" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 ${isLastStep ? 'bg-slate-100 dark:bg-slate-600' : 'bg-white dark:bg-slate-700'} text-slate-900 dark:text-white" id="step${i}Time"
+                        value="${defaultTime}"
+                        ${isLastStep ? 'readonly' : ''}
+                        onchange="updateStepCalculations(${i})"
+                        required>
+                </div>
+                <div>
+                    <label>Verilen Doz (${unit})</label>
+                    <input type="number" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-600 text-slate-900 dark:text-white" id="step${i}Dose"
+                        readonly>
+                </div>
+            </div>
+        </div>`;
+    }
+
+    html += '</div>';
+    html += `
+    <div id="submitContainer" class="flex gap-4 mt-6">
+        <button type="button" class="flex-1 px-6 py-3 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors" onclick="resetForm()">Temizle</button>
+        <button type="button" class="flex-1 px-6 py-3 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 transition-colors" onclick="calculateInfusionProtocol()">Hesapla</button>
+    </div>`;
+
+    document.getElementById('stepFields').innerHTML = html;
+
+    // Auto-calculate initial doses
+    for (let i = 1; i <= count; i++) {
+        if (i !== count) {
+            updateStepCalculations(i);
+        }
+    }
+}
+
+function calculateInfusionProtocol() {
+    const stepCountValue = document.querySelectorAll('[id^="step"][id$="Solution"]').length;
+    const useCustomUnit = document.getElementById('useCustomUnit').checked;
+    const unit = useCustomUnit ? document.getElementById('customUnit').value : 'mg';
+
+    // Validate all fields are filled
+    for (let i = 1; i <= stepCountValue; i++) {
+        const solution = document.getElementById(`step${i}Solution`).value;
+        const rate = document.getElementById(`step${i}Rate`).value;
+        const time = document.getElementById(`step${i}Time`).value;
+
+        if (!solution || !rate || (!time && i !== stepCountValue)) {
+            alert('Lütfen tüm basamak detaylarını doldurunuz.');
+            return;
+        }
+    }
+
+    let cumulativeDose = 0;
+    let totalTime = 0;
+    const targetDose = parseFloat(document.getElementById('targetDose').value);
+
+    let html = `
+    <div class="results-section">
+        <h3>İNFÜZYON UYGULAMA BASAMAKLARI</h3>
+        <div class="overflow-x-auto">
+        <table id="stepsTable">
+            <thead>
+                <tr>
+                    <th>Basamak</th>
+                    <th>Solüsyon</th>
+                    <th>Hız (mL/saat)</th>
+                    <th>Süre (dakika)</th>
+                    <th>Hacim (mL)</th>
+                    <th>Verilen Doz (${unit})</th>
+                    <th>Kümülatif Doz (${unit})</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+    for (let i = 1; i <= stepCountValue; i++) {
+        const solutionNum = document.getElementById(`step${i}Solution`).value;
+        const rate = parseFloat(document.getElementById(`step${i}Rate`).value);
+        const time = parseFloat(document.getElementById(`step${i}Time`).value);
+        const concentration = parseFloat(document.getElementById(`solution${solutionNum}Conc`).value);
+
+        const volume = (rate * time) / 60;
+        const dose = volume * concentration;
+        cumulativeDose += dose;
+        totalTime += time;
+
+        html += `
+            <tr>
+                <td>${i}</td>
+                <td>${solutionNum}</td>
+                <td>${formatNumber(rate, 2)}</td>
+                <td>${formatNumber(time, 2)}</td>
+                <td>${formatNumber(volume, 2)}</td>
+                <td>${formatNumber(dose, 3)}</td>
+                <td>${formatNumber(cumulativeDose, 3)}</td>
+            </tr>`;
+    }
+
+    html += `
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="7">
+                        Toplam Süre: ${totalTime} dakika<br>
+                        Verilen Toplam Doz: ${formatNumber(cumulativeDose, 3)} ${unit}<br>
+                        Hedef Doz: ${formatNumber(targetDose, 3)} ${unit}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        </div>
+    </div>`;
+
+    document.getElementById('resultSection').innerHTML = html;
+    addExportButtons();
 }
 
 function calculateBolusStepDose(stepNumber) {
