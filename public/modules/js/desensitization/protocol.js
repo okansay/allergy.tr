@@ -916,7 +916,10 @@ function calculateOralProtocol() {
 }
 
 function generateStepFields() {
-    if (document.getElementById('ivType').value === 'infusion') {
+    const ivType = document.getElementById('ivType');
+    const isInfusion = ivType && ivType.value === 'infusion';
+
+    if (isInfusion) {
         // Validate solution details first
         for (let i = 1; i <= solutionCount; i++) {
             const conc = document.getElementById(`solution${i}Conc`)?.value;
