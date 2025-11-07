@@ -1160,12 +1160,44 @@ function calculateInfusionProtocol() {
     const useCustomUnit = document.getElementById('useCustomUnit').checked;
     const unit = useCustomUnit ? document.getElementById('customUnit').value : 'mg';
     const targetDose = parseFloat(document.getElementById('targetDose').value);
+    const dilutionVolume = parseFloat(document.getElementById('dilutionVolume').value);
 
     console.log('=== Calculating Infusion Protocol ===');
     console.log('Target Dose:', targetDose, unit);
     console.log('Total Steps:', stepCountValue);
+    console.log('Dilution Volume:', dilutionVolume, 'mL');
 
-    // Calculate last step time first
+    // First, update last solution concentration based on cumulative dose from previous solutions
+    // This is critical for Castells protocol accuracy
+    let doseFromPreviousSolutions = 0;
+    const lastSolutionNum = parseInt(document.getElementById(`step${stepCountValue}Solution`).value);
+
+    // Calculate total dose given by all previous solutions (before last solution starts)
+    for (let i = 1; i < stepCountValue; i++) {
+        const solutionNum = parseInt(document.getElementById(`step${i}Solution`).value);
+        const rate = parseFloat(document.getElementById(`step${i}Rate`).value);
+        const time = parseFloat(document.getElementById(`step${i}Time`).value);
+        const concentration = parseFloat(document.getElementById(`solution${solutionNum}Conc`).value);
+
+        if (solutionNum < lastSolutionNum) {
+            const volume = (rate * time) / 60;
+            const dose = volume * concentration;
+            doseFromPreviousSolutions += dose;
+        }
+    }
+
+    // Update last solution concentration to match remaining dose
+    if (doseFromPreviousSolutions > 0 && dilutionVolume) {
+        const remainingDoseForLastSolution = targetDose - doseFromPreviousSolutions;
+        const correctedConcentration = remainingDoseForLastSolution / dilutionVolume;
+        document.getElementById(`solution${lastSolutionNum}Conc`).value = correctedConcentration;
+        console.log('Last Solution Concentration Correction:');
+        console.log('  Dose from previous solutions:', doseFromPreviousSolutions.toFixed(6), unit);
+        console.log('  Remaining dose for last solution:', remainingDoseForLastSolution.toFixed(6), unit);
+        console.log('  Corrected concentration:', correctedConcentration.toFixed(6), unit + '/mL');
+    }
+
+    // Now calculate total dose given in all steps before the last
     let totalDoseGiven = 0;
     for (let i = 1; i < stepCountValue; i++) {
         const solutionNum = document.getElementById(`step${i}Solution`).value;
@@ -1186,8 +1218,7 @@ function calculateInfusionProtocol() {
 
     console.log('Total Dose Given (steps 1-' + (stepCountValue-1) + '):', totalDoseGiven.toFixed(6), unit);
 
-    // Calculate last step
-    const lastSolutionNum = document.getElementById(`step${stepCountValue}Solution`).value;
+    // Calculate last step with corrected concentration
     const lastRate = parseFloat(document.getElementById(`step${stepCountValue}Rate`).value);
     const lastConcentration = parseFloat(document.getElementById(`solution${lastSolutionNum}Conc`).value);
 
@@ -1197,12 +1228,14 @@ function calculateInfusionProtocol() {
     }
 
     const remainingDose = targetDose - totalDoseGiven;
-    const lastTime = (remainingDose * 60) / (lastRate * lastConcentration);
+    const lastVolume = remainingDose / lastConcentration;
+    const lastTime = (lastVolume * 60) / lastRate;
 
     console.log('Last Step Calculation:');
     console.log('  Remaining Dose:', remainingDose.toFixed(6), unit);
     console.log('  Last Rate:', lastRate, 'mL/hr');
-    console.log('  Last Concentration:', lastConcentration, 'mg/mL');
+    console.log('  Last Concentration (corrected):', lastConcentration.toFixed(6), 'mg/mL');
+    console.log('  Required Volume:', lastVolume.toFixed(3), 'mL');
     console.log('  Calculated Time:', lastTime.toFixed(2), 'minutes');
 
     document.getElementById(`step${stepCountValue}Time`).value = lastTime.toFixed(2);
