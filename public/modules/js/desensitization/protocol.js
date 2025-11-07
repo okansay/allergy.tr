@@ -1161,6 +1161,10 @@ function calculateInfusionProtocol() {
     const unit = useCustomUnit ? document.getElementById('customUnit').value : 'mg';
     const targetDose = parseFloat(document.getElementById('targetDose').value);
 
+    console.log('=== Calculating Infusion Protocol ===');
+    console.log('Target Dose:', targetDose, unit);
+    console.log('Total Steps:', stepCountValue);
+
     // Calculate last step time first
     let totalDoseGiven = 0;
     for (let i = 1; i < stepCountValue; i++) {
@@ -1176,8 +1180,11 @@ function calculateInfusionProtocol() {
 
         const volume = (rate * time) / 60;
         const dose = volume * concentration;
+        console.log(`Step ${i}: Sol=${solutionNum}, Rate=${rate}, Time=${time}, Vol=${volume.toFixed(3)}, Conc=${concentration}, Dose=${dose.toFixed(6)}`);
         totalDoseGiven += dose;
     }
+
+    console.log('Total Dose Given (steps 1-' + (stepCountValue-1) + '):', totalDoseGiven.toFixed(6), unit);
 
     // Calculate last step
     const lastSolutionNum = document.getElementById(`step${stepCountValue}Solution`).value;
@@ -1191,6 +1198,13 @@ function calculateInfusionProtocol() {
 
     const remainingDose = targetDose - totalDoseGiven;
     const lastTime = (remainingDose * 60) / (lastRate * lastConcentration);
+
+    console.log('Last Step Calculation:');
+    console.log('  Remaining Dose:', remainingDose.toFixed(6), unit);
+    console.log('  Last Rate:', lastRate, 'mL/hr');
+    console.log('  Last Concentration:', lastConcentration, 'mg/mL');
+    console.log('  Calculated Time:', lastTime.toFixed(2), 'minutes');
+
     document.getElementById(`step${stepCountValue}Time`).value = lastTime.toFixed(2);
 
     let cumulativeDose = 0;
