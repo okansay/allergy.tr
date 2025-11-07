@@ -1246,7 +1246,8 @@ function calculateInfusionProtocol() {
 
     document.getElementById(`step${stepCountValue}Time`).value = lastTime.toFixed(2);
 
-    let cumulativeDose = 0;
+    // Build results table
+    cumulativeDose = 0;  // Reset for table display
     let totalTime = 0;
 
     let html = `
