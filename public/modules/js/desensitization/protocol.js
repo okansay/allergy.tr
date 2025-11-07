@@ -1009,22 +1009,42 @@ function calculateInfusionProtocol() {
     const stepCountValue = document.querySelectorAll('[id^="step"][id$="Solution"]').length;
     const useCustomUnit = document.getElementById('useCustomUnit').checked;
     const unit = useCustomUnit ? document.getElementById('customUnit').value : 'mg';
+    const targetDose = parseFloat(document.getElementById('targetDose').value);
 
-    // Validate all fields are filled
-    for (let i = 1; i <= stepCountValue; i++) {
-        const solution = document.getElementById(`step${i}Solution`).value;
-        const rate = document.getElementById(`step${i}Rate`).value;
-        const time = document.getElementById(`step${i}Time`).value;
+    // Calculate last step time first
+    let totalDoseGiven = 0;
+    for (let i = 1; i < stepCountValue; i++) {
+        const solutionNum = document.getElementById(`step${i}Solution`).value;
+        const rate = parseFloat(document.getElementById(`step${i}Rate`).value);
+        const time = parseFloat(document.getElementById(`step${i}Time`).value);
+        const concentration = parseFloat(document.getElementById(`solution${solutionNum}Conc`).value);
 
-        if (!solution || !rate || (!time && i !== stepCountValue)) {
+        if (!solutionNum || !rate || !time || !concentration) {
             alert('Lütfen tüm basamak detaylarını doldurunuz.');
             return;
         }
+
+        const volume = (rate * time) / 60;
+        const dose = volume * concentration;
+        totalDoseGiven += dose;
     }
+
+    // Calculate last step
+    const lastSolutionNum = document.getElementById(`step${stepCountValue}Solution`).value;
+    const lastRate = parseFloat(document.getElementById(`step${stepCountValue}Rate`).value);
+    const lastConcentration = parseFloat(document.getElementById(`solution${lastSolutionNum}Conc`).value);
+
+    if (!lastSolutionNum || !lastRate || !lastConcentration) {
+        alert('Lütfen son basamak detaylarını doldurunuz.');
+        return;
+    }
+
+    const remainingDose = targetDose - totalDoseGiven;
+    const lastTime = (remainingDose * 60) / (lastRate * lastConcentration);
+    document.getElementById(`step${stepCountValue}Time`).value = lastTime.toFixed(2);
 
     let cumulativeDose = 0;
     let totalTime = 0;
-    const targetDose = parseFloat(document.getElementById('targetDose').value);
 
     let html = `
     <div class="results-section">
