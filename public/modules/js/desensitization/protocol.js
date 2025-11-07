@@ -98,14 +98,29 @@ function selectProtocolType(type) {
 
 function selectCastellsSolutionCount(count) {
     solutionCount = count;
-    const stepCount = count * 4;
-    validateAndGenerateCustom();
+    const totalSteps = count * 4;
 
-    // After generating solution fields, set step count
+    // Validate inputs first
+    const targetDose = parseFloat(document.getElementById('targetDose').value);
+    const dilutionVolume = parseFloat(document.getElementById('dilutionVolume').value);
+
+    if (!targetDose || isNaN(targetDose) || targetDose <= 0) {
+        alert('Lütfen geçerli bir hedef doz giriniz.');
+        return;
+    }
+    if (!dilutionVolume || isNaN(dilutionVolume) || dilutionVolume <= 0) {
+        alert('Lütfen geçerli bir sulandırma miktarı giriniz.');
+        return;
+    }
+
+    // Generate solution fields directly
+    generateSolutionFields(count);
+
+    // After generating solution fields, set step count and generate steps
     const stepCountInput = document.getElementById('stepCount');
     if (stepCountInput) {
-        stepCountInput.value = stepCount;
-        generateStepFields();
+        stepCountInput.value = totalSteps;
+        // Don't auto-generate steps, wait for user to click the button
     }
 }
 
@@ -316,7 +331,7 @@ function showBolusForm() {
 function validateAndGenerateCustom() {
     const targetDose = parseFloat(document.getElementById('targetDose').value);
     const dilutionVolume = parseFloat(document.getElementById('dilutionVolume').value);
-    solutionCount = parseInt(document.getElementById('solutionCount').value);
+    const solutionCountInput = document.getElementById('solutionCount');
 
     if (!targetDose || isNaN(targetDose) || targetDose <= 0) {
         alert('Lütfen geçerli bir hedef doz giriniz.');
@@ -326,14 +341,19 @@ function validateAndGenerateCustom() {
         alert('Lütfen geçerli bir sulandırma miktarı giriniz.');
         return;
     }
-    if (!solutionCount || solutionCount < 1) {
-        alert('Lütfen geçerli bir solüsyon sayısı girin.');
-        return;
+
+    // Get solution count from input (for custom protocol)
+    if (solutionCountInput) {
+        solutionCount = parseInt(solutionCountInput.value);
+        if (!solutionCount || solutionCount < 1) {
+            alert('Lütfen geçerli bir solüsyon sayısı girin.');
+            return;
+        }
     }
 
     // Check if step count exists and validate solutions
-    const stepCount = document.getElementById('stepCount')?.value;
-    if (stepCount) {
+    const stepCountInput = document.getElementById('stepCount');
+    if (stepCountInput && stepCountInput.value) {
         for (let i = 1; i <= solutionCount; i++) {
             const conc = document.getElementById(`solution${i}Conc`)?.value;
             if (!conc || isNaN(conc) || conc <= 0) {
@@ -341,7 +361,8 @@ function validateAndGenerateCustom() {
                 return;
             }
         }
-        if (!stepCount || stepCount < 1) {
+        const stepCountValue = parseInt(stepCountInput.value);
+        if (!stepCountValue || stepCountValue < 1) {
             alert('Lütfen geçerli bir basamak sayısı girin.');
             return;
         }
