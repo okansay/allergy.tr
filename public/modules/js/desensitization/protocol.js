@@ -1041,6 +1041,26 @@ function calculateOralProtocol() {
     addExportButtons();
 }
 
+function getCastellsRate(stepNumber) {
+    // Castells protocol uses standardized rates with doubling pattern
+    const stepIndex = stepNumber - 1; // Convert to 0-indexed
+    const solutionIndex = Math.floor(stepIndex / 4); // Which solution (0, 1, 2, ...)
+    const stepInSolution = stepIndex % 4; // Which step within the solution (0-3)
+
+    // Base rates for each solution: 2, 5, 10, 20, 40, 80...
+    const bases = [2, 5, 10, 20, 40, 80, 160, 320]; // Enough for 8 solutions
+    const base = bases[solutionIndex];
+
+    // Multipliers within each solution
+    // First solution has special pattern: [1, 2.5, 5, 10]
+    // All other solutions double: [1, 2, 4, 8]
+    const multipliers = solutionIndex === 0
+        ? [1, 2.5, 5, 10]  // First solution: 2, 5, 10, 20
+        : [1, 2, 4, 8];    // Other solutions: base, base*2, base*4, base*8
+
+    return base * multipliers[stepInSolution];
+}
+
 function generateStepFields() {
     const ivType = document.getElementById('ivType');
     const isInfusion = ivType && ivType.value === 'infusion';
@@ -1070,7 +1090,8 @@ function generateStepFields() {
     html += '<div class="section-title">İnfüzyon Basamak Detayları</div>';
 
     for (let i = 1; i <= count; i++) {
-        const defaultRate = i * 2;
+        // Use Castells protocol rates (doubling pattern) or linear for custom protocols
+        const defaultRate = activeProtocolType === 'castells' ? getCastellsRate(i) : i * 2;
         const defaultTime = i === count ? '' : 15;
         const defaultSolution = Math.ceil(i / 4);
         const isLastStep = i === count;
