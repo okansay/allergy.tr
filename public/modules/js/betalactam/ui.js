@@ -95,16 +95,43 @@ function displayCrossReactivity(selectedDrug) {
         }
     });
 
-    // Build HTML
+    // Build HTML with prominent drug name banner
     let html = `
-        <div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl p-6 mb-6">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">
-                ${selectedDrug.name} için Çapraz Reaksiyon Analizi
-            </h3>
-            <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4">
-                <p class="text-sm text-blue-900 dark:text-blue-100">
-                    <strong>Grup:</strong> ${selectedDrug.group}
-                </p>
+        <div class="bg-gradient-to-r from-primary to-blue-600 rounded-xl p-8 mb-6 shadow-lg">
+            <div class="text-center">
+                <div class="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg mb-4">
+                    <p class="text-white/90 text-sm font-semibold uppercase tracking-wider">Seçilen İlaç</p>
+                </div>
+                <h2 class="text-4xl font-bold text-white mb-3 drop-shadow-lg">
+                    ${selectedDrug.name}
+                </h2>
+                <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-6 py-2 rounded-full">
+                    <span class="material-symbols-outlined text-white text-lg">category</span>
+                    <p class="text-white font-semibold">${selectedDrug.group}</p>
+                </div>
+                ${selectedDrug.commonlyUsed ? `
+                    <div class="mt-3">
+                        <span class="inline-flex items-center gap-1 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-bold">
+                            <span class="material-symbols-outlined text-base">star</span>
+                            Sık Kullanılan İlaç
+                        </span>
+                    </div>
+                ` : ''}
+            </div>
+        </div>
+
+        <div class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 rounded-lg p-4 mb-6">
+            <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl">info</span>
+                <div>
+                    <h3 class="text-lg font-bold text-blue-900 dark:text-blue-100 mb-2">
+                        Çapraz Reaksiyon Analizi
+                    </h3>
+                    <p class="text-sm text-blue-800 dark:text-blue-200">
+                        Aşağıda <strong>${selectedDrug.name}</strong> ile diğer beta-laktam antibiyotikler arasındaki
+                        yapısal benzerlikler ve çapraz reaksiyon riskleri gösterilmektedir.
+                    </p>
+                </div>
             </div>
         </div>`;
 
