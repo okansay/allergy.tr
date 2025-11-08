@@ -1,5 +1,5 @@
-// Desensitization Protocol Calculator v20250108-004
-console.log('🔬 Protocol.js loaded - Version 20250108-004 - Debug rate calculation');
+// Desensitization Protocol Calculator v20250108-005
+console.log('🔬 Protocol.js loaded - Version 20250108-005 - Comprehensive flow tracking');
 
 let solutionCount = 0;
 let stepCount = 0;
@@ -100,8 +100,13 @@ function selectProtocolType(type) {
 }
 
 function selectCastellsSolutionCount(count) {
+    console.log('🎯 selectCastellsSolutionCount() called with count:', count);
+    console.log('🎯 Before: activeProtocolType =', activeProtocolType);
+
     // CRITICAL: Set protocol type for Castells
     activeProtocolType = 'castells';
+
+    console.log('🎯 After: activeProtocolType =', activeProtocolType);
     console.log('✅ Castells protocol activated - rates will use doubling pattern');
 
     solutionCount = count;
@@ -845,6 +850,9 @@ function printResults() {
 }
 
 function generateSolutionFields(count) {
+    console.log('📋 generateSolutionFields() called with count:', count);
+    console.log('📋 activeProtocolType at start:', activeProtocolType);
+
     const useCustomUnit = document.getElementById('useCustomUnit').checked;
     const unit = useCustomUnit ? document.getElementById('customUnit').value : 'mg';
     const targetDose = parseFloat(document.getElementById('targetDose').value);
@@ -852,6 +860,7 @@ function generateSolutionFields(count) {
     const stockConc = targetDose / dilutionVolume;
 
     solutionCount = count;
+    console.log('📋 activeProtocolType at end:', activeProtocolType);
     let html = '<div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl p-6">';
     html += '<div class="section-title">Solüsyon Detayları</div>';
     html += '<div class="space-y-4">';
@@ -1069,6 +1078,9 @@ function getCastellsRate(stepNumber) {
 }
 
 function generateStepFields() {
+    console.log('🟢 generateStepFields() called');
+    console.log('🟢 activeProtocolType at start:', activeProtocolType);
+
     const ivType = document.getElementById('ivType');
     const isInfusion = ivType && ivType.value === 'infusion';
 
