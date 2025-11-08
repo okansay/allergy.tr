@@ -80,10 +80,6 @@
     </div>
 </div>
 
-<!-- Load Scripts -->
-<script src="/modules/js/betalactam/data.js"></script>
-<script src="/modules/js/betalactam/ui.js"></script>
-
 <style>
 /* Custom styles for beta-lactam module */
 .similarity-badge {

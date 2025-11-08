@@ -217,3 +217,24 @@ document.addEventListener('DOMContentLoaded', function() {
         initBetalactamModule();
     }
 });
+
+// Also watch for dynamic module loading (for Alpine.js x-html)
+if (typeof window !== 'undefined') {
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length) {
+                const drugSelect = document.getElementById('selectedDrug');
+                if (drugSelect && !drugSelect.hasAttribute('data-initialized')) {
+                    drugSelect.setAttribute('data-initialized', 'true');
+                    initBetalactamModule();
+                }
+            }
+        });
+    });
+
+    // Start observing after a short delay to ensure Alpine has loaded
+    setTimeout(function() {
+        const targetNode = document.querySelector('.module-container') || document.body;
+        observer.observe(targetNode, { childList: true, subtree: true });
+    }, 100);
+}

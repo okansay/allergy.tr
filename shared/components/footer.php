@@ -39,6 +39,10 @@
 <script src="/modules/js/desensitization/protocol.js?v=20250108-008"></script>
 <script src="/modules/js/desensitization/ui.js?v=20250108-008"></script>
 
+<!-- Beta-Lactam Module Scripts -->
+<script src="/modules/js/betalactam/data.js?v=20250108-001"></script>
+<script src="/modules/js/betalactam/ui.js?v=20250108-001"></script>
+
 <!-- Alpine.js App State -->
 <script>
     document.addEventListener('alpine:init', () => {
