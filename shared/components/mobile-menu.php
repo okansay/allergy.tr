@@ -19,28 +19,41 @@
             </a>
         </li>
 
-        <li>
-            <a
-                @click.prevent="navigateTo('desensitization'); menuOpen = false"
-                href="#desensitization"
-                :class="currentRoute === 'desensitization' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+        <!-- İlaç Alerjileri - Dropdown Menu -->
+        <li x-data="{ open: false }">
+            <!-- Ana Menü -->
+            <div
+                @click="open = !open"
+                :class="(currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity') ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
                 class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer"
             >
-                <span class="material-symbols-outlined" :class="currentRoute === 'desensitization' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">pill</span>
-                <p :class="currentRoute === 'desensitization' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate">İlaç Alerjileri</p>
-            </a>
-        </li>
+                <span class="material-symbols-outlined" :class="(currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity') ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">pill</span>
+                <p :class="(currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity') ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate flex-1">İlaç Alerjileri</p>
+                <span class="material-symbols-outlined text-lg transition-transform" :class="[open ? 'rotate-180' : '', (currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity') ? 'text-primary' : 'text-slate-600 dark:text-slate-400']">expand_more</span>
+            </div>
 
-        <li>
-            <a
-                @click.prevent="navigateTo('betalactam-cross-reactivity'); menuOpen = false"
-                href="#betalactam-cross-reactivity"
-                :class="currentRoute === 'betalactam-cross-reactivity' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
-                class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer"
-            >
-                <span class="material-symbols-outlined" :class="currentRoute === 'betalactam-cross-reactivity' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">science</span>
-                <p :class="currentRoute === 'betalactam-cross-reactivity' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate">Beta-Laktam Çapraz Reaksiyon</p>
-            </a>
+            <!-- Alt Menüler -->
+            <div x-show="open" x-collapse class="ml-4 mt-1 space-y-1">
+                <a
+                    @click.prevent="navigateTo('desensitization'); menuOpen = false"
+                    href="#desensitization"
+                    :class="currentRoute === 'desensitization' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
+                >
+                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'desensitization' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">vaccines</span>
+                    <p :class="currentRoute === 'desensitization' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">İlaç Desensitizasyonu</p>
+                </a>
+
+                <a
+                    @click.prevent="navigateTo('betalactam-cross-reactivity'); menuOpen = false"
+                    href="#betalactam-cross-reactivity"
+                    :class="currentRoute === 'betalactam-cross-reactivity' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
+                >
+                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'betalactam-cross-reactivity' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">science</span>
+                    <p :class="currentRoute === 'betalactam-cross-reactivity' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">Beta-Laktam Çapraz</p>
+                </a>
+            </div>
         </li>
 
         <li>
