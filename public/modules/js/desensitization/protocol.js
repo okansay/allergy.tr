@@ -1,3 +1,6 @@
+// Desensitization Protocol Calculator v20250108-002
+console.log('🔬 Protocol.js loaded - Version 20250108-002 - Castells rates active');
+
 let solutionCount = 0;
 let stepCount = 0;
 let activeProtocolType = null;
