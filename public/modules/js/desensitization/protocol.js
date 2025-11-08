@@ -1,5 +1,5 @@
-// Desensitization Protocol Calculator v20250108-002
-console.log('🔬 Protocol.js loaded - Version 20250108-002 - Castells rates active');
+// Desensitization Protocol Calculator v20250108-003
+console.log('🔬 Protocol.js loaded - Version 20250108-003 - Castells activeProtocolType FIX');
 
 let solutionCount = 0;
 let stepCount = 0;
@@ -100,6 +100,10 @@ function selectProtocolType(type) {
 }
 
 function selectCastellsSolutionCount(count) {
+    // CRITICAL: Set protocol type for Castells
+    activeProtocolType = 'castells';
+    console.log('✅ Castells protocol activated - rates will use doubling pattern');
+
     solutionCount = count;
     const totalSteps = count * 4;
 
