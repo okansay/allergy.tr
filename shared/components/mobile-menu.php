@@ -92,6 +92,33 @@
             </a>
         </li>
 
+        <!-- Skorlamalar - Dropdown Menu -->
+        <li x-data="{ open: false }">
+            <!-- Ana Menü -->
+            <div
+                @click="open = !open"
+                :class="currentRoute === 'regiscar-score' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer"
+            >
+                <span class="material-symbols-outlined" :class="currentRoute === 'regiscar-score' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">assignment</span>
+                <p :class="currentRoute === 'regiscar-score' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate flex-1">Skorlamalar</p>
+                <span class="material-symbols-outlined text-lg transition-transform" :class="[open ? 'rotate-180' : '', currentRoute === 'regiscar-score' ? 'text-primary' : 'text-slate-600 dark:text-slate-400']">expand_more</span>
+            </div>
+
+            <!-- Alt Menüler -->
+            <div x-show="open" x-collapse class="ml-4 mt-1 space-y-1">
+                <a
+                    @click.prevent="navigateTo('regiscar-score'); menuOpen = false"
+                    href="#regiscar-score"
+                    :class="currentRoute === 'regiscar-score' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
+                >
+                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'regiscar-score' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">monitoring</span>
+                    <p :class="currentRoute === 'regiscar-score' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">RegiSCAR-DRESS</p>
+                </a>
+            </div>
+        </li>
+
         <li class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
             <a
                 href="/api/auth.php?action=logout"

@@ -43,6 +43,9 @@
 <script src="/modules/js/betalactam/data.js?v=20250108-001"></script>
 <script src="/modules/js/betalactam/ui.js?v=20250108-001"></script>
 
+<!-- RegiSCAR Score Calculator Scripts -->
+<script src="/modules/js/regiscar/calculator.js?v=20250108-001"></script>
+
 <!-- Alpine.js App State -->
 <script>
     document.addEventListener('alpine:init', () => {
