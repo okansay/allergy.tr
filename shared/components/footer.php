@@ -36,8 +36,8 @@
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 <!-- Desensitization Module Scripts -->
-<script src="/modules/js/desensitization/protocol.js?v=20250108-005"></script>
-<script src="/modules/js/desensitization/ui.js?v=20250108-005"></script>
+<script src="/modules/js/desensitization/protocol.js?v=20250108-006"></script>
+<script src="/modules/js/desensitization/ui.js?v=20250108-006"></script>
 
 <!-- Alpine.js App State -->
 <script>

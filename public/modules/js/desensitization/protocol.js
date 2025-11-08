@@ -1,5 +1,5 @@
-// Desensitization Protocol Calculator v20250108-005
-console.log('🔬 Protocol.js loaded - Version 20250108-005 - Comprehensive flow tracking');
+// Desensitization Protocol Calculator v20250108-006
+console.log('🔬 Protocol.js loaded - Version 20250108-006 - FIX: resetForm() order corrected');
 
 let solutionCount = 0;
 let stepCount = 0;
@@ -39,10 +39,16 @@ function resetForm() {
 }
 
 function selectProtocolType(type) {
+    // CRITICAL FIX: Reset form BEFORE setting activeProtocolType
+    // Otherwise resetForm() will set activeProtocolType back to null
+    resetForm();
+
+    // Now set the protocol type (this must come AFTER resetForm)
     activeProtocolType = type;
     activeStepCount = null;
 
-    resetForm();
+    console.log('🎨 Protocol type selected:', type);
+    console.log('🎨 activeProtocolType is now:', activeProtocolType);
 
     const buttons = document.querySelectorAll('.btn-protocol');
     buttons.forEach(btn => {
