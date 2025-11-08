@@ -183,43 +183,86 @@ function createFormField(labelText, inputType, options = {}) {
 }
 
 function updateStepCalculations(stepNumber) {
-    const isLastStep = stepNumber === stepCount;
-    const solutionSelect = document.getElementById(`step${stepNumber}Solution`);
-    const rateInput = document.getElementById(`step${stepNumber}Rate`);
-    const timeInput = document.getElementById(`step${stepNumber}Time`);
-    const doseInput = document.getElementById(`step${stepNumber}Dose`);
+    // When any step changes, recalculate everything
+    recalculateAllSteps();
+}
 
-    if (!solutionSelect.value) return;
+function recalculateAllSteps() {
+    if (!stepCount || stepCount === 0) return;
 
-    const solution = document.getElementById(`solution${solutionSelect.value}Conc`);
-    if (!solution) return;
+    const targetDose = parseFloat(document.getElementById('targetDose')?.value);
+    const dilutionVolume = parseFloat(document.getElementById('dilutionVolume')?.value) || 100;
 
-    const concentration = parseFloat(solution.value);
-    const rate = parseFloat(rateInput.value);
+    if (!targetDose || isNaN(targetDose)) return;
 
-    if (isLastStep) {
-        let totalDoseGiven = 0;
-        for (let i = 1; i < stepCount; i++) {
-            const dose = parseFloat(document.getElementById(`step${i}Dose`).value);
-            if (!isNaN(dose)) {
-                totalDoseGiven += dose;
+    // Get the last solution number
+    const lastSolutionNum = parseInt(document.getElementById(`step${stepCount}Solution`)?.value);
+    if (!lastSolutionNum) return;
+
+    // First pass: Calculate cumulative dose before last solution starts
+    let cumulativeDose = 0;
+    for (let i = 1; i <= stepCount; i++) {
+        const solutionNum = parseInt(document.getElementById(`step${i}Solution`)?.value);
+        if (!solutionNum) continue;
+
+        // Only process steps before last solution starts
+        if (solutionNum < lastSolutionNum) {
+            const rate = parseFloat(document.getElementById(`step${i}Rate`)?.value);
+            const time = parseFloat(document.getElementById(`step${i}Time`)?.value);
+            const concentration = parseFloat(document.getElementById(`solution${solutionNum}Conc`)?.value);
+
+            if (!isNaN(rate) && !isNaN(time) && !isNaN(concentration)) {
+                const volume = (rate * time) / 60;
+                const dose = volume * concentration;
+                cumulativeDose += dose;
             }
         }
+    }
 
-        const targetDose = parseFloat(document.getElementById('targetDose').value);
-        const remainingDose = targetDose - totalDoseGiven;
+    // Update last solution concentration
+    const correctedConcentration = (targetDose - cumulativeDose) / dilutionVolume;
+    const lastSolutionConcInput = document.getElementById(`solution${lastSolutionNum}Conc`);
+    if (lastSolutionConcInput) {
+        lastSolutionConcInput.value = correctedConcentration.toFixed(4);
+    }
 
-        if (!isNaN(rate) && rate > 0) {
-            const timeNeeded = (remainingDose * 60) / (rate * concentration);
-            timeInput.value = timeNeeded.toFixed(2);
-            doseInput.value = remainingDose;
-        }
-    } else {
-        const time = parseFloat(timeInput.value);
-        if (!isNaN(rate) && !isNaN(time)) {
+    // Second pass: Calculate all step doses (except last step)
+    cumulativeDose = 0;
+    for (let i = 1; i < stepCount; i++) {
+        const solutionNum = parseInt(document.getElementById(`step${i}Solution`)?.value);
+        const rate = parseFloat(document.getElementById(`step${i}Rate`)?.value);
+        const time = parseFloat(document.getElementById(`step${i}Time`)?.value);
+        const concentration = parseFloat(document.getElementById(`solution${solutionNum}Conc`)?.value);
+
+        if (!isNaN(rate) && !isNaN(time) && !isNaN(concentration)) {
             const volume = (rate * time) / 60;
-            const calculatedDose = volume * concentration;
-            doseInput.value = calculatedDose;
+            const dose = volume * concentration;
+            cumulativeDose += dose;
+
+            const doseInput = document.getElementById(`step${i}Dose`);
+            if (doseInput) {
+                doseInput.value = dose.toFixed(4);
+            }
+        }
+    }
+
+    // Calculate last step time
+    const lastRate = parseFloat(document.getElementById(`step${stepCount}Rate`)?.value);
+    const lastConcentration = parseFloat(document.getElementById(`solution${lastSolutionNum}Conc`)?.value);
+
+    if (!isNaN(lastRate) && lastRate > 0 && !isNaN(lastConcentration) && lastConcentration > 0) {
+        const remainingDose = targetDose - cumulativeDose;
+        const requiredVolume = remainingDose / lastConcentration;
+        const lastTime = (requiredVolume * 60) / lastRate;
+
+        const lastTimeInput = document.getElementById(`step${stepCount}Time`);
+        const lastDoseInput = document.getElementById(`step${stepCount}Dose`);
+
+        if (lastTimeInput) {
+            lastTimeInput.value = lastTime.toFixed(2);
+        }
+        if (lastDoseInput) {
+            lastDoseInput.value = remainingDose.toFixed(4);
         }
     }
 }

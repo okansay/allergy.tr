@@ -1,5 +1,5 @@
-// Desensitization Protocol Calculator v20250108-006
-console.log('🔬 Protocol.js loaded - Version 20250108-006 - FIX: resetForm() order corrected');
+// Desensitization Protocol Calculator v20250108-007
+console.log('🔬 Protocol.js loaded - Version 20250108-007 - Auto-calculation + 4-digit decimals + dilution visibility');
 
 let solutionCount = 0;
 let stepCount = 0;
@@ -69,16 +69,20 @@ function selectProtocolType(type) {
         const adminRoute = document.getElementById('adminRoute');
         const adminRouteSection = document.getElementById('adminRouteSection');
         const ivType = document.getElementById('ivType');
+        const dilutionVolumeGroup = document.getElementById('dilutionVolumeGroup');
 
         // Hide route and type selections but set their values
         document.getElementById('ivTypeSection').style.display = 'none';
         if (adminRouteSection) adminRouteSection.style.display = 'none';
 
+        // Show dilution volume for Castells (always infusion)
+        if (dilutionVolumeGroup) dilutionVolumeGroup.style.display = 'block';
+
         // Set values automatically
         adminRoute.value = 'iv';
         ivType.value = 'infusion';
 
-        // Show solution count selection
+        // Show solution count selection (only 3 or 4 solutions)
         castellsOptions.innerHTML = `
             <div class="form-group">
                 <label class="form-label">Solüsyon Sayısı</label>
@@ -96,9 +100,13 @@ function selectProtocolType(type) {
         const castellsOptions = document.getElementById('castellsOptions');
         const customProtocol = document.getElementById('customProtocol');
         const adminRouteSection = document.getElementById('adminRouteSection');
+        const dilutionVolumeGroup = document.getElementById('dilutionVolumeGroup');
 
         document.getElementById('ivTypeSection').style.display = 'none';
         if (adminRouteSection) adminRouteSection.style.display = 'block';
+
+        // Hide dilution volume initially for custom protocol
+        if (dilutionVolumeGroup) dilutionVolumeGroup.style.display = 'none';
 
         if (castellsOptions) castellsOptions.style.display = 'none';
         if (customProtocol) customProtocol.style.display = 'block';
@@ -668,12 +676,12 @@ function updateDoseCalculation(stepNumber) {
     if (!ratio || ratio <= 0) return;
 
     const finalConc = initialConc * (1/ratio);
-    finalConcInput.value = Number(parseFloat(finalConc).toFixed(10)).toString();
+    finalConcInput.value = parseFloat(finalConc).toFixed(4);
 
     // Only calculate dose when both volume and dilution ratio are entered
     if (volumeValue && ratio) {
         const dose = finalConc * volumeValue;
-        doseInput.value = dose.toFixed(10);
+        doseInput.value = dose.toFixed(4);
     }
 
     if (isLastStep) {
@@ -688,22 +696,22 @@ function updateDoseCalculation(stepNumber) {
         const lastVolume = remainingDose / finalConc;
 
         volume.value = lastVolume.toFixed(2);
-        doseInput.value = remainingDose.toFixed(3);
+        doseInput.value = remainingDose.toFixed(4);
     } else {
         const volumeValue = parseFloat(volume.value);
         if (volumeValue && ratio) {
             const dose = finalConc * volumeValue;
-            doseInput.value = dose.toFixed(10);
+            doseInput.value = dose.toFixed(4);
         } else {
             doseInput.value = '';
         }
     }
 }
 
-function formatNumber(number, decimals = 5) {
-    let formatted = parseFloat(number).toFixed(5);
-    formatted = formatted.replace(/\.?0+$/, "");
-    return formatted.includes(".") ? formatted : formatted + ".0";
+function formatNumber(number, decimals = 4) {
+    let formatted = parseFloat(number).toFixed(decimals);
+    // Always show exactly 'decimals' digits after decimal point
+    return formatted;
 }
 
 function formatTime(totalMinutes) {
@@ -877,8 +885,10 @@ function generateSolutionFields(count) {
         <div>
             <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Solüsyon ${i} Konsantrasyonu (${unit}/ml)</label>
             <input type="number" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white" id="solution${i}Conc"
-                value="${defaultConc}"
-                step="0.0000001" min="0" max="9999999.9999999" required>
+                value="${defaultConc.toFixed(4)}"
+                step="0.0001" min="0" max="9999999.9999"
+                onchange="if(typeof recalculateAllSteps === 'function') recalculateAllSteps();"
+                required>
         </div>`;
     }
     html += '</div>';
@@ -1226,7 +1236,7 @@ function calculateInfusionProtocol() {
 
     // Update last solution concentration (Reference implementation)
     const correctedConcentration = (targetDose - cumulativeDose) / dilutionVolume;
-    document.getElementById(`solution${lastSolutionNum}Conc`).value = correctedConcentration;
+    document.getElementById(`solution${lastSolutionNum}Conc`).value = correctedConcentration.toFixed(4);
 
     console.log('Last Solution Concentration Correction:');
     console.log('  Cumulative dose before last solution:', cumulativeDose.toFixed(6), unit);
@@ -1317,9 +1327,9 @@ function calculateInfusionProtocol() {
                 <td>${solutionNum}</td>
                 <td>${formatNumber(rate, 2)}</td>
                 <td>${formatNumber(time, 2)}</td>
-                <td>${formatNumber(volume, 2)}</td>
-                <td>${formatNumber(dose, 3)}</td>
-                <td>${formatNumber(cumulativeDose, 3)}</td>
+                <td>${formatNumber(volume, 4)}</td>
+                <td>${formatNumber(dose, 4)}</td>
+                <td>${formatNumber(cumulativeDose, 4)}</td>
             </tr>`;
     }
 
@@ -1329,8 +1339,8 @@ function calculateInfusionProtocol() {
                 <tr>
                     <td colspan="7">
                         Toplam Süre: ${formatTime(totalTime)}<br>
-                        Verilen Toplam Doz: ${formatNumber(cumulativeDose, 3)} ${unit}<br>
-                        Hedef Doz: ${formatNumber(targetDose, 3)} ${unit}
+                        Verilen Toplam Doz: ${formatNumber(cumulativeDose, 4)} ${unit}<br>
+                        Hedef Doz: ${formatNumber(targetDose, 4)} ${unit}
                     </td>
                 </tr>
             </tfoot>
@@ -1366,13 +1376,13 @@ function calculateBolusStepDose(stepNumber) {
         }
 
         if (cumulativeDose > targetDose) {
-            alert(`Uyarı: Bu değerler hedef dozu (${targetDose}) aşacak şekilde ${cumulativeDose.toFixed(3)} kümülatif doza neden olacak!`);
+            alert(`Uyarı: Bu değerler hedef dozu (${targetDose}) aşacak şekilde ${cumulativeDose.toFixed(4)} kümülatif doza neden olacak!`);
             volumeInput.value = '';
             doseInput.value = '';
             return;
         }
 
-        doseInput.value = dose.toFixed(10);
+        doseInput.value = dose.toFixed(4);
     }
 }
 
@@ -1400,13 +1410,13 @@ function calculateOralStepDose(stepNumber) {
         }
 
         if (cumulativeDose > targetDose) {
-            alert(`Uyarı: Bu değerler hedef dozu (${targetDose}) aşacak şekilde ${cumulativeDose.toFixed(3)} kümülatif doza neden olacak!`);
+            alert(`Uyarı: Bu değerler hedef dozu (${targetDose}) aşacak şekilde ${cumulativeDose.toFixed(4)} kümülatif doza neden olacak!`);
             volumeInput.value = '';
             doseInput.value = '';
             return;
         }
 
-        doseInput.value = dose.toFixed(10);
+        doseInput.value = dose.toFixed(4);
     }
 }
 
@@ -1423,7 +1433,7 @@ function calculateSubcutanStepDose(stepNumber) {
 
     if (!isNaN(dilutionRatio) && dilutionRatio > 0) {
         const finalConc = initialConc * (1/dilutionRatio);
-        finalConcInput.value = Number(parseFloat(finalConc).toFixed(10)).toString();
+        finalConcInput.value = parseFloat(finalConc).toFixed(4);
 
         if (!isNaN(volume)) {
             const dose = finalConc * volume;
@@ -1440,13 +1450,13 @@ function calculateSubcutanStepDose(stepNumber) {
             }
 
             if (cumulativeDose > targetDose) {
-                alert(`Uyarı: Bu değerler hedef dozu (${targetDose}) aşacak şekilde ${cumulativeDose.toFixed(3)} kümülatif doza neden olacak!`);
+                alert(`Uyarı: Bu değerler hedef dozu (${targetDose}) aşacak şekilde ${cumulativeDose.toFixed(4)} kümülatif doza neden olacak!`);
                 volumeInput.value = '';
                 doseInput.value = '';
                 return;
             }
 
-            doseInput.value = dose.toFixed(10);
+            doseInput.value = dose.toFixed(4);
         }
     }
 }
