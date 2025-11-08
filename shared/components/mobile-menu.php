@@ -33,6 +33,18 @@
 
         <li>
             <a
+                @click.prevent="navigateTo('betalactam-cross-reactivity'); menuOpen = false"
+                href="#betalactam-cross-reactivity"
+                :class="currentRoute === 'betalactam-cross-reactivity' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer"
+            >
+                <span class="material-symbols-outlined" :class="currentRoute === 'betalactam-cross-reactivity' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">science</span>
+                <p :class="currentRoute === 'betalactam-cross-reactivity' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate">Beta-Laktam Çapraz Reaksiyon</p>
+            </a>
+        </li>
+
+        <li>
+            <a
                 @click.prevent="navigateTo('immune-deficiencies'); menuOpen = false"
                 href="#immune-deficiencies"
                 :class="currentRoute === 'immune-deficiencies' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"

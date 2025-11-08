@@ -29,6 +29,19 @@
         </div>
     </a>
 
+    <!-- Beta-Laktam Çapraz Reaksiyon -->
+    <a
+        @click.prevent="navigateTo('betalactam-cross-reactivity')"
+        href="#betalactam-cross-reactivity"
+        class="flex flex-1 gap-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/50 p-4 flex-col shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+    >
+        <span class="material-symbols-outlined text-primary">science</span>
+        <div class="flex flex-col gap-1">
+            <h2 class="text-slate-900 dark:text-slate-50 text-base font-bold leading-tight">Beta-Laktam Çapraz Reaksiyon</h2>
+            <p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Beta-Lactam Cross-Reactivity</p>
+        </div>
+    </a>
+
     <!-- İmmün Yetmezlikler -->
     <a
         @click.prevent="navigateTo('immune-deficiencies')"
