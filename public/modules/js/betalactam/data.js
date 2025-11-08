@@ -306,113 +306,113 @@ const betalactamData = {
 
     // Similarity level descriptions with color gradients by risk level
     similarityLevels: {
-        // YÜKSEK RİSK - ÖZDEŞ (En Koyu Kırmızı)
+        // YÜKSEK RİSK - ÖZDEŞ (Çok Koyu Kırmızı - Neredeyse Siyah)
         'R1': {
             label: 'Özdeş R1 Yapısı (R1)',
             description: 'İki ilaç özdeş R1 yan zincir yapısına sahiptir',
             risk: 'Yüksek çapraz reaksiyon riski',
-            color: '#991B1B',  // En koyu kırmızı
+            color: '#7F1D1D',  // Çok koyu bordo-kırmızı (Tailwind red-900)
             bgColor: '#FFCCCC'
         },
         'R2': {
             label: 'Özdeş R2 Yapısı (R2)',
             description: 'İki ilaç özdeş R2 yan zincir yapısına sahiptir',
             risk: 'Yüksek çapraz reaksiyon riski',
-            color: '#991B1B',  // En koyu kırmızı
+            color: '#7F1D1D',  // Çok koyu bordo-kırmızı
             bgColor: '#FFE0B2'
         },
 
-        // YÜKSEK RİSK - KISMI ÖZDEŞ (Orta-Koyu Kırmızı)
+        // YÜKSEK RİSK - KISMI ÖZDEŞ (Koyu Kırmızı)
         "R1'": {
             label: "R1 Kısmi Özdeş (Halka) (R1')",
             description: 'R1 yan zincirinin sadece halka kısmı özdeştir',
             risk: 'Yüksek çapraz reaksiyon riski',
-            color: '#DC2626',  // Orta-koyu kırmızı
+            color: '#B91C1C',  // Koyu kırmızı (Tailwind red-700)
             bgColor: '#FFD4B3'
         },
         "R1''": {
             label: "R1 Kısmi Özdeş (Dal) (R1'')",
             description: 'R1 yan zincirinin sadece dal kısmı özdeştir',
             risk: 'Yüksek çapraz reaksiyon riski',
-            color: '#DC2626',  // Orta-koyu kırmızı
+            color: '#B91C1C',  // Koyu kırmızı
             bgColor: '#FFD4B3'
         },
 
-        // YÜKSEK RİSK - KARMA (R1 özdeş + r2 benzer veya tersi)
+        // YÜKSEK RİSK - KARMA (R1 özdeş + r2 benzer veya tersi) - Orta Kırmızı
         'R1r2': {
             label: 'R1 Özdeş + r2 Benzer (R1r2)',
             description: 'R1 özdeş, R2 benzer yapıdadır',
             risk: 'Yüksek çapraz reaksiyon riski',
-            color: '#B91C1C',
+            color: '#DC2626',  // Orta kırmızı (Tailwind red-600)
             bgColor: '#FFE5CC'
         },
         'r1R2': {
             label: 'r1 Benzer + R2 Özdeş (r1R2)',
             description: 'R1 benzer, R2 özdeş yapıdadır',
             risk: 'Yüksek çapraz reaksiyon riski',
-            color: '#B91C1C',
+            color: '#DC2626',  // Orta kırmızı
             bgColor: '#FFE5CC'
         },
         "R1'r2": {
             label: "R1' Kısmi Özdeş + r2 Benzer (R1'r2)",
             description: 'R1 kısmen özdeş, R2 benzer yapıdadır',
             risk: 'Yüksek çapraz reaksiyon riski',
-            color: '#EF4444',
+            color: '#F87171',  // Açık kırmızı (Tailwind red-400)
             bgColor: '#FFEEDD'
         },
 
-        // ORTA RİSK - BENZER (Koyu Sarı/Amber)
+        // ORTA RİSK - BENZER (Çok Koyu Kahverengi-Amber)
         'r1': {
             label: 'Benzer R1 Yapısı (r1)',
             description: 'İki ilaç benzer R1 yan zincir yapısına sahiptir',
             risk: 'Orta çapraz reaksiyon riski',
-            color: '#B45309',  // Daha koyu amber
+            color: '#78350F',  // Çok koyu amber (Tailwind amber-900)
             bgColor: '#FEF3C7'
         },
         'r2': {
             label: 'Benzer R2 Yapısı (r2)',
             description: 'İki ilaç benzer R2 yan zincir yapısına sahiptir',
             risk: 'Orta çapraz reaksiyon riski',
-            color: '#B45309',  // Daha koyu amber
+            color: '#78350F',  // Çok koyu amber
             bgColor: '#FEF3C7'
         },
 
-        // ORTA RİSK - KISMI BENZER (Orta Sarı)
+        // ORTA RİSK - KISMI BENZER (Koyu Turuncu)
         "r1'": {
             label: "R1 Kısmi Benzer (Halka) (r1')",
             description: 'R1 yan zincirinin sadece halka kısmı benzerdir',
             risk: 'Orta çapraz reaksiyon riski',
-            color: '#D97706',  // Orta amber
+            color: '#C2410C',  // Koyu turuncu (Tailwind orange-700)
             bgColor: '#FEF9C3'
         },
         "r1''": {
             label: "R1 Kısmi Benzer (Dal) (r1'')",
             description: 'R1 yan zincirinin sadece dal kısmı benzerdir',
             risk: 'Orta çapraz reaksiyon riski',
-            color: '#D97706',  // Orta amber
+            color: '#C2410C',  // Koyu turuncu
             bgColor: '#FEF9C3'
         },
 
-        // ORTA RİSK - KARMA BENZER (Açık Sarı)
+        // ORTA RİSK - KARMA BENZER (Orta Sarı-Turuncu)
         'r1r2': {
             label: 'r1 Benzer + r2 Benzer (r1r2)',
             description: 'Hem R1 hem R2 benzer yapıdadır',
             risk: 'Orta çapraz reaksiyon riski',
-            color: '#F59E0B',  // Daha açık sarı
+            color: '#F59E0B',  // Orta amber (Tailwind amber-500)
             bgColor: '#FFFBEB'
         },
         "r1'r2": {
             label: "r1' Kısmi Benzer + r2 Benzer (r1'r2)",
             description: 'R1 kısmen benzer, R2 benzer yapıdadır',
             risk: 'Orta çapraz reaksiyon riski',
-            color: '#F59E0B',  // Daha açık sarı
+            color: '#FBBF24',  // Açık sarı (Tailwind amber-400)
             bgColor: '#FFFBEB'
         },
         "r1'R2": {
             label: "r1' Kısmi Benzer + R2 Özdeş (r1'R2)",
             description: 'R1 kısmen benzer, R2 özdeş yapıdadır',
             risk: 'Orta-Yüksek çapraz reaksiyon riski',
-            color: '#D97706',
+            color: '#D97706',  // Orta-koyu amber (Tailwind amber-600)
             bgColor: '#FEF3C7'
         },
 
