@@ -281,7 +281,14 @@ function calculateScore() {
 
 // Update score display
 function updateScoreDisplay(score) {
-    document.getElementById('totalScore').textContent = score;
+    // Update score text
+    const scoreElements = document.querySelectorAll('#totalScore');
+    scoreElements.forEach(el => el.textContent = score);
+
+    const indicatorScore = document.getElementById('indicatorScore');
+    if (indicatorScore) {
+        indicatorScore.textContent = score;
+    }
 
     // Find interpretation
     const interpretation = regiscarData.finalInterpretation.find(
@@ -289,12 +296,49 @@ function updateScoreDisplay(score) {
     );
 
     if (interpretation) {
-        document.getElementById('interpretationText').textContent = interpretation.label;
+        const interpretationElements = document.querySelectorAll('#interpretationText');
+        interpretationElements.forEach(el => {
+            el.textContent = interpretation.label;
 
-        // Update color scheme
-        const box = document.getElementById('interpretationBox');
-        box.className = 'bg-white/20 backdrop-blur-sm rounded-lg p-4';
+            // Update color based on category
+            el.className = el.className.replace(/text-(red|yellow|orange|green)-\d+/g, '');
+            if (interpretation.color === 'red') {
+                el.classList.add('text-red-600', 'dark:text-red-400');
+            } else if (interpretation.color === 'yellow') {
+                el.classList.add('text-yellow-600', 'dark:text-yellow-400');
+            } else if (interpretation.color === 'orange') {
+                el.classList.add('text-orange-600', 'dark:text-orange-400');
+            } else if (interpretation.color === 'green') {
+                el.classList.add('text-green-600', 'dark:text-green-400');
+            }
+        });
     }
+
+    // Update indicator position on bar
+    updateScoreIndicator(score);
+}
+
+// Update score indicator position
+function updateScoreIndicator(score) {
+    const indicator = document.getElementById('scoreIndicator');
+    if (!indicator) return;
+
+    // Score range: -4 to +9 (total 14 points)
+    // Bar segments: No case (≤1) = 5 points, Possible (2-3) = 2 points, Probable (4-5) = 2 points, Definite (≥6) = 4 points
+
+    // Calculate position as percentage
+    // Map score from -4...9 range to 0...100% position
+    const minScore = -4;
+    const maxScore = 9;
+    const range = maxScore - minScore; // 13
+
+    // Normalize score to 0-100%
+    let percentage = ((score - minScore) / range) * 100;
+
+    // Clamp to 0-100%
+    percentage = Math.max(0, Math.min(100, percentage));
+
+    indicator.style.left = percentage + '%';
 }
 
 // Reset score
