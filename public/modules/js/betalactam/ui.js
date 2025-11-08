@@ -73,6 +73,9 @@ function displayCrossReactivity(selectedDrug) {
     const resultsContainer = document.getElementById('crossReactivityResults');
     const crossReactions = betalactamData.crossReactivity[selectedDrug.id] || {};
 
+    console.log('🔬 Displaying cross-reactivity for:', selectedDrug.name, selectedDrug.id);
+    console.log('📊 Cross reactions found:', Object.keys(crossReactions).length);
+
     // Categorize drugs by similarity level
     const categorized = {
         high: [],      // R1, R2, R1r2, r1R2, R1', R1'', R1'r2, R1''r2
@@ -85,6 +88,11 @@ function displayCrossReactivity(selectedDrug) {
 
         const similarity = crossReactions[drug.id] || '';
 
+        // Check if similarity code exists in similarityLevels
+        if (similarity && !betalactamData.similarityLevels[similarity]) {
+            console.warn('⚠️ Unknown similarity code:', similarity, 'for drug:', drug.name);
+        }
+
         // Categorize based on similarity level
         if (['R1', 'R2', 'R1r2', 'r1R2', "R1'", "R1''", "R1'r2", "R1''r2"].includes(similarity)) {
             categorized.high.push({ drug, similarity });
@@ -95,24 +103,26 @@ function displayCrossReactivity(selectedDrug) {
         }
     });
 
+    console.log('📈 Categorized - High:', categorized.high.length, 'Moderate:', categorized.moderate.length, 'Low:', categorized.low.length);
+
     // Build HTML with prominent drug name banner
     let html = `
-        <div class="bg-gradient-to-r from-primary to-blue-600 rounded-xl p-8 mb-6 shadow-lg">
+        <div class="bg-gradient-to-r from-blue-400 to-cyan-500 rounded-xl p-5 sm:p-6 mb-6 shadow-lg">
             <div class="text-center">
-                <div class="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg mb-4">
-                    <p class="text-white/90 text-sm font-semibold uppercase tracking-wider">Seçilen İlaç</p>
+                <div class="inline-block bg-white/25 backdrop-blur-sm px-3 py-1.5 rounded-lg mb-3">
+                    <p class="text-white/95 text-xs sm:text-sm font-semibold uppercase tracking-wider">Seçilen İlaç</p>
                 </div>
-                <h2 class="text-4xl font-bold text-white mb-3 drop-shadow-lg">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3 drop-shadow-lg break-words">
                     ${selectedDrug.name}
                 </h2>
-                <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-6 py-2 rounded-full">
-                    <span class="material-symbols-outlined text-white text-lg">category</span>
-                    <p class="text-white font-semibold">${selectedDrug.group}</p>
+                <div class="inline-flex flex-wrap items-center justify-center gap-2 bg-white/25 backdrop-blur-sm px-4 sm:px-6 py-1.5 sm:py-2 rounded-full">
+                    <span class="material-symbols-outlined text-white text-base sm:text-lg">category</span>
+                    <p class="text-white text-sm sm:text-base font-semibold">${selectedDrug.group}</p>
                 </div>
                 ${selectedDrug.commonlyUsed ? `
-                    <div class="mt-3">
-                        <span class="inline-flex items-center gap-1 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-bold">
-                            <span class="material-symbols-outlined text-base">star</span>
+                    <div class="mt-2 sm:mt-3">
+                        <span class="inline-flex items-center gap-1 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs sm:text-sm font-bold">
+                            <span class="material-symbols-outlined text-sm sm:text-base">star</span>
                             Sık Kullanılan İlaç
                         </span>
                     </div>
@@ -120,14 +130,14 @@ function displayCrossReactivity(selectedDrug) {
             </div>
         </div>
 
-        <div class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 rounded-lg p-4 mb-6">
-            <div class="flex items-start gap-3">
-                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl">info</span>
-                <div>
-                    <h3 class="text-lg font-bold text-blue-900 dark:text-blue-100 mb-2">
+        <div class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 rounded-lg p-3 sm:p-4 mb-6">
+            <div class="flex items-start gap-2 sm:gap-3">
+                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-xl sm:text-2xl flex-shrink-0">info</span>
+                <div class="min-w-0">
+                    <h3 class="text-base sm:text-lg font-bold text-blue-900 dark:text-blue-100 mb-1 sm:mb-2">
                         Çapraz Reaksiyon Analizi
                     </h3>
-                    <p class="text-sm text-blue-800 dark:text-blue-200">
+                    <p class="text-xs sm:text-sm text-blue-800 dark:text-blue-200">
                         Aşağıda <strong>${selectedDrug.name}</strong> ile diğer beta-laktam antibiyotikler arasındaki
                         yapısal benzerlikler ve çapraz reaksiyon riskleri gösterilmektedir.
                     </p>
