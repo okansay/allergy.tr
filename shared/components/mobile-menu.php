@@ -97,12 +97,12 @@
             <!-- Ana Menü -->
             <div
                 @click="open = !open"
-                :class="currentRoute === 'regiscar-score' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                :class="(currentRoute === 'regiscar-score' || currentRoute === 'scorad-index') ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
                 class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer"
             >
-                <span class="material-symbols-outlined" :class="currentRoute === 'regiscar-score' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">assignment</span>
-                <p :class="currentRoute === 'regiscar-score' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate flex-1">Skorlamalar</p>
-                <span class="material-symbols-outlined text-lg transition-transform" :class="[open ? 'rotate-180' : '', currentRoute === 'regiscar-score' ? 'text-primary' : 'text-slate-600 dark:text-slate-400']">expand_more</span>
+                <span class="material-symbols-outlined" :class="(currentRoute === 'regiscar-score' || currentRoute === 'scorad-index') ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">assignment</span>
+                <p :class="(currentRoute === 'regiscar-score' || currentRoute === 'scorad-index') ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate flex-1">Skorlamalar</p>
+                <span class="material-symbols-outlined text-lg transition-transform" :class="[open ? 'rotate-180' : '', (currentRoute === 'regiscar-score' || currentRoute === 'scorad-index') ? 'text-primary' : 'text-slate-600 dark:text-slate-400']">expand_more</span>
             </div>
 
             <!-- Alt Menüler -->
@@ -115,6 +115,15 @@
                 >
                     <span class="material-symbols-outlined text-lg" :class="currentRoute === 'regiscar-score' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">monitoring</span>
                     <p :class="currentRoute === 'regiscar-score' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">RegiSCAR-DRESS</p>
+                </a>
+                <a
+                    @click.prevent="navigateTo('scorad-index'); menuOpen = false"
+                    href="#scorad-index"
+                    :class="currentRoute === 'scorad-index' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
+                >
+                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'scorad-index' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">dermatology</span>
+                    <p :class="currentRoute === 'scorad-index' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">SCORAD Index</p>
                 </a>
             </div>
         </li>

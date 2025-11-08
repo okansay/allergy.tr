@@ -99,7 +99,7 @@
             <!-- Ana Menü -->
             <div
                 @click="open = !open"
-                :class="currentRoute === 'regiscar-score' ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
+                :class="(currentRoute === 'regiscar-score' || currentRoute === 'scorad-index') ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
                 class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer transition-colors"
             >
                 <span class="material-symbols-outlined text-xl">assignment</span>
@@ -117,6 +117,15 @@
                 >
                     <span class="material-symbols-outlined text-lg">monitoring</span>
                     <p class="text-sm font-medium truncate">RegiSCAR-DRESS</p>
+                </a>
+                <a
+                    @click.prevent="navigateTo('scorad-index')"
+                    href="#scorad-index"
+                    :class="currentRoute === 'scorad-index' ? 'bg-primary text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer transition-colors"
+                >
+                    <span class="material-symbols-outlined text-lg">dermatology</span>
+                    <p class="text-sm font-medium truncate">SCORAD Index</p>
                 </a>
             </div>
         </div>
