@@ -304,112 +304,125 @@ const betalactamData = {
         }
     },
 
-    // Similarity level descriptions
+    // Similarity level descriptions with color gradients by risk level
     similarityLevels: {
+        // YÜKSEK RİSK - ÖZDEŞ (Koyu Kırmızı/Turuncu)
         'R1': {
             label: 'Özdeş R1 Yapısı',
             description: 'İki ilaç özdeş R1 yan zincir yapısına sahiptir',
             risk: 'Yüksek çapraz reaksiyon riski',
-            color: '#FF6B6B',
-            bgColor: '#FFCC99'
+            color: '#DC2626',  // Koyu kırmızı
+            bgColor: '#FFCCCC'
         },
         'R2': {
             label: 'Özdeş R2 Yapısı',
             description: 'İki ilaç özdeş R2 yan zincir yapısına sahiptir',
             risk: 'Yüksek çapraz reaksiyon riski',
-            color: '#FFA500',
-            bgColor: '#FFFF99'
+            color: '#DC2626',  // Koyu kırmızı
+            bgColor: '#FFE0B2'
         },
-        'r1': {
-            label: 'Benzer R1 Yapısı',
-            description: 'İki ilaç benzer R1 yan zincir yapısına sahiptir',
-            risk: 'Orta çapraz reaksiyon riski',
-            color: '#FFB347',
-            bgColor: '#FFE5CC'
-        },
-        'r2': {
-            label: 'Benzer R2 Yapısı',
-            description: 'İki ilaç benzer R2 yan zincir yapısına sahiptir',
-            risk: 'Orta çapraz reaksiyon riski',
-            color: '#FFD700',
-            bgColor: '#FFFFCC'
-        },
+
+        // YÜKSEK RİSK - KISMI ÖZDEŞ (Orta Kırmızı/Turuncu)
         "R1'": {
             label: 'R1 Kısmi Özdeş (Halka)',
             description: 'R1 yan zincirinin sadece halka kısmı özdeştir',
-            risk: 'Orta-Yüksek çapraz reaksiyon riski',
-            color: '#FF8C42',
+            risk: 'Yüksek çapraz reaksiyon riski',
+            color: '#EF4444',  // Orta kırmızı
             bgColor: '#FFD4B3'
         },
         "R1''": {
             label: 'R1 Kısmi Özdeş (Dal)',
             description: 'R1 yan zincirinin sadece dal kısmı özdeştir',
-            risk: 'Orta-Yüksek çapraz reaksiyon riski',
-            color: '#FF8C42',
+            risk: 'Yüksek çapraz reaksiyon riski',
+            color: '#EF4444',  // Orta kırmızı
             bgColor: '#FFD4B3'
         },
-        "r1'": {
-            label: 'R1 Kısmi Benzer (Halka)',
-            description: 'R1 yan zincirinin sadece halka kısmı benzerdir',
-            risk: 'Düşük-Orta çapraz reaksiyon riski',
-            color: '#FFC85C',
-            bgColor: '#FFF0D9'
-        },
-        "r1''": {
-            label: 'R1 Kısmi Benzer (Dal)',
-            description: 'R1 yan zincirinin sadece dal kısmı benzerdir',
-            risk: 'Düşük-Orta çapraz reaksiyon riski',
-            color: '#FFC85C',
-            bgColor: '#FFF0D9'
-        },
+
+        // YÜKSEK RİSK - KARMA (R1 özdeş + r2 benzer veya tersi)
         'R1r2': {
             label: 'R1 Özdeş + r2 Benzer',
             description: 'R1 özdeş, R2 benzer yapıdadır',
             risk: 'Yüksek çapraz reaksiyon riski',
-            color: '#FF7F50',
-            bgColor: '#FFEEAA'
+            color: '#DC2626',
+            bgColor: '#FFE5CC'
         },
         'r1R2': {
             label: 'r1 Benzer + R2 Özdeş',
             description: 'R1 benzer, R2 özdeş yapıdadır',
             risk: 'Yüksek çapraz reaksiyon riski',
-            color: '#FF7F50',
-            bgColor: '#FFEEAA'
+            color: '#DC2626',
+            bgColor: '#FFE5CC'
         },
+        "R1'r2": {
+            label: 'R1\' Kısmi Özdeş + r2 Benzer',
+            description: 'R1 kısmen özdeş, R2 benzer yapıdadır',
+            risk: 'Yüksek çapraz reaksiyon riski',
+            color: '#EF4444',
+            bgColor: '#FFEEDD'
+        },
+
+        // ORTA RİSK - BENZER (Koyu Sarı/Turuncu)
+        'r1': {
+            label: 'Benzer R1 Yapısı',
+            description: 'İki ilaç benzer R1 yan zincir yapısına sahiptir',
+            risk: 'Orta çapraz reaksiyon riski',
+            color: '#D97706',  // Koyu amber
+            bgColor: '#FEF3C7'
+        },
+        'r2': {
+            label: 'Benzer R2 Yapısı',
+            description: 'İki ilaç benzer R2 yan zincir yapısına sahiptir',
+            risk: 'Orta çapraz reaksiyon riski',
+            color: '#D97706',  // Koyu amber
+            bgColor: '#FEF3C7'
+        },
+
+        // ORTA RİSK - KISMI BENZER (Orta Sarı)
+        "r1'": {
+            label: 'R1 Kısmi Benzer (Halka)',
+            description: 'R1 yan zincirinin sadece halka kısmı benzerdir',
+            risk: 'Orta çapraz reaksiyon riski',
+            color: '#F59E0B',  // Orta amber
+            bgColor: '#FEF9C3'
+        },
+        "r1''": {
+            label: 'R1 Kısmi Benzer (Dal)',
+            description: 'R1 yan zincirinin sadece dal kısmı benzerdir',
+            risk: 'Orta çapraz reaksiyon riski',
+            color: '#F59E0B',  // Orta amber
+            bgColor: '#FEF9C3'
+        },
+
+        // ORTA RİSK - KARMA BENZER (Açık Sarı)
         'r1r2': {
             label: 'r1 Benzer + r2 Benzer',
             description: 'Hem R1 hem R2 benzer yapıdadır',
             risk: 'Orta çapraz reaksiyon riski',
-            color: '#FFA07A',
-            bgColor: '#FFF5E6'
+            color: '#FBBF24',  // Açık sarı
+            bgColor: '#FFFBEB'
         },
         "r1'r2": {
             label: 'r1\' Kısmi Benzer + r2 Benzer',
             description: 'R1 kısmen benzer, R2 benzer yapıdadır',
             risk: 'Orta çapraz reaksiyon riski',
-            color: '#FFAC7F',
-            bgColor: '#FFF5E6'
+            color: '#FBBF24',  // Açık sarı
+            bgColor: '#FFFBEB'
         },
         "r1'R2": {
             label: 'r1\' Kısmi Benzer + R2 Özdeş',
             description: 'R1 kısmen benzer, R2 özdeş yapıdadır',
             risk: 'Orta-Yüksek çapraz reaksiyon riski',
-            color: '#FF9966',
-            bgColor: '#FFEEDD'
+            color: '#F59E0B',
+            bgColor: '#FEF3C7'
         },
-        "R1'r2": {
-            label: 'R1\' Kısmi Özdeş + r2 Benzer',
-            description: 'R1 kısmen özdeş, R2 benzer yapıdadır',
-            risk: 'Orta-Yüksek çapraz reaksiyon riski',
-            color: '#FF9966',
-            bgColor: '#FFEEDD'
-        },
+
+        // DÜŞÜK RİSK - BENZERLİK YOK
         '': {
             label: 'Yapısal Benzerlik Yok',
             description: 'İki ilaç arasında R1 veya R2 yapısal benzerliği bulunmamaktadır',
             risk: 'Düşük çapraz reaksiyon riski',
-            color: '#4CAF50',
-            bgColor: '#E8F5E9'
+            color: '#059669',  // Yeşil
+            bgColor: '#D1FAE5'
         }
     }
 };
