@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ
+      - claude/add-betalactam-cross-reactivity-011CUw79egEQy8kz8cAYD4yd
       - main
       - master
 
@@ -26,14 +27,18 @@ jobs:
           echo "🚀 Starting deployment..."
           cd ${{ secrets.HOSTINGER_PATH }}
 
+          # Determine which branch to deploy
+          DEPLOY_BRANCH="${{ github.ref_name }}"
+          echo "🌿 Deploying branch: $DEPLOY_BRANCH"
+
           # Check if git repository exists
           if [ ! -d ".git" ]; then
               echo "📦 Cloning repository..."
-              git clone -b claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ https://github.com/okansay/allergy.tr.git .
+              git clone -b $DEPLOY_BRANCH https://github.com/okansay/allergy.tr.git .
           else
               echo "📥 Pulling latest changes..."
               git fetch origin
-              git reset --hard origin/claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ
+              git reset --hard origin/$DEPLOY_BRANCH
           fi
 
           echo "📂 Current directory: $(pwd)"
