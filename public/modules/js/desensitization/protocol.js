@@ -1,5 +1,5 @@
-// Desensitization Protocol Calculator v20250108-003
-console.log('🔬 Protocol.js loaded - Version 20250108-003 - Castells activeProtocolType FIX');
+// Desensitization Protocol Calculator v20250108-004
+console.log('🔬 Protocol.js loaded - Version 20250108-004 - Debug rate calculation');
 
 let solutionCount = 0;
 let stepCount = 0;
@@ -1097,8 +1097,15 @@ function generateStepFields() {
     html += '<div class="section-title">İnfüzyon Basamak Detayları</div>';
 
     for (let i = 1; i <= count; i++) {
+        // Debug: Log what's happening with rate calculation
+        console.log(`🔍 Step ${i} - activeProtocolType:`, activeProtocolType);
+        const castellsRate = getCastellsRate(i);
+        console.log(`🔍 Step ${i} - getCastellsRate() returns:`, castellsRate);
+
         // Use Castells protocol rates (doubling pattern) or linear for custom protocols
         const defaultRate = activeProtocolType === 'castells' ? getCastellsRate(i) : i * 2;
+        console.log(`🔍 Step ${i} - defaultRate selected:`, defaultRate, `(linear would be: ${i * 2})`);
+
         const defaultTime = i === count ? '' : 15;
         const defaultSolution = Math.ceil(i / 4);
         const isLastStep = i === count;
