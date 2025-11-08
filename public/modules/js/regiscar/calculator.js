@@ -211,8 +211,8 @@ function renderCriteria() {
                                 <span class="text-sm font-medium text-slate-700 dark:text-slate-200">${option.label}</span>
                             </div>
                             <span class="px-2 py-1 rounded text-xs font-bold ${
-                                option.points > 0 ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200' :
-                                option.points < 0 ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-200' :
+                                option.points > 0 ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-200' :
+                                option.points < 0 ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200' :
                                 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300'
                             }">
                                 ${option.points >= 0 ? '+' : ''}${option.points}
