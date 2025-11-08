@@ -75,8 +75,8 @@ function displayCrossReactivity(selectedDrug) {
 
     // Categorize drugs by similarity level
     const categorized = {
-        high: [],      // R1, R2, R1r2, r1R2, R1', R1''
-        moderate: [],  // r1, r2, r1r2, r1'r2, r1'R2, R1'r2, r1', r1''
+        high: [],      // R1, R2, R1r2, r1R2, R1', R1'', R1'r2, R1''r2
+        moderate: [],  // r1, r2, r1r2, r1'r2, r1'R2, r1', r1''
         low: []        // '' (no similarity)
     };
 
@@ -86,7 +86,7 @@ function displayCrossReactivity(selectedDrug) {
         const similarity = crossReactions[drug.id] || '';
 
         // Categorize based on similarity level
-        if (['R1', 'R2', 'R1r2', 'r1R2', "R1'", "R1''"].includes(similarity)) {
+        if (['R1', 'R2', 'R1r2', 'r1R2', "R1'", "R1''", "R1'r2", "R1''r2"].includes(similarity)) {
             categorized.high.push({ drug, similarity });
         } else if (similarity === '') {
             categorized.low.push({ drug, similarity });

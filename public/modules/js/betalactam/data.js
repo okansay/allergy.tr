@@ -360,6 +360,13 @@ const betalactamData = {
             color: '#F87171',  // Açık kırmızı (Tailwind red-400)
             bgColor: '#FFEEDD'
         },
+        "R1''r2": {
+            label: "R1'' Kısmi Özdeş (Dal) + r2 Benzer (R1''r2)",
+            description: 'R1 dal kısmı özdeş, R2 benzer yapıdadır',
+            risk: 'Yüksek çapraz reaksiyon riski',
+            color: '#F87171',  // Açık kırmızı (Tailwind red-400)
+            bgColor: '#FFEEDD'
+        },
 
         // ORTA RİSK - BENZER (Çok Koyu Kahverengi-Amber)
         'r1': {
