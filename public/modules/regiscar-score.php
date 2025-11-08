@@ -30,8 +30,8 @@
         </div>
     </div>
 
-    <!-- Score Display - Bottom Sticky Bar -->
-    <div class="sticky bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t-2 border-slate-200 dark:border-slate-700 shadow-lg z-10 mt-8">
+    <!-- Score Display - Bottom Fixed Bar (Mobile) / Sticky (Desktop) -->
+    <div class="fixed lg:sticky bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t-2 border-slate-200 dark:border-slate-700 shadow-lg z-50 mt-8">
         <div class="max-w-7xl mx-auto p-4 sm:p-6">
             <!-- Score Value Display -->
             <div class="flex items-center justify-between mb-4">
@@ -56,36 +56,36 @@
             <div class="relative">
                 <!-- Labels Above Bar -->
                 <div class="flex justify-between mb-2 text-xs font-semibold">
-                    <span class="text-red-600 dark:text-red-400">No case</span>
+                    <span class="text-green-600 dark:text-green-400">No case</span>
                     <span class="text-yellow-600 dark:text-yellow-400">Possible</span>
                     <span class="text-orange-600 dark:text-orange-400">Probable</span>
-                    <span class="text-green-600 dark:text-green-400">Definite</span>
+                    <span class="text-red-600 dark:text-red-400">Definite</span>
                 </div>
 
                 <!-- Progress Bar -->
                 <div class="relative h-10 sm:h-12 rounded-lg overflow-hidden flex shadow-inner">
-                    <!-- No case: ≤1 (from -4 to 1 = 5 points out of 14 total range) -->
-                    <div class="flex-[5] bg-red-100 dark:bg-red-900/30 border-r-2 border-white dark:border-slate-800 relative group cursor-pointer hover:bg-red-200 dark:hover:bg-red-900/40 transition-colors">
+                    <!-- No case: ≤1 (from -4 to 1 = 5 points out of 14 total range) - GREEN -->
+                    <div class="flex-[5] bg-green-100 dark:bg-green-900/30 border-r-2 border-white dark:border-slate-800 relative group cursor-pointer hover:bg-green-200 dark:hover:bg-green-900/40 transition-colors">
                         <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-xs font-bold text-red-700 dark:text-red-300">≤1</span>
+                            <span class="text-xs font-bold text-green-700 dark:text-green-300">≤1</span>
                         </div>
                     </div>
-                    <!-- Possible: 2-3 (2 points) -->
+                    <!-- Possible: 2-3 (2 points) - YELLOW -->
                     <div class="flex-[2] bg-yellow-100 dark:bg-yellow-900/30 border-r-2 border-white dark:border-slate-800 relative group cursor-pointer hover:bg-yellow-200 dark:hover:bg-yellow-900/40 transition-colors">
                         <div class="absolute inset-0 flex items-center justify-center">
                             <span class="text-xs font-bold text-yellow-700 dark:text-yellow-300">2-3</span>
                         </div>
                     </div>
-                    <!-- Probable: 4-5 (2 points) -->
+                    <!-- Probable: 4-5 (2 points) - ORANGE -->
                     <div class="flex-[2] bg-orange-100 dark:bg-orange-900/30 border-r-2 border-white dark:border-slate-800 relative group cursor-pointer hover:bg-orange-200 dark:hover:bg-orange-900/40 transition-colors">
                         <div class="absolute inset-0 flex items-center justify-center">
                             <span class="text-xs font-bold text-orange-700 dark:text-orange-300">4-5</span>
                         </div>
                     </div>
-                    <!-- Definite: ≥6 (from 6 to 9 = 4 points) -->
-                    <div class="flex-[4] bg-green-100 dark:bg-green-900/30 relative group cursor-pointer hover:bg-green-200 dark:hover:bg-green-900/40 transition-colors">
+                    <!-- Definite: ≥6 (from 6 to 9 = 4 points) - RED -->
+                    <div class="flex-[4] bg-red-100 dark:bg-red-900/30 relative group cursor-pointer hover:bg-red-200 dark:hover:bg-red-900/40 transition-colors">
                         <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-xs font-bold text-green-700 dark:text-green-300">≥6</span>
+                            <span class="text-xs font-bold text-red-700 dark:text-red-300">≥6</span>
                         </div>
                     </div>
 
@@ -110,7 +110,7 @@
     </div>
 
     <!-- Two Column Layout -->
-    <div class="grid grid-cols-1 gap-6 mb-24">
+    <div class="grid grid-cols-1 gap-6 mb-32 pb-4">
         <!-- Criteria -->
         <div class="space-y-4">
             <!-- Criterion Cards -->

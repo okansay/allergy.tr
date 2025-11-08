@@ -7,10 +7,10 @@ const regiscarData = {
     version: "1.0",
     scoreRange: { min: -4, max: 9 },
     finalInterpretation: [
-        { min: -999, max: 1, label: "No case (excluded)", color: "red" },
+        { min: -999, max: 1, label: "No case (excluded)", color: "green" },
         { min: 2, max: 3, label: "Possible DRESS", color: "yellow" },
         { min: 4, max: 5, label: "Probable DRESS", color: "orange" },
-        { min: 6, max: 999, label: "Definite DRESS", color: "green" }
+        { min: 6, max: 999, label: "Definite DRESS", color: "red" }
     ],
     criteria: [
         {
