@@ -109,6 +109,7 @@ function renderScoradUI() {
                 ${Object.entries(bodyAreaLabels).map(([area, label]) => {
                     const maxPercentage = bsaPercentages[scoradValues.ageGroup][area];
                     const value = scoradValues.bodyAreas[area] || 0;
+                    const percentage = maxPercentage === 0 ? 0 : (value / maxPercentage) * 100;
                     return `
                         <div>
                             <div class="flex items-center justify-between mb-2">
@@ -119,13 +120,13 @@ function renderScoradUI() {
                             </div>
                             <div class="relative">
                                 <input type="range"
-                                    min="0" max="100" step="1"
+                                    min="0" max="${maxPercentage}" step="0.1"
                                     value="${value}"
-                                    onchange="setBodyAreaPercentage('${area}', parseInt(this.value))"
-                                    oninput="setBodyAreaPercentage('${area}', parseInt(this.value))"
+                                    onchange="setBodyAreaPercentage('${area}', parseFloat(this.value))"
+                                    oninput="setBodyAreaPercentage('${area}', parseFloat(this.value))"
                                     class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:h-8 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:shadow-lg [&::-moz-range-thumb]:w-8 [&::-moz-range-thumb]:h-8 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-primary [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:shadow-lg">
-                                <div class="absolute -top-8 left-0 text-xs font-bold text-primary" style="left: ${value}%;" id="area_${area}_label">
-                                    ${value}%
+                                <div class="absolute -top-8 left-0 text-xs font-bold text-primary transition-all duration-150" style="left: ${percentage}%; transform: translateX(-50%);" id="area_${area}_label">
+                                    ${value.toFixed(1)}%
                                 </div>
                             </div>
                         </div>
@@ -140,14 +141,14 @@ function renderScoradUI() {
             </div>
         </div>
 
-        <!-- B: Intensity with Sliders -->
+        <!-- B: Intensity with Buttons -->
         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-5">
             <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <span class="bg-primary/10 text-primary px-2 py-1 rounded text-sm">B</span>
                 Intensity - Şiddet Puanları (Temsilî Alan)
             </h3>
-            <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Her bulgu için 0-3 arası seçin</p>
-            <div class="space-y-4">
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">En şiddetli olan temsilî alanı değerlendirin (0: Yok, 1: Hafif, 2: Orta, 3: Şiddetli)</p>
+            <div class="space-y-3">
                 ${renderIntensitySlider('erythema', 'Erythema (Eritem)')}
                 ${renderIntensitySlider('edema', 'Edema/Papulation (Ödem/Papül)')}
                 ${renderIntensitySlider('oozing', 'Oozing/Crusts (Sızıntı/Kabuk)')}
@@ -173,24 +174,40 @@ function renderScoradUI() {
 
 function renderIntensitySlider(id, label) {
     const value = scoradValues.B[id];
+    const severityLabels = {
+        0: { label: 'Yok', color: 'slate' },
+        1: { label: 'Hafif', color: 'green' },
+        2: { label: 'Orta', color: 'yellow' },
+        3: { label: 'Şiddetli', color: 'red' }
+    };
+
     return `
-        <div>
-            <div class="flex items-center justify-between mb-2">
-                <span class="text-sm font-medium text-slate-700 dark:text-slate-300">${label}</span>
-                <span class="text-2xl font-bold text-primary" id="intensity_${id}_value">${value}</span>
+        <div class="p-4 rounded-lg bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/50 border border-slate-200 dark:border-slate-700">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">${label}</span>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs text-slate-500 dark:text-slate-400">Seçili:</span>
+                    <span class="text-xl font-bold text-primary" id="intensity_${id}_value">${value}</span>
+                </div>
             </div>
-            <div class="flex items-center gap-3">
-                <span class="text-xs text-slate-500 dark:text-slate-400 w-12">Yok (0)</span>
-                <input type="range"
-                    min="0" max="3" step="1"
-                    value="${value}"
-                    onchange="setIntensity('${id}', parseInt(this.value))"
-                    oninput="setIntensity('${id}', parseInt(this.value))"
-                    class="flex-1 h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-primary [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer">
-                <span class="text-xs text-slate-500 dark:text-slate-400 w-16 text-right">Şiddetli (3)</span>
-            </div>
-            <div class="flex justify-between mt-1 px-12">
-                ${[0,1,2,3].map(v => `<span class="text-xs text-slate-400 ${value === v ? 'font-bold text-primary' : ''}">${v}</span>`).join('')}
+            <div class="grid grid-cols-4 gap-2">
+                ${[0,1,2,3].map(val => {
+                    const isActive = value === val;
+                    const severity = severityLabels[val];
+                    return `
+                        <button
+                            onclick="setIntensity('${id}', ${val})"
+                            class="relative group flex flex-col items-center justify-center py-3 px-2 rounded-lg font-semibold transition-all duration-200 transform ${
+                                isActive ?
+                                `bg-${severity.color}-500 text-white shadow-lg scale-105 ring-2 ring-${severity.color}-400 ring-offset-2 dark:ring-offset-slate-800` :
+                                `bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-${severity.color}-50 dark:hover:bg-slate-600 hover:scale-102 border-2 border-slate-200 dark:border-slate-600`
+                            }">
+                            <span class="text-2xl font-bold mb-1">${val}</span>
+                            <span class="text-xs ${isActive ? 'text-white' : 'text-slate-500 dark:text-slate-400'}">${severity.label}</span>
+                            ${isActive ? '<div class="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full border-2 border-' + severity.color + '-500"></div>' : ''}
+                        </button>
+                    `;
+                }).join('')}
             </div>
         </div>
     `;
@@ -241,11 +258,14 @@ function setAgeGroup(ageGroup) {
 function setBodyAreaPercentage(area, percentage) {
     scoradValues.bodyAreas[area] = percentage;
 
-    // Update label position
+    // Update label position and text
+    const maxBSA = bsaPercentages[scoradValues.ageGroup][area];
+    const position = maxBSA === 0 ? 0 : (percentage / maxBSA) * 100;
+
     const label = document.getElementById(`area_${area}_label`);
     if (label) {
-        label.style.left = percentage + '%';
-        label.textContent = percentage + '%';
+        label.style.left = position + '%';
+        label.textContent = percentage.toFixed(1) + '%';
     }
 
     calculateExtent();
@@ -261,13 +281,11 @@ function setBodyAreaPercentage(area, percentage) {
 
 function calculateExtent() {
     let total = 0;
-    const maxPercentages = bsaPercentages[scoradValues.ageGroup];
 
     Object.keys(scoradValues.bodyAreas).forEach(area => {
         const areaPercentage = scoradValues.bodyAreas[area] || 0;
-        const maxBSA = maxPercentages[area];
-        // Calculate actual BSA: (selected percentage / 100) * max BSA for that area
-        total += (areaPercentage / 100) * maxBSA;
+        // Now the slider values are already in BSA percentage, just sum them up
+        total += areaPercentage;
     });
 
     scoradValues.A = Math.min(100, total);
@@ -275,9 +293,8 @@ function calculateExtent() {
 
 function setIntensity(id, value) {
     scoradValues.B[id] = value;
-    // Update value display without full re-render
-    const valueEl = document.getElementById(`intensity_${id}_value`);
-    if (valueEl) valueEl.textContent = value;
+    // Re-render UI to update button states
+    renderScoradUI();
     calculateScorad();
 }
 

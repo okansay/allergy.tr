@@ -28,7 +28,7 @@
                         <li>• <strong>C:</strong> Subjektif semptomlar (kaşıntı + uyku × 0-10 = 0-20)</li>
                     </ul>
                     <div class="text-xs text-blue-600 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/40 rounded p-2">
-                        <strong>Not:</strong> Her vücut bölgesinin tutulum yüzdesini ayarlayın (0-100%). Örnek: Baş bölgesinin %50'si tutulmuşsa, çocukta 21×0.5=10.5%, erişkinde 9×0.5=4.5% BSA'ya karşılık gelir.
+                        <strong>Not:</strong> Her vücut bölgesi için maksimum BSA yüzdesine kadar kaydırıcıyla seçim yapın. Örnek: Erişkinde baş bölgesi max %9, tamamı tutulmuşsa 9%, yarısı tutulmuşsa 4.5% seçilir.
                     </div>
                 </div>
             </div>
