@@ -1,7 +1,6 @@
 <div x-data="{
     searchQuery: '',
     selectedDrugId: null,
-    selectedCategory: '',
 
     normalizeText(text) {
         return text.toLowerCase()
@@ -143,10 +142,6 @@
     },
 
     get filteredDrugs() {
-        if (this.selectedCategory) {
-            return this.drugsByCategory[this.selectedCategory] || [];
-        }
-
         if (!this.searchQuery || this.searchQuery.length < 3) return [];
 
         const query = this.normalizeText(this.searchQuery);
@@ -167,19 +162,6 @@
     selectDrug(drugId) {
         this.selectedDrugId = drugId;
         this.searchQuery = '';
-        this.selectedCategory = '';
-    },
-
-    filterByCategory(category) {
-        this.selectedCategory = category;
-        this.searchQuery = '';
-        this.selectedDrugId = null;
-    },
-
-    clearFilters() {
-        this.searchQuery = '';
-        this.selectedCategory = '';
-        this.selectedDrugId = null;
     }
 }" class="space-y-6 pb-20">
 
@@ -207,7 +189,7 @@
             <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Listeden Seçin</label>
             <select
                 x-model="selectedDrugId"
-                @change="if (selectedDrugId) { searchQuery = ''; selectedCategory = ''; }"
+                @change="if (selectedDrugId) { searchQuery = ''; }"
                 class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white">
                 <option value="">İlaç seçin...</option>
                 <template x-for="category in categories" :key="category">
@@ -238,7 +220,7 @@
                 <input
                     type="text"
                     x-model="searchQuery"
-                    @input="selectedCategory = ''; selectedDrugId = null;"
+                    @input="selectedDrugId = null;"
                     placeholder="İlaç adı yazın (en az 3 harf)..."
                     class="w-full pl-12 pr-12 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                 />
@@ -256,29 +238,7 @@
         </div>
     </div>
 
-    <!-- Category Buttons -->
-    <div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl p-6">
-        <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Kategorilere Göre Gözat</h2>
-        <div class="flex flex-wrap gap-2">
-            <template x-for="category in categories" :key="category">
-                <button
-                    @click="filterByCategory(category)"
-                    :class="selectedCategory === category ? 'bg-primary text-white border-primary' : 'bg-slate-50 dark:bg-slate-700 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-600 hover:border-primary hover:bg-primary/10'"
-                    class="px-4 py-2 rounded-lg border transition-colors text-sm font-medium">
-                    <span x-text="category"></span>
-                    <span class="ml-2 opacity-75" x-text="'(' + drugsByCategory[category].length + ')'"></span>
-                </button>
-            </template>
-        </div>
-        <button
-            x-show="selectedCategory || searchQuery"
-            @click="clearFilters()"
-            class="mt-4 text-sm text-primary hover:underline">
-            Filtreleri temizle
-        </button>
-    </div>
-
-    <!-- Search/Category Results -->
+    <!-- Search Results -->
     <div x-show="filteredDrugs.length > 0 && !selectedDrug" class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl p-6">
         <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">
             <span x-text="filteredDrugs.length"></span> ilaç bulundu
