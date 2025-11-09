@@ -118,7 +118,7 @@
 
             let currentPathIndex = 0;
 
-            function tryLoadData() {
+            async function tryLoadData() {
                 if (currentPathIndex >= possiblePaths.length) {
                     log('❌ All paths failed! Could not load data.js', 'error');
                     updateStatus('dataStatus', '❌ 404', 'red');
@@ -128,6 +128,27 @@
                 const path = possiblePaths[currentPathIndex];
                 log(`🔍 Trying path: ${path}`, 'info');
 
+                // First, try to fetch to see what HTTP response we get
+                try {
+                    log(`📡 Testing HTTP fetch for: ${path}`, 'info');
+                    const response = await fetch(path);
+                    log(`📊 HTTP Status: ${response.status} ${response.statusText}`, response.ok ? 'success' : 'error');
+                    log(`📋 Content-Type: ${response.headers.get('content-type')}`, 'info');
+
+                    if (!response.ok) {
+                        log(`❌ HTTP error ${response.status}, trying next path...`, 'error');
+                        currentPathIndex++;
+                        setTimeout(tryLoadData, 100);
+                        return;
+                    }
+                } catch (fetchError) {
+                    log(`❌ Fetch error: ${fetchError.message}`, 'error');
+                    currentPathIndex++;
+                    setTimeout(tryLoadData, 100);
+                    return;
+                }
+
+                // If fetch succeeded, try loading as script
                 const dataScript = document.createElement('script');
                 dataScript.src = path;
 
@@ -151,7 +172,8 @@
                 };
 
                 dataScript.onerror = function(e) {
-                    log(`❌ Failed to load from: ${path}`, 'error');
+                    log(`❌ Script tag failed to load from: ${path}`, 'error');
+                    log(`📝 Error details: ${e.message || 'Unknown error'}`, 'error');
                     currentPathIndex++;
                     setTimeout(tryLoadData, 100);
                 };
@@ -159,9 +181,30 @@
                 document.head.appendChild(dataScript);
             }
 
-            function loadUI(basePath) {
+            async function loadUI(basePath) {
+                const uiPath = basePath + 'ui.js';
+                log(`🔍 Loading ui.js from: ${uiPath}`, 'info');
+
+                // Test fetch first
+                try {
+                    log(`📡 Testing HTTP fetch for ui.js`, 'info');
+                    const response = await fetch(uiPath);
+                    log(`📊 UI.js HTTP Status: ${response.status} ${response.statusText}`, response.ok ? 'success' : 'error');
+
+                    if (!response.ok) {
+                        log(`❌ UI.js HTTP error ${response.status}`, 'error');
+                        updateStatus('uiStatus', `❌ ${response.status}`, 'red');
+                        return;
+                    }
+                } catch (fetchError) {
+                    log(`❌ UI.js fetch error: ${fetchError.message}`, 'error');
+                    updateStatus('uiStatus', '❌ Fetch Err', 'red');
+                    return;
+                }
+
+                // Load as script
                 const uiScript = document.createElement('script');
-                uiScript.src = basePath + 'ui.js';
+                uiScript.src = uiPath;
 
                 uiScript.onload = function() {
                     log('✅ ui.js loaded successfully', 'success');
@@ -174,7 +217,8 @@
                 };
 
                 uiScript.onerror = function(e) {
-                    log('❌ Failed to load ui.js', 'error');
+                    log('❌ Failed to load ui.js as script', 'error');
+                    log(`📝 Error details: ${e.message || 'Unknown error'}`, 'error');
                     updateStatus('uiStatus', '❌ Failed', 'red');
                 };
 
