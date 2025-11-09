@@ -620,6 +620,50 @@ const skinTestData = {
         }
     ],
 
+    // Fluoroquinolones
+    fluoroquinolones: [
+        {
+            id: 'ciprofloxacin',
+            name: 'Ciprofloxacin (Siprofloksasin)',
+            searchTerms: ['ciprofloxacin', 'siprofloksasin', 'cipro', 'cipralex'],
+            category: 'Fluorokinolonlar',
+            spt: '0.025 mg/ml',
+            idt: '0.005 mg/ml',
+            patch: 'Uygulanmaz',
+            notes: 'En sık kullanılan fluorokinolon. MRGPRX2 aracılı non-IgE reaksiyonlar sıktır. Yanlış pozitif oranı yüksek olduğu için deri testi yorumunda dikkatli olunmalı. IDT pozitifliği için: spesifik FQ flare ≥ histamine flare (0.025 mg/ml) veya flare ≥ 5mm (0.005 mg/ml) ve diğer FQ\'lere negatif olmalı'
+        },
+        {
+            id: 'levofloxacin',
+            name: 'Levofloxacin (Levofloksasin)',
+            searchTerms: ['levofloxacin', 'levofloksasin', 'levo', 'tavanic'],
+            category: 'Fluorokinolonlar',
+            spt: '0.025 mg/ml',
+            idt: '0.005 mg/ml',
+            patch: 'Uygulanmaz',
+            notes: 'Yaygın kullanılan fluorokinolon. MRGPRX2 aracılı non-IgE reaksiyonlar sıktır. Gerçek IgE aracılı reaksiyonlar nadirdir ve genellikle ilaca spesifiktir. Deri testi yorumunda yüksek yanlış pozitif oranına dikkat'
+        },
+        {
+            id: 'moxifloxacin',
+            name: 'Moxifloxacin (Moksifloksasin)',
+            searchTerms: ['moxifloxacin', 'moksifloksasin', 'moxi', 'avelox'],
+            category: 'Fluorokinolonlar',
+            spt: '0.025 mg/ml',
+            idt: '0.005 mg/ml',
+            patch: 'Uygulanmaz',
+            notes: 'Fluorokinolonlarla ilişkili anafilaksilerin çoğu moksifloksasinledir. Ancak ABD\'de siprofloksasin ve levofloksasin kadar yaygın kullanılmaz. MRGPRX2 aracılı direkt mast hücre aktivasyonu nedeniyle yanlış pozitif testler sıktır'
+        },
+        {
+            id: 'ofloxacin',
+            name: 'Ofloxacin',
+            searchTerms: ['ofloxacin', 'ofloksasin'],
+            category: 'Fluorokinolonlar',
+            spt: '0.025 mg/ml',
+            idt: '0.005 mg/ml',
+            patch: 'Uygulanmaz',
+            notes: 'Fluorokinolon grubu antibiyotik. Deri testi yanlış pozitif oranı yüksektir'
+        }
+    ],
+
     // Anticonvulsants
     anticonvulsants: [
         {
@@ -666,6 +710,16 @@ const skinTestData = {
 
     // Other drugs
     others: [
+        {
+            id: 'vancomycin',
+            name: 'Vancomycin (Vankomisin)',
+            searchTerms: ['vancomycin', 'vankomisin', 'vanko'],
+            category: 'Antibiyotikler - Glikopeptid',
+            spt: '5 mg/ml',
+            idt: '0.05 mg/ml (1/100 dilüsyon)',
+            patch: '%10',
+            notes: 'Non-IgE aracılı "Red Man Sendromu" çok sıktır (histamin salınımı). Gerçek IgE aracılı reaksiyonlar nadirdir. Hızlı infüzyon ile reaksiyon riski artar. Yüksek konsantrasyonlar irritan olabilir. Deri testi yanlış pozitif oranı yüksektir'
+        },
         {
             id: 'chlorhexidine',
             name: 'Chlorhexidine (Klorheksidin)',

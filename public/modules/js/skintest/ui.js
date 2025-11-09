@@ -292,6 +292,7 @@ function renderCategoryButtons() {
 
     const categories = {
         'betalactams': { name: 'Beta-laktamlar', icon: 'science', color: 'blue' },
+        'fluoroquinolones': { name: 'Fluorokinolonlar', icon: 'category', color: 'lime' },
         'anesthetics': { name: 'Anestezikler', icon: 'local_hospital', color: 'indigo' },
         'opioids': { name: 'Opioidler', icon: 'medication', color: 'purple' },
         'neuromuscularBlockers': { name: 'NM Blokerler', icon: 'offline_bolt', color: 'pink' },
