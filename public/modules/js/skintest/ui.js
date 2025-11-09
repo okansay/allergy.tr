@@ -6,8 +6,66 @@ let selectedDrug = null;
 
 // Initialize the module
 function initSkinTestModule() {
+    populateDropdown();
     setupSearchInput();
+    setupDropdown();
     renderCategoryButtons();
+}
+
+// Populate the grouped dropdown
+function populateDropdown() {
+    const dropdown = document.getElementById('drugDropdown');
+    if (!dropdown) return;
+
+    // Group drugs by category
+    const groupedDrugs = {};
+    allDrugs.forEach(drug => {
+        const category = drug.category;
+        if (!groupedDrugs[category]) {
+            groupedDrugs[category] = [];
+        }
+        groupedDrugs[category].push(drug);
+    });
+
+    // Sort categories
+    const sortedCategories = Object.keys(groupedDrugs).sort();
+
+    // Build dropdown HTML
+    let html = '<option value="">İlaç seçin...</option>';
+
+    sortedCategories.forEach(category => {
+        html += `<optgroup label="${category}">`;
+        // Sort drugs within category alphabetically
+        groupedDrugs[category]
+            .sort((a, b) => a.name.localeCompare(b.name, 'tr'))
+            .forEach(drug => {
+                html += `<option value="${drug.id}">${drug.name}</option>`;
+            });
+        html += '</optgroup>';
+    });
+
+    dropdown.innerHTML = html;
+}
+
+// Setup dropdown selection
+function setupDropdown() {
+    const dropdown = document.getElementById('drugDropdown');
+    if (!dropdown) return;
+
+    dropdown.addEventListener('change', (e) => {
+        const drugId = e.target.value;
+        if (drugId) {
+            selectDrug(drugId);
+            // Clear search input
+            const searchInput = document.getElementById('drugSearch');
+            if (searchInput) {
+                searchInput.value = '';
+                clearSearchResults();
+            }
+        } else {
+            clearDrugDetails();
+        }
+    });
 }
 
 // Setup search input with debounce
@@ -17,6 +75,16 @@ function setupSearchInput() {
 
     searchInput.addEventListener('input', (e) => {
         const query = e.target.value.trim();
+        const clearBtn = document.getElementById('clearSearch');
+
+        // Show/hide clear button
+        if (clearBtn) {
+            if (query.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+        }
 
         // Clear previous timeout
         if (searchTimeout) {
@@ -40,6 +108,7 @@ function setupSearchInput() {
             searchInput.value = '';
             clearSearchResults();
             clearDrugDetails();
+            clearBtn.classList.add('hidden');
             searchInput.focus();
         });
     }
@@ -309,6 +378,13 @@ function clearDrugDetails() {
         detailsContainer.innerHTML = '';
         detailsContainer.classList.add('hidden');
     }
+
+    // Reset dropdown
+    const dropdown = document.getElementById('drugDropdown');
+    if (dropdown) {
+        dropdown.value = '';
+    }
+
     selectedDrug = null;
 }
 

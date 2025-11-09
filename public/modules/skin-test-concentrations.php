@@ -49,38 +49,78 @@
         </div>
     </div>
 
-    <!-- Search Section -->
+    <!-- Drug Selection Section -->
     <div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl p-6">
-        <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">İlaç Arama</h2>
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">İlaç Seçimi</h2>
 
-        <div class="relative">
-            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-                search
-            </span>
-            <input
-                type="text"
-                id="drugSearch"
-                placeholder="İlaç adı yazın (en az 3 harf)..."
-                class="w-full pl-12 pr-12 py-3 rounded-lg border border-slate-300 dark:border-slate-600
-                       bg-white dark:bg-slate-700 text-slate-900 dark:text-white
-                       focus:ring-2 focus:ring-primary focus:border-primary
-                       placeholder:text-slate-400 dark:placeholder:text-slate-500"
-                autocomplete="off"
-            />
-            <button
-                id="clearSearch"
-                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                <span class="material-symbols-outlined">close</span>
-            </button>
+        <!-- Dropdown Selection -->
+        <div class="mb-6">
+            <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                Listeden Seçin
+            </label>
+            <div class="relative">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none z-10">
+                    medication
+                </span>
+                <select
+                    id="drugDropdown"
+                    class="w-full pl-12 pr-10 py-3 rounded-lg border border-slate-300 dark:border-slate-600
+                           bg-white dark:bg-slate-700 text-slate-900 dark:text-white
+                           focus:ring-2 focus:ring-primary focus:border-primary
+                           appearance-none cursor-pointer"
+                >
+                    <option value="">İlaç seçin...</option>
+                </select>
+                <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                    expand_more
+                </span>
+            </div>
         </div>
 
-        <div class="mt-3 text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2">
-            <span class="material-symbols-outlined text-sm">lightbulb</span>
-            <span>İpucu: 3 veya daha fazla harf yazarak arama yapabilirsiniz. Türkçe ve İngilizce isimlere göre arama yapar.</span>
+        <!-- Divider -->
+        <div class="relative my-6">
+            <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-slate-200 dark:border-slate-700"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+                <span class="px-4 bg-white dark:bg-slate-800/50 text-slate-500 dark:text-slate-400">VEYA</span>
+            </div>
         </div>
 
-        <!-- Search Results -->
-        <div id="searchResults" class="mt-4 hidden max-h-96 overflow-y-auto"></div>
+        <!-- Search Input -->
+        <div>
+            <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                İlaç Arayın
+            </label>
+            <div class="relative">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                    search
+                </span>
+                <input
+                    type="text"
+                    id="drugSearch"
+                    placeholder="İlaç adı yazın (en az 3 harf)..."
+                    class="w-full pl-12 pr-12 py-3 rounded-lg border border-slate-300 dark:border-slate-600
+                           bg-white dark:bg-slate-700 text-slate-900 dark:text-white
+                           focus:ring-2 focus:ring-primary focus:border-primary
+                           placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                    autocomplete="off"
+                />
+                <button
+                    id="clearSearch"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hidden">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <div class="mt-3 text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">lightbulb</span>
+                <span>İpucu: Türkçe ve İngilizce isimlere göre arama yapabilirsiniz.</span>
+            </div>
+
+            <!-- Search Results -->
+            <div id="searchResults" class="mt-4 hidden max-h-96 overflow-y-auto"></div>
+        </div>
     </div>
 
     <!-- Category Filters -->
