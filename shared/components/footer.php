@@ -44,7 +44,7 @@
 <script src="/modules/js/betalactam/ui.js?v=20250108-001"></script>
 
 <!-- RegiSCAR Score Calculator Scripts -->
-<script src="/modules/js/regiscar/calculator.js?v=20250109-005"></script>
+<script src="/modules/js/regiscar/calculator.js?v=20250109-006"></script>
 
 <!-- SCORAD Index Calculator Scripts -->
 <script src="/modules/js/scorad/calculator.js?v=20250109-003"></script>

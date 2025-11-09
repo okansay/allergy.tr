@@ -281,6 +281,8 @@ function calculateScore() {
 
 // Update score display
 function updateScoreDisplay(score) {
+    console.log('🔬 RegiSCAR updateScoreDisplay called with score:', score);
+
     // Update score text
     const scoreElements = document.querySelectorAll('#totalScore');
     scoreElements.forEach(el => el.textContent = score);
@@ -295,13 +297,23 @@ function updateScoreDisplay(score) {
         interp => score >= interp.min && score <= interp.max
     );
 
+    console.log('🔬 Found interpretation:', interpretation);
+
     if (interpretation) {
         const interpretationEl = document.getElementById('interpretationText');
+        console.log('🔬 interpretationText element:', interpretationEl);
+
         if (interpretationEl) {
+            console.log('🔬 Setting text to:', interpretation.label, 'and color:', interpretation.color);
             interpretationEl.textContent = interpretation.label;
             // Set className directly like SCORAD does (more reliable with Tailwind JIT)
             interpretationEl.className = `text-base sm:text-lg font-bold text-${interpretation.color}-600 dark:text-${interpretation.color}-400`;
+            console.log('🔬 New className:', interpretationEl.className);
+        } else {
+            console.error('🔬 interpretationText element NOT FOUND!');
         }
+    } else {
+        console.error('🔬 No interpretation found for score:', score);
     }
 
     // Update indicator position on bar
