@@ -296,22 +296,12 @@ function updateScoreDisplay(score) {
     );
 
     if (interpretation) {
-        const interpretationElements = document.querySelectorAll('#interpretationText');
-        interpretationElements.forEach(el => {
-            el.textContent = interpretation.label;
-
-            // Update color based on category
-            el.className = el.className.replace(/text-(red|yellow|orange|green)-\d+/g, '');
-            if (interpretation.color === 'red') {
-                el.classList.add('text-red-600', 'dark:text-red-400');
-            } else if (interpretation.color === 'yellow') {
-                el.classList.add('text-yellow-600', 'dark:text-yellow-400');
-            } else if (interpretation.color === 'orange') {
-                el.classList.add('text-orange-600', 'dark:text-orange-400');
-            } else if (interpretation.color === 'green') {
-                el.classList.add('text-green-600', 'dark:text-green-400');
-            }
-        });
+        const interpretationEl = document.getElementById('interpretationText');
+        if (interpretationEl) {
+            interpretationEl.textContent = interpretation.label;
+            // Set className directly like SCORAD does (more reliable with Tailwind JIT)
+            interpretationEl.className = `text-base sm:text-lg font-bold text-${interpretation.color}-600 dark:text-${interpretation.color}-400`;
+        }
     }
 
     // Update indicator position on bar
