@@ -46,7 +46,7 @@
                         <p class="text-base sm:text-lg font-bold" id="interpretationText">No case (excluded)</p>
                     </div>
                 </div>
-                <button onclick="resetScore()" class="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg transition-colors text-sm font-semibold">
+                <button onclick="resetRegiscarScore()" class="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg transition-colors text-sm font-semibold">
                     <span class="material-symbols-outlined text-lg">refresh</span>
                     <span class="hidden sm:inline">Reset</span>
                 </button>
