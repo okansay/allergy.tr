@@ -42,6 +42,14 @@
                 <span class="material-symbols-outlined text-primary text-lg">science</span>
                 <span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">Beta-Laktam Çapraz Reaksiyon</span>
             </a>
+            <a
+                @click.prevent="navigateTo('skin-test-concentrations')"
+                href="#skin-test-concentrations"
+                class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors cursor-pointer group"
+            >
+                <span class="material-symbols-outlined text-primary text-lg">science</span>
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">Deri Testi Konsantrasyonları</span>
+            </a>
         </div>
     </div>
 
