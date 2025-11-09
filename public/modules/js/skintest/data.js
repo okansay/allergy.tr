@@ -877,6 +877,11 @@ Object.keys(skinTestData).forEach(category => {
     allDrugs.push(...skinTestData[category]);
 });
 
+console.log('📦 Skin Test Data loaded');
+console.log('📊 Total categories:', Object.keys(skinTestData).length);
+console.log('📊 Total drugs in allDrugs:', allDrugs.length);
+console.log('📝 Categories:', Object.keys(skinTestData).join(', '));
+
 // Export data
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { skinTestData, allDrugs };

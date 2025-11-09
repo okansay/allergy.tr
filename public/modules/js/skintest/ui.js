@@ -6,16 +6,41 @@ let selectedDrug = null;
 
 // Initialize the module
 function initSkinTestModule() {
+    console.log('🚀 Initializing Skin Test Module...');
+    console.log('📊 Total drugs available:', typeof allDrugs !== 'undefined' ? allDrugs.length : 'allDrugs is undefined');
+
+    if (typeof allDrugs === 'undefined' || !allDrugs) {
+        console.error('❌ allDrugs is not defined! Check if data.js is loaded properly.');
+        return;
+    }
+
+    if (allDrugs.length === 0) {
+        console.error('❌ allDrugs is empty! Check data.js structure.');
+        return;
+    }
+
+    console.log('✅ allDrugs loaded successfully with', allDrugs.length, 'drugs');
+    console.log('📝 Sample drug:', allDrugs[0]);
+
     populateDropdown();
     setupSearchInput();
     setupDropdown();
     renderCategoryButtons();
+
+    console.log('✅ Skin Test Module initialized successfully');
 }
 
 // Populate the grouped dropdown
 function populateDropdown() {
+    console.log('🔧 Populating dropdown...');
     const dropdown = document.getElementById('drugDropdown');
-    if (!dropdown) return;
+
+    if (!dropdown) {
+        console.error('❌ Dropdown element not found!');
+        return;
+    }
+
+    console.log('✅ Dropdown element found');
 
     // Group drugs by category
     const groupedDrugs = {};
@@ -26,6 +51,9 @@ function populateDropdown() {
         }
         groupedDrugs[category].push(drug);
     });
+
+    console.log('📊 Grouped into', Object.keys(groupedDrugs).length, 'categories');
+    console.log('📁 Categories:', Object.keys(groupedDrugs));
 
     // Sort categories
     const sortedCategories = Object.keys(groupedDrugs).sort();
@@ -45,6 +73,7 @@ function populateDropdown() {
     });
 
     dropdown.innerHTML = html;
+    console.log('✅ Dropdown populated with', allDrugs.length, 'drugs');
 }
 
 // Setup dropdown selection
@@ -453,8 +482,25 @@ function filterByCategory(categoryKey) {
 }
 
 // Initialize when DOM is ready
+function safeInit() {
+    // Check if we're in a dynamic module load (Alpine.js x-html)
+    // Give the DOM a moment to settle
+    setTimeout(() => {
+        const dropdown = document.getElementById('drugDropdown');
+        const searchInput = document.getElementById('drugSearch');
+
+        if (dropdown || searchInput) {
+            console.log('✅ Module elements found, initializing...');
+            initSkinTestModule();
+        } else {
+            console.log('⏳ Module elements not ready yet, retrying...');
+            setTimeout(safeInit, 100); // Retry after 100ms
+        }
+    }, 50); // Initial delay of 50ms
+}
+
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSkinTestModule);
+    document.addEventListener('DOMContentLoaded', safeInit);
 } else {
-    initSkinTestModule();
+    safeInit();
 }
