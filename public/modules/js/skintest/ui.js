@@ -45,17 +45,44 @@ function setupSearchInput() {
     }
 }
 
+// Normalize text for Turkish/English search
+function normalizeText(text) {
+    return text
+        .toLowerCase()
+        .replace(/ı/g, 'i')
+        .replace(/İ/g, 'i')
+        .replace(/ğ/g, 'g')
+        .replace(/Ğ/g, 'g')
+        .replace(/ü/g, 'u')
+        .replace(/Ü/g, 'u')
+        .replace(/ş/g, 's')
+        .replace(/Ş/g, 's')
+        .replace(/ö/g, 'o')
+        .replace(/Ö/g, 'o')
+        .replace(/ç/g, 'c')
+        .replace(/Ç/g, 'c');
+}
+
 // Perform drug search
 function performSearch(query) {
-    const lowerQuery = query.toLowerCase();
+    const normalizedQuery = normalizeText(query);
 
     const results = allDrugs.filter(drug => {
-        // Search in name and search terms
-        const nameMatch = drug.name.toLowerCase().includes(lowerQuery);
-        const termsMatch = drug.searchTerms.some(term =>
-            term.toLowerCase().includes(lowerQuery)
-        );
-        return nameMatch || termsMatch;
+        // Normalize and search in name
+        const normalizedName = normalizeText(drug.name);
+        const nameMatch = normalizedName.includes(normalizedQuery);
+
+        // Normalize and search in search terms
+        const termsMatch = drug.searchTerms.some(term => {
+            const normalizedTerm = normalizeText(term);
+            return normalizedTerm.includes(normalizedQuery);
+        });
+
+        // Also search in category
+        const normalizedCategory = normalizeText(drug.category);
+        const categoryMatch = normalizedCategory.includes(normalizedQuery);
+
+        return nameMatch || termsMatch || categoryMatch;
     });
 
     displaySearchResults(results, query);
@@ -293,11 +320,13 @@ function renderCategoryButtons() {
     const categories = {
         'betalactams': { name: 'Beta-laktamlar', icon: 'science', color: 'blue' },
         'fluoroquinolones': { name: 'Fluorokinolonlar', icon: 'category', color: 'lime' },
+        'otherAntibiotics': { name: 'Diğer Antibiyotikler', icon: 'medication_liquid', color: 'emerald' },
         'anesthetics': { name: 'Anestezikler', icon: 'local_hospital', color: 'indigo' },
         'opioids': { name: 'Opioidler', icon: 'medication', color: 'purple' },
         'neuromuscularBlockers': { name: 'NM Blokerler', icon: 'offline_bolt', color: 'pink' },
         'anticoagulants': { name: 'Antikoagülanlar', icon: 'water_drop', color: 'red' },
         'platinumSalts': { name: 'Platin Tuzları', icon: 'colorize', color: 'orange' },
+        'taxanes': { name: 'Taksanlar', icon: 'healing', color: 'rose' },
         'nsaids': { name: 'NSAİİ', icon: 'pill', color: 'amber' },
         'biologicals': { name: 'Biyolojikler', icon: 'biotech', color: 'green' },
         'localAnesthetics': { name: 'Lokal Anestezikler', icon: 'syringe', color: 'teal' },

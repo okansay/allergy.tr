@@ -60,10 +60,50 @@ const skinTestData = {
             name: 'Sefalosporinler (Genel)',
             searchTerms: ['cephalosporin', 'sefalosporin', 'cef'],
             category: 'Beta-laktam Antibiyotikler',
+            spt: '20 mg/ml',
+            idt: '20 mg/ml',
+            patch: '%5',
+            notes: 'Çoğu sefalosporin için güvenli konsantrasyon 20 mg/ml (cefuroxime, ceftriaxone, cefotaxime, ceftazidime, cefazolin, cephalexin, cefaclor, cefatrizine). ÖNEMLİ: Cefepime için farklı konsantrasyon kullanılır (2 mg/ml)'
+        },
+        {
+            id: 'cefepime',
+            name: 'Cefepime',
+            searchTerms: ['cefepime', 'sefepim'],
+            category: 'Beta-laktam Antibiyotikler',
             spt: '2 mg/ml',
             idt: '2 mg/ml',
             patch: '%5',
-            notes: 'Tüm sefalosporinler için genel konsantrasyon. Bazı çalışmalar 20 mg/ml\'nin de güvenli olabileceğini önermektedir (cefuroxime, ceftriaxone, cefotaxime, ceftazidime, cefazolin, cephalexin, cefaclor, cefatrizine için - ancak cefepime hariç)'
+            notes: '4. kuşak sefalosporin. DİKKAT: Diğer sefalosporinlerden farklı olarak 20 mg/ml irritan olabilir, bu yüzden 2 mg/ml kullanılır (S2k 2023, JACI-IP 2025)'
+        },
+        {
+            id: 'aztreonam',
+            name: 'Aztreonam',
+            searchTerms: ['aztreonam'],
+            category: 'Beta-laktam Antibiyotikler',
+            spt: '20 mg/ml',
+            idt: '20 mg/ml',
+            patch: '%5',
+            notes: 'Monobaktam. Bazı merkezler 2-10 mg/ml kullanır. Penisilin/sefalosporin alerjisinde alternatif olabilir'
+        },
+        {
+            id: 'imipenem',
+            name: 'Imipenem/Cilastatin',
+            searchTerms: ['imipenem', 'cilastatin'],
+            category: 'Beta-laktam Antibiyotikler',
+            spt: '1 mg/ml',
+            idt: '1 mg/ml',
+            patch: '%5',
+            notes: 'Karbapenem grubu. Geniş spektrumlu beta-laktam antibiyotik'
+        },
+        {
+            id: 'meropenem',
+            name: 'Meropenem',
+            searchTerms: ['meropenem'],
+            category: 'Beta-laktam Antibiyotikler',
+            spt: '1 mg/ml',
+            idt: '1 mg/ml',
+            patch: '%5',
+            notes: 'Karbapenem grubu. Merkezlere göre 0.5-1 mg/ml kullanılır'
         }
     ],
 
@@ -708,18 +748,86 @@ const skinTestData = {
         }
     ],
 
-    // Other drugs
-    others: [
+    // Other Antibiotics
+    otherAntibiotics: [
         {
             id: 'vancomycin',
             name: 'Vancomycin (Vankomisin)',
             searchTerms: ['vancomycin', 'vankomisin', 'vanko'],
             category: 'Antibiyotikler - Glikopeptid',
-            spt: '5 mg/ml',
-            idt: '0.05 mg/ml (1/100 dilüsyon)',
+            spt: '50 mg/ml',
+            idt: '5 mg/ml',
             patch: '%10',
             notes: 'Non-IgE aracılı "Red Man Sendromu" çok sıktır (histamin salınımı). Gerçek IgE aracılı reaksiyonlar nadirdir. Hızlı infüzyon ile reaksiyon riski artar. Yüksek konsantrasyonlar irritan olabilir. Deri testi yanlış pozitif oranı yüksektir'
         },
+        {
+            id: 'teicoplanin',
+            name: 'Teicoplanin',
+            searchTerms: ['teicoplanin', 'teikoplanin'],
+            category: 'Antibiyotikler - Glikopeptid',
+            spt: '25 mg/ml',
+            idt: '2.5 mg/ml',
+            patch: '%10',
+            notes: 'Glikopeptid grubu. Vankomisin alternatifi'
+        },
+        {
+            id: 'clarithromycin',
+            name: 'Clarithromycin (Klaritromisin)',
+            searchTerms: ['clarithromycin', 'klaritromisin', 'biaxin'],
+            category: 'Antibiyotikler - Makrolid',
+            spt: '50 mg/ml',
+            idt: '5 mg/ml',
+            patch: '%10',
+            notes: 'Makrolid grubu. Deri testi duyarlılığı düşük, merkezler arası değişkenlik gösterir'
+        },
+        {
+            id: 'azithromycin',
+            name: 'Azithromycin (Azitromisin)',
+            searchTerms: ['azithromycin', 'azitromisin', 'zithromax'],
+            category: 'Antibiyotikler - Makrolid',
+            spt: '50 mg/ml',
+            idt: '5 mg/ml',
+            patch: '%10',
+            notes: 'Makrolid grubu. İrritanlık riski var. Deri testi duyarlılığı düşük'
+        },
+        {
+            id: 'metronidazole',
+            name: 'Metronidazole (Metronidazol)',
+            searchTerms: ['metronidazole', 'metronidazol', 'flagyl'],
+            category: 'Antibiyotikler - Nitroimidazol',
+            spt: '5 mg/ml',
+            idt: '0.05 mg/ml',
+            patch: '%10',
+            notes: 'Nitroimidazol grubu. Anaerobik bakterilere ve protozolara karşı etkili'
+        }
+    ],
+
+    // Chemotherapy - Taxanes
+    taxanes: [
+        {
+            id: 'paclitaxel',
+            name: 'Paclitaxel',
+            searchTerms: ['paclitaxel', 'taxol'],
+            category: 'Kemoterapötikler - Taksan',
+            spt: '6 mg/ml',
+            idt: '0.001 → 1 mg/ml (kademeli)',
+            patch: 'Uygulanmaz',
+            notes: 'Taksan grubu kemoterapötik. Seri artan IDT (kademeli) önerilir: 0.001 → 0.01 → 0.1 → 1 mg/ml (AAAAI 2022). Hipersensitivite reaksiyonları sık'
+        },
+        {
+            id: 'docetaxel',
+            name: 'Docetaxel',
+            searchTerms: ['docetaxel', 'taxotere'],
+            category: 'Kemoterapötikler - Taksan',
+            spt: 'Dilüe edilmemiş (konsantre)',
+            idt: '0.001 → 1 mg/ml (kademeli)',
+            patch: 'Uygulanmaz',
+            notes: 'Taksan grubu. Seri artan IDT önerilir. Paclitaxel ile çapraz reaktivite olabilir. Premedikasyon genellikle gereklidir'
+        }
+    ],
+
+    // Other drugs
+    others: [
         {
             id: 'chlorhexidine',
             name: 'Chlorhexidine (Klorheksidin)',
