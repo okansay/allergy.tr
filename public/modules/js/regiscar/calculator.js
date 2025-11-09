@@ -315,30 +315,21 @@ function updateScoreDisplay(score) {
     }
 
     // Update indicator position on bar
-    updateScoreIndicator(score);
-}
-
-// Update score indicator position
-function updateScoreIndicator(score) {
     const indicator = document.getElementById('scoreIndicator');
-    if (!indicator) return;
+    if (indicator) {
+        // Score range: -4 to +9 (total 14 points)
+        const minScore = -4;
+        const maxScore = 9;
+        const range = maxScore - minScore; // 13
 
-    // Score range: -4 to +9 (total 14 points)
-    // Bar segments: No case (≤1) = 5 points, Possible (2-3) = 2 points, Probable (4-5) = 2 points, Definite (≥6) = 4 points
+        // Normalize score to 0-100%
+        let percentage = ((score - minScore) / range) * 100;
 
-    // Calculate position as percentage
-    // Map score from -4...9 range to 0...100% position
-    const minScore = -4;
-    const maxScore = 9;
-    const range = maxScore - minScore; // 13
+        // Clamp to 0-100%
+        percentage = Math.max(0, Math.min(100, percentage));
 
-    // Normalize score to 0-100%
-    let percentage = ((score - minScore) / range) * 100;
-
-    // Clamp to 0-100%
-    percentage = Math.max(0, Math.min(100, percentage));
-
-    indicator.style.left = percentage + '%';
+        indicator.style.left = percentage + '%';
+    }
 }
 
 // Reset score
