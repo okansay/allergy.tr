@@ -19,16 +19,41 @@
             </a>
         </li>
 
-        <li>
-            <a
-                @click.prevent="navigateTo('desensitization'); menuOpen = false"
-                href="#desensitization"
-                :class="currentRoute === 'desensitization' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+        <!-- İlaç Alerjileri - Dropdown Menu -->
+        <li x-data="{ open: false }">
+            <!-- Ana Menü -->
+            <div
+                @click="open = !open"
+                :class="(currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity') ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
                 class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer"
             >
-                <span class="material-symbols-outlined" :class="currentRoute === 'desensitization' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">pill</span>
-                <p :class="currentRoute === 'desensitization' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate">İlaç Alerjileri</p>
-            </a>
+                <span class="material-symbols-outlined" :class="(currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity') ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">pill</span>
+                <p :class="(currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity') ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate flex-1">İlaç Alerjileri</p>
+                <span class="material-symbols-outlined text-lg transition-transform" :class="[open ? 'rotate-180' : '', (currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity') ? 'text-primary' : 'text-slate-600 dark:text-slate-400']">expand_more</span>
+            </div>
+
+            <!-- Alt Menüler -->
+            <div x-show="open" x-collapse class="ml-4 mt-1 space-y-1">
+                <a
+                    @click.prevent="navigateTo('desensitization'); menuOpen = false"
+                    href="#desensitization"
+                    :class="currentRoute === 'desensitization' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
+                >
+                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'desensitization' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">vaccines</span>
+                    <p :class="currentRoute === 'desensitization' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">İlaç Desensitizasyonu</p>
+                </a>
+
+                <a
+                    @click.prevent="navigateTo('betalactam-cross-reactivity'); menuOpen = false"
+                    href="#betalactam-cross-reactivity"
+                    :class="currentRoute === 'betalactam-cross-reactivity' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
+                >
+                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'betalactam-cross-reactivity' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">science</span>
+                    <p :class="currentRoute === 'betalactam-cross-reactivity' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">Beta-Laktam Çapraz</p>
+                </a>
+            </div>
         </li>
 
         <li>
@@ -65,6 +90,42 @@
                 <span class="material-symbols-outlined" :class="currentRoute === 'calculators' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">calculate</span>
                 <p :class="currentRoute === 'calculators' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate">Hesaplayıcılar</p>
             </a>
+        </li>
+
+        <!-- Skorlamalar - Dropdown Menu -->
+        <li x-data="{ open: false }">
+            <!-- Ana Menü -->
+            <div
+                @click="open = !open"
+                :class="(currentRoute === 'regiscar-score' || currentRoute === 'scorad-index') ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer"
+            >
+                <span class="material-symbols-outlined" :class="(currentRoute === 'regiscar-score' || currentRoute === 'scorad-index') ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">assignment</span>
+                <p :class="(currentRoute === 'regiscar-score' || currentRoute === 'scorad-index') ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate flex-1">Skorlamalar</p>
+                <span class="material-symbols-outlined text-lg transition-transform" :class="[open ? 'rotate-180' : '', (currentRoute === 'regiscar-score' || currentRoute === 'scorad-index') ? 'text-primary' : 'text-slate-600 dark:text-slate-400']">expand_more</span>
+            </div>
+
+            <!-- Alt Menüler -->
+            <div x-show="open" x-collapse class="ml-4 mt-1 space-y-1">
+                <a
+                    @click.prevent="navigateTo('regiscar-score'); menuOpen = false"
+                    href="#regiscar-score"
+                    :class="currentRoute === 'regiscar-score' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
+                >
+                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'regiscar-score' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">monitoring</span>
+                    <p :class="currentRoute === 'regiscar-score' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">RegiSCAR-DRESS</p>
+                </a>
+                <a
+                    @click.prevent="navigateTo('scorad-index'); menuOpen = false"
+                    href="#scorad-index"
+                    :class="currentRoute === 'scorad-index' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
+                >
+                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'scorad-index' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">dermatology</span>
+                    <p :class="currentRoute === 'scorad-index' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">SCORAD Index</p>
+                </a>
+            </div>
         </li>
 
         <li class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
