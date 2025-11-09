@@ -22,7 +22,7 @@
             <!-- Ana Menü -->
             <div
                 @click="open = !open"
-                :class="(currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity') ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
+                :class="(currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity' || currentRoute === 'skin-test-concentrations') ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
                 class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer transition-colors"
             >
                 <span class="material-symbols-outlined text-xl">pill</span>
@@ -50,6 +50,16 @@
                 >
                     <span class="material-symbols-outlined text-lg">science</span>
                     <p class="text-sm font-medium truncate">Beta-Laktam Çapraz</p>
+                </a>
+
+                <a
+                    @click.prevent="navigateTo('skin-test-concentrations')"
+                    href="#skin-test-concentrations"
+                    :class="currentRoute === 'skin-test-concentrations' ? 'bg-primary text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer transition-colors"
+                >
+                    <span class="material-symbols-outlined text-lg">syringe</span>
+                    <p class="text-sm font-medium truncate">Deri Testi Konsantrasyonları</p>
                 </a>
             </div>
         </div>

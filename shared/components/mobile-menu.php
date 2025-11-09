@@ -24,12 +24,12 @@
             <!-- Ana Menü -->
             <div
                 @click="open = !open"
-                :class="(currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity') ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                :class="(currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity' || currentRoute === 'skin-test-concentrations') ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
                 class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer"
             >
-                <span class="material-symbols-outlined" :class="(currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity') ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">pill</span>
-                <p :class="(currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity') ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate flex-1">İlaç Alerjileri</p>
-                <span class="material-symbols-outlined text-lg transition-transform" :class="[open ? 'rotate-180' : '', (currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity') ? 'text-primary' : 'text-slate-600 dark:text-slate-400']">expand_more</span>
+                <span class="material-symbols-outlined" :class="(currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity' || currentRoute === 'skin-test-concentrations') ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">pill</span>
+                <p :class="(currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity' || currentRoute === 'skin-test-concentrations') ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate flex-1">İlaç Alerjileri</p>
+                <span class="material-symbols-outlined text-lg transition-transform" :class="[open ? 'rotate-180' : '', (currentRoute === 'desensitization' || currentRoute === 'betalactam-cross-reactivity' || currentRoute === 'skin-test-concentrations') ? 'text-primary' : 'text-slate-600 dark:text-slate-400']">expand_more</span>
             </div>
 
             <!-- Alt Menüler -->
@@ -52,6 +52,16 @@
                 >
                     <span class="material-symbols-outlined text-lg" :class="currentRoute === 'betalactam-cross-reactivity' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">science</span>
                     <p :class="currentRoute === 'betalactam-cross-reactivity' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">Beta-Laktam Çapraz</p>
+                </a>
+
+                <a
+                    @click.prevent="navigateTo('skin-test-concentrations'); menuOpen = false"
+                    href="#skin-test-concentrations"
+                    :class="currentRoute === 'skin-test-concentrations' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
+                >
+                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'skin-test-concentrations' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">syringe</span>
+                    <p :class="currentRoute === 'skin-test-concentrations' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">Deri Testi Konsantrasyonları</p>
                 </a>
             </div>
         </li>
