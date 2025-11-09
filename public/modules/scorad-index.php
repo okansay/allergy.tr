@@ -17,16 +17,19 @@
         <div class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 rounded-lg p-4">
             <div class="flex items-start gap-3">
                 <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl flex-shrink-0">info</span>
-                <div>
+                <div class="w-full">
                     <h3 class="text-base font-bold text-blue-900 dark:text-blue-100 mb-2">Atopik Dermatit Şiddet Değerlendirmesi</h3>
-                    <p class="text-sm text-blue-800 dark:text-blue-200 mb-2">
-                        SCORAD = A/5 + 7B/2 + C
+                    <p class="text-sm text-blue-800 dark:text-blue-200 mb-2 font-semibold">
+                        SCORAD = A/5 + 7B/2 + C (0-103)
                     </p>
-                    <ul class="text-xs text-blue-700 dark:text-blue-300 space-y-1">
-                        <li>• A: Tutulum yüzdesi (0-100%)</li>
-                        <li>• B: Şiddet skorları (6 item × 0-3 = 0-18)</li>
-                        <li>• C: Subjektif semptomlar (2 VAS × 0-10 = 0-20)</li>
+                    <ul class="text-xs text-blue-700 dark:text-blue-300 space-y-1 mb-3">
+                        <li>• <strong>A:</strong> Vücut yüzey alanı tutulumu (yaş grubuna göre)</li>
+                        <li>• <strong>B:</strong> Şiddet skorları (6 bulgu × 0-3 = 0-18)</li>
+                        <li>• <strong>C:</strong> Subjektif semptomlar (kaşıntı + uyku × 0-10 = 0-20)</li>
                     </ul>
+                    <div class="text-xs text-blue-600 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/40 rounded p-2">
+                        <strong>Not:</strong> Vücut yüzde oranları yaşa göre değişir (2 yaş altı çocuklarda baş %21, 2 yaş üzerinde %9)
+                    </div>
                 </div>
             </div>
         </div>
