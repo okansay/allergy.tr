@@ -75,95 +75,114 @@
     </div>
 
     <script>
-        // Custom logging
-        const debugLog = document.getElementById('debugLog');
-        function log(message, type = 'info') {
-            const colors = {
-                success: 'log-success',
-                error: 'log-error',
-                info: 'log-info',
-                warning: 'log-warning'
-            };
-            const div = document.createElement('div');
-            div.className = `log-item ${colors[type]}`;
-            div.textContent = message;
-            debugLog.appendChild(div);
-            debugLog.scrollTop = debugLog.scrollHeight;
-            console.log(message);
-        }
+        // Prevent multiple loads
+        if (window.testPageInitialized) {
+            console.log('⚠️ Test page already initialized, skipping...');
+        } else {
+            window.testPageInitialized = true;
 
-        // Override console
-        const originalLog = console.log;
-        const originalError = console.error;
-        console.log = function(...args) {
-            log(args.join(' '), 'info');
-            originalLog.apply(console, args);
-        };
-        console.error = function(...args) {
-            log(args.join(' '), 'error');
-            originalError.apply(console, args);
-        };
-
-        // Status updaters
-        function updateStatus(id, status, color) {
-            const el = document.getElementById(id);
-            if (el) {
-                el.textContent = status;
-                el.style.color = color;
-            }
-        }
-
-        // Load scripts
-        log('🔄 Starting script load...', 'info');
-
-        // Load data.js
-        const dataScript = document.createElement('script');
-        dataScript.src = '/modules/js/skintest/data.js';
-
-        dataScript.onload = function() {
-            log('✅ data.js loaded successfully', 'success');
-            updateStatus('dataStatus', '✅ Loaded', 'green');
-
-            // Check allDrugs
-            if (typeof allDrugs !== 'undefined') {
-                log(`✅ allDrugs available with ${allDrugs.length} drugs`, 'success');
-                updateStatus('drugCount', allDrugs.length, 'green');
-
-                // Show some drugs
-                log(`📝 Sample drugs: ${allDrugs.slice(0, 3).map(d => d.name).join(', ')}`, 'info');
-            } else {
-                log('❌ allDrugs is undefined!', 'error');
-                updateStatus('drugCount', '❌ Error', 'red');
+            // Custom logging
+            const debugLog = document.getElementById('debugLog');
+            function log(message, type = 'info') {
+                const colors = {
+                    success: 'log-success',
+                    error: 'log-error',
+                    info: 'log-info',
+                    warning: 'log-warning'
+                };
+                const div = document.createElement('div');
+                div.className = `log-item ${colors[type]}`;
+                div.textContent = new Date().toLocaleTimeString() + ' - ' + message;
+                debugLog.appendChild(div);
+                debugLog.scrollTop = debugLog.scrollHeight;
             }
 
-            // Load ui.js
-            const uiScript = document.createElement('script');
-            uiScript.src = '/modules/js/skintest/ui.js';
+            // Status updaters
+            function updateStatus(id, status, color) {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.textContent = status;
+                    el.style.color = color;
+                }
+            }
 
-            uiScript.onload = function() {
-                log('✅ ui.js loaded successfully', 'success');
-                updateStatus('uiStatus', '✅ Loaded', 'green');
+            // Load scripts ONCE
+            log('🔄 Starting script load (ONE TIME ONLY)...', 'info');
 
-                // Test initialization
-                setTimeout(() => {
-                    testModuleFunctions();
-                }, 500);
-            };
+            // Try multiple possible paths
+            const possiblePaths = [
+                '/modules/js/skintest/data.js',
+                './modules/js/skintest/data.js',
+                '../modules/js/skintest/data.js'
+            ];
 
-            uiScript.onerror = function(e) {
-                log('❌ Failed to load ui.js: ' + e, 'error');
-                updateStatus('uiStatus', '❌ Failed', 'red');
-            };
+            let currentPathIndex = 0;
 
-            document.head.appendChild(uiScript);
-        };
+            function tryLoadData() {
+                if (currentPathIndex >= possiblePaths.length) {
+                    log('❌ All paths failed! Could not load data.js', 'error');
+                    updateStatus('dataStatus', '❌ 404', 'red');
+                    return;
+                }
 
-        dataScript.onerror = function(e) {
-            log('❌ Failed to load data.js: ' + e, 'error');
-            updateStatus('dataStatus', '❌ Failed', 'red');
-        };
+                const path = possiblePaths[currentPathIndex];
+                log(`🔍 Trying path: ${path}`, 'info');
 
-        document.head.appendChild(dataScript);
+                const dataScript = document.createElement('script');
+                dataScript.src = path;
+
+                dataScript.onload = function() {
+                    log(`✅ data.js loaded from: ${path}`, 'success');
+                    updateStatus('dataStatus', '✅ Loaded', 'green');
+
+                    // Check allDrugs
+                    if (typeof allDrugs !== 'undefined') {
+                        log(`✅ allDrugs available with ${allDrugs.length} drugs`, 'success');
+                        updateStatus('drugCount', allDrugs.length, 'green');
+                        log(`📝 First 3 drugs: ${allDrugs.slice(0, 3).map(d => d.name).join(', ')}`, 'info');
+
+                        // Load ui.js with same base path
+                        const basePath = path.replace('data.js', '');
+                        loadUI(basePath);
+                    } else {
+                        log('❌ allDrugs is undefined after load!', 'error');
+                        updateStatus('drugCount', '❌ Undefined', 'red');
+                    }
+                };
+
+                dataScript.onerror = function(e) {
+                    log(`❌ Failed to load from: ${path}`, 'error');
+                    currentPathIndex++;
+                    setTimeout(tryLoadData, 100);
+                };
+
+                document.head.appendChild(dataScript);
+            }
+
+            function loadUI(basePath) {
+                const uiScript = document.createElement('script');
+                uiScript.src = basePath + 'ui.js';
+
+                uiScript.onload = function() {
+                    log('✅ ui.js loaded successfully', 'success');
+                    updateStatus('uiStatus', '✅ Loaded', 'green');
+
+                    // Test initialization
+                    setTimeout(() => {
+                        testModuleFunctions();
+                    }, 500);
+                };
+
+                uiScript.onerror = function(e) {
+                    log('❌ Failed to load ui.js', 'error');
+                    updateStatus('uiStatus', '❌ Failed', 'red');
+                };
+
+                document.head.appendChild(uiScript);
+            }
+
+            // Start loading
+            tryLoadData();
 
         // Test module functions
         function testModuleFunctions() {
