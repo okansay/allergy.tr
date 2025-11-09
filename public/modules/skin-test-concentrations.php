@@ -266,5 +266,45 @@ mark {
 }
 </style>
 
-<script src="/modules/js/skintest/data.js"></script>
-<script src="/modules/js/skintest/ui.js"></script>
+<script>
+// Load scripts dynamically for Alpine.js x-html compatibility
+(function() {
+    console.log('🔄 Loading Skin Test Module scripts...');
+
+    // Check if scripts already loaded
+    if (window.skinTestScriptsLoaded) {
+        console.log('✅ Scripts already loaded, re-initializing...');
+        if (typeof window.safeInitSkinTest === 'function') {
+            window.safeInitSkinTest();
+        } else {
+            console.error('❌ safeInitSkinTest function not found!');
+        }
+        return;
+    }
+
+    // Load data.js
+    const dataScript = document.createElement('script');
+    dataScript.src = '/modules/js/skintest/data.js';
+    dataScript.onload = function() {
+        console.log('✅ data.js loaded');
+
+        // Load ui.js after data.js
+        const uiScript = document.createElement('script');
+        uiScript.src = '/modules/js/skintest/ui.js';
+        uiScript.onload = function() {
+            console.log('✅ ui.js loaded');
+            window.skinTestScriptsLoaded = true;
+        };
+        uiScript.onerror = function(error) {
+            console.error('❌ Failed to load ui.js:', error);
+            console.error('Path attempted: /modules/js/skintest/ui.js');
+        };
+        document.head.appendChild(uiScript);
+    };
+    dataScript.onerror = function(error) {
+        console.error('❌ Failed to load data.js:', error);
+        console.error('Path attempted: /modules/js/skintest/data.js');
+    };
+    document.head.appendChild(dataScript);
+})();
+</script>

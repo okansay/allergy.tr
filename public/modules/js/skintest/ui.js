@@ -499,6 +499,10 @@ function safeInit() {
     }, 50); // Initial delay of 50ms
 }
 
+// Export to global scope for dynamic module loading
+window.initSkinTestModule = initSkinTestModule;
+window.safeInitSkinTest = safeInit;
+
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', safeInit);
 } else {
