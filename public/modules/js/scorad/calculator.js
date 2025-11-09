@@ -3,7 +3,16 @@ console.log('🔬 SCORAD Index Calculator loaded');
 
 let scoradValues = {
     ageGroup: 'adult',  // 'adult' (≥2 years) or 'child' (<2 years)
-    bodyAreas: {},  // Selected body areas
+    bodyAreas: {  // Percentage of each body area affected (0-100%)
+        head: 0,
+        trunkAnterior: 0,
+        trunkPosterior: 0,
+        upperLimbRight: 0,
+        upperLimbLeft: 0,
+        lowerLimbRight: 0,
+        lowerLimbLeft: 0,
+        genitals: 0
+    },
     A: 0,  // Extent (0-100%)
     B: { erythema: 0, edema: 0, oozing: 0, excoriation: 0, lichenification: 0, dryness: 0 },  // Intensity (0-3 each)
     C: { pruritus: 0, sleep: 0 }  // Subjective (0-10 each)
@@ -78,52 +87,56 @@ function renderScoradUI() {
                 <span class="bg-primary/10 text-primary px-2 py-1 rounded text-sm">A</span>
                 Extent - Vücut Yüzey Alanı Tutulumu
             </h3>
-            <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Tutulumlu bölgeleri seçin</p>
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Her bölgenin tutulum yüzdesini ayarlayın</p>
 
-            <!-- Body Diagram Visual -->
-            <div class="mb-6 p-4 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900/50 dark:to-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-                <div class="text-center mb-3">
-                    <div class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">
-                        ${scoradValues.ageGroup === 'child' ? '< 2 Yaş' : '≥ 2 Yaş'} - Vücut Yüzde Oranları
-                    </div>
+            <!-- Body Diagram Reference -->
+            <div class="mb-4 p-3 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900/50 dark:to-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
+                <div class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-2 text-center">
+                    ${scoradValues.ageGroup === 'child' ? '< 2 Yaş' : '≥ 2 Yaş'} - Max BSA Değerleri
                 </div>
-                <div class="grid grid-cols-2 gap-2 text-xs">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                     ${Object.entries(bsaPercentages[scoradValues.ageGroup]).map(([area, percentage]) => `
-                        <div class="flex items-center justify-between p-2 rounded ${scoradValues.bodyAreas[area] ? 'bg-primary/20 border-2 border-primary' : 'bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600'}">
-                            <span class="font-medium">${bodyAreaLabels[area]}</span>
+                        <div class="flex items-center justify-between p-2 rounded bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600">
+                            <span class="font-medium text-xs">${bodyAreaLabels[area]}</span>
                             <span class="font-bold text-primary">${percentage}%</span>
                         </div>
                     `).join('')}
                 </div>
             </div>
 
-            <!-- Body Area Checkboxes -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+            <!-- Body Area Sliders -->
+            <div class="space-y-4 mb-4">
                 ${Object.entries(bodyAreaLabels).map(([area, label]) => {
-                    const percentage = bsaPercentages[scoradValues.ageGroup][area];
+                    const maxPercentage = bsaPercentages[scoradValues.ageGroup][area];
+                    const value = scoradValues.bodyAreas[area] || 0;
                     return `
-                        <label class="flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${
-                            scoradValues.bodyAreas[area] ?
-                            'bg-primary/10 border-2 border-primary' :
-                            'bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800'
-                        }">
-                            <input type="checkbox"
-                                ${scoradValues.bodyAreas[area] ? 'checked' : ''}
-                                onchange="toggleBodyArea('${area}')"
-                                class="w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary">
-                            <div class="flex-1 flex items-center justify-between">
-                                <span class="font-medium text-sm">${label}</span>
-                                <span class="font-bold text-primary text-sm">${percentage}%</span>
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-medium text-slate-700 dark:text-slate-300">${label}</span>
+                                <div class="text-xs text-slate-500 dark:text-slate-400">
+                                    Max: <span class="font-bold text-primary">${maxPercentage}%</span>
+                                </div>
                             </div>
-                        </label>
+                            <div class="relative">
+                                <input type="range"
+                                    min="0" max="100" step="1"
+                                    value="${value}"
+                                    onchange="setBodyAreaPercentage('${area}', parseInt(this.value))"
+                                    oninput="setBodyAreaPercentage('${area}', parseInt(this.value))"
+                                    class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:h-8 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:shadow-lg [&::-moz-range-thumb]:w-8 [&::-moz-range-thumb]:h-8 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-primary [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:shadow-lg">
+                                <div class="absolute -top-8 left-0 text-xs font-bold text-primary" style="left: ${value}%;" id="area_${area}_label">
+                                    ${value}%
+                                </div>
+                            </div>
+                        </div>
                     `;
                 }).join('')}
             </div>
 
             <!-- Total Extent Display -->
             <div class="text-center p-4 bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg border-2 border-primary/30">
-                <div class="text-sm text-slate-600 dark:text-slate-400 mb-1">Toplam Tutulum</div>
-                <div class="text-4xl font-bold text-primary" id="extentValue">${scoradValues.A}%</div>
+                <div class="text-sm text-slate-600 dark:text-slate-400 mb-1">Toplam Tutulum (A)</div>
+                <div class="text-4xl font-bold text-primary" id="extentValue">${scoradValues.A.toFixed(1)}%</div>
             </div>
         </div>
 
@@ -210,27 +223,51 @@ function renderVASSlider(id, label, min, max) {
 
 function setAgeGroup(ageGroup) {
     scoradValues.ageGroup = ageGroup;
-    scoradValues.bodyAreas = {};  // Reset body areas when age changes
+    scoradValues.bodyAreas = {  // Reset body areas when age changes
+        head: 0,
+        trunkAnterior: 0,
+        trunkPosterior: 0,
+        upperLimbRight: 0,
+        upperLimbLeft: 0,
+        lowerLimbRight: 0,
+        lowerLimbLeft: 0,
+        genitals: 0
+    };
     calculateExtent();
     renderScoradUI();
     calculateScorad();
 }
 
-function toggleBodyArea(area) {
-    scoradValues.bodyAreas[area] = !scoradValues.bodyAreas[area];
+function setBodyAreaPercentage(area, percentage) {
+    scoradValues.bodyAreas[area] = percentage;
+
+    // Update label position
+    const label = document.getElementById(`area_${area}_label`);
+    if (label) {
+        label.style.left = percentage + '%';
+        label.textContent = percentage + '%';
+    }
+
     calculateExtent();
-    renderScoradUI();
+
+    // Update total display
+    const extentValue = document.getElementById('extentValue');
+    if (extentValue) {
+        extentValue.textContent = scoradValues.A.toFixed(1) + '%';
+    }
+
     calculateScorad();
 }
 
 function calculateExtent() {
     let total = 0;
-    const percentages = bsaPercentages[scoradValues.ageGroup];
+    const maxPercentages = bsaPercentages[scoradValues.ageGroup];
 
     Object.keys(scoradValues.bodyAreas).forEach(area => {
-        if (scoradValues.bodyAreas[area]) {
-            total += percentages[area];
-        }
+        const areaPercentage = scoradValues.bodyAreas[area] || 0;
+        const maxBSA = maxPercentages[area];
+        // Calculate actual BSA: (selected percentage / 100) * max BSA for that area
+        total += (areaPercentage / 100) * maxBSA;
     });
 
     scoradValues.A = Math.min(100, total);
@@ -292,7 +329,16 @@ function updateScoreDisplay(score) {
 function resetScorad() {
     scoradValues = {
         ageGroup: 'adult',
-        bodyAreas: {},
+        bodyAreas: {
+            head: 0,
+            trunkAnterior: 0,
+            trunkPosterior: 0,
+            upperLimbRight: 0,
+            upperLimbLeft: 0,
+            lowerLimbRight: 0,
+            lowerLimbLeft: 0,
+            genitals: 0
+        },
         A: 0,
         B: { erythema: 0, edema: 0, oozing: 0, excoriation: 0, lichenification: 0, dryness: 0 },
         C: { pruritus: 0, sleep: 0 }
