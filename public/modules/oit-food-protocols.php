@@ -1,4 +1,176 @@
-<div class="module-container p-4 sm:p-6 max-w-7xl mx-auto" x-data="oitProtocolApp()">
+<div class="module-container p-4 sm:p-6 max-w-7xl mx-auto" x-data="{
+    // UI State
+    currentStep: 1,
+    showIntro: false,
+    showHowItWorks: false,
+    showSafety: false,
+    showOptionalFields: false,
+
+    // Patient Data
+    patientData: {
+        age_years: null,
+        weight_kg: null,
+        allergen: '',
+        other_allergen_text: '',
+        asthma_control: 'none',
+        history_of_anaphylaxis: false,
+        history_of_eoe: false,
+        baseline_ofc_threshold: null,
+        specific_ige: null,
+        skin_prick_wheal_mm: null,
+        distance_to_emergency_minutes: null
+    },
+
+    // Protocol Selection
+    protocolFilter: {
+        allergen: null
+    },
+    selectedProtocol: null,
+
+    // Protocols Data
+    protocols: [
+        {
+            id: 'varshney2011_peanut_jaci',
+            display_name_tr: 'Varshney ve ark., 2011 – Yer fıstığı OIT (JACI)',
+            allergen: 'peanut',
+            protocol_speed: 'conventional',
+            literature: {
+                title: 'A randomized controlled study of peanut oral immunotherapy: clinical desensitization and modulation of the allergic response',
+                first_author: 'Varshney',
+                year: 2011,
+                journal: 'Journal of Allergy and Clinical Immunology',
+                pmid: '21377034'
+            },
+            requires_omalizumab: false,
+            eligibility_summary_tr: 'Yer fıstığı ile oral provokasyonla doğrulanmış IgE aracılı yer fıstığı alerjisi olan çocuklarda uygulanan konvansiyonel OIT protokolü. Yaş aralığı, dışlama kriterleri ve ayrıntılar için özgün makaleye bakılmalıdır.',
+            protocol_type_label_tr: 'Konvansiyonel yer fıstığı OIT',
+            notes_tr: 'Bu şablon, Varshney 2011 çalışmasına dayanmaktadır. Gerçek doz değerleri, artışım lojiği ve gözlem süreleri, özgün makaleden okunarak merkeziniz tarafından girilmelidir.'
+        },
+        {
+            id: 'anagnostou2014_peanut_lancet_stop2',
+            display_name_tr: 'Anagnostou ve ark., 2014 – Yer fıstığı OIT (STOP II, Lancet)',
+            allergen: 'peanut',
+            protocol_speed: 'conventional',
+            literature: {
+                title: 'Assessing the efficacy of oral immunotherapy for the desensitisation of peanut allergy in children (STOP II): a phase 2 randomised controlled trial',
+                first_author: 'Anagnostou',
+                year: 2014,
+                journal: 'The Lancet',
+                pmid: '24485709'
+            },
+            requires_omalizumab: false,
+            eligibility_summary_tr: 'Çocukluk çağı yer fıstığı alerjisinde, randomize kontrollü faz 2 çalışma protokolüne dayalı konvansiyonel OIT şablonu. Çalışmaya alınma ve dışlama kriterleri için mutlaka orijinal makaleye bakılmalıdır.',
+            protocol_type_label_tr: 'Konvansiyonel yer fıstığı OIT (STOP II)',
+            notes_tr: 'Bu şablon, STOP II çalışmasının doz ve izlem mantığını temsil eder; mg düzeyleri ve ziyaret sıklığı, özgün Lancet makalesinden alınarak ayrıca tanımlanmalıdır.'
+        },
+        {
+            id: 'skripak2008_milk_jaci',
+            display_name_tr: 'Skripak ve ark., 2008 – Süt OIT (JACI)',
+            allergen: 'cow_milk',
+            protocol_speed: 'conventional',
+            literature: {
+                title: 'A randomized, double-blind, placebo-controlled study of milk oral immunotherapy for cow\\'s milk allergy',
+                first_author: 'Skripak',
+                year: 2008,
+                journal: 'Journal of Allergy and Clinical Immunology',
+                pmid: '18951617'
+            },
+            requires_omalizumab: false,
+            eligibility_summary_tr: 'IgE aracılı inek sütü alerjisi olan çocuklarda yapılan randomize, çift kör, plasebo kontrollü süt OIT çalışmasının şablonu. Çalışma tasarımı, OFC protokolleri ve dışlama kriterleri için makaleye başvurulmalıdır.',
+            protocol_type_label_tr: 'Konvansiyonel süt OIT',
+            notes_tr: 'Bu şablon, Skripak 2008 süt OIT çalışmasına dayanmaktadır. Gerçek doz adımları ve artışım hızları, özgün JACI makalesine göre merkeziniz tarafından ayrıca tanımlanmalıdır.'
+        },
+        {
+            id: 'burks2012_egg_nejm',
+            display_name_tr: 'Burks ve ark., 2012 – Yumurta OIT (NEJM)',
+            allergen: 'egg',
+            protocol_speed: 'conventional',
+            literature: {
+                title: 'Oral immunotherapy for treatment of egg allergy in children',
+                first_author: 'Burks',
+                year: 2012,
+                journal: 'New England Journal of Medicine',
+                pmid: '22808958'
+            },
+            requires_omalizumab: false,
+            eligibility_summary_tr: 'Yumurta alerjisi olan çocuklarda yapılan, çok merkezli, çift kör, plasebo kontrollü OIT çalışmasının şablonu. Yaş aralığı, randomizasyon ayrıntıları ve uzun dönem izlem için NEJM makalesine bakılmalıdır.',
+            protocol_type_label_tr: 'Konvansiyonel yumurta OIT',
+            notes_tr: 'Bu şablon, Burks 2012 NEJM yumurta OIT çalışmasına dayanmaktadır. Doz artışım planları ve hedef bakım dozları, özgün yayından bire bir alınıp girilmelidir.'
+        }
+    ],
+
+    get filteredProtocols() {
+        if (this.protocolFilter.allergen === null) {
+            return this.protocols;
+        }
+        return this.protocols.filter(p => p.allergen === this.protocolFilter.allergen);
+    },
+
+    selectProtocol(protocol) {
+        this.selectedProtocol = protocol;
+    },
+
+    validateAndNext() {
+        if (!this.patientData.age_years || !this.patientData.weight_kg || !this.patientData.allergen) {
+            alert('Lütfen zorunlu alanları doldurun (Yaş, Kilo, Alerjen)');
+            return;
+        }
+        this.currentStep = 2;
+    },
+
+    goToSummary() {
+        if (!this.selectedProtocol) {
+            alert('Lütfen bir protokol seçin');
+            return;
+        }
+        this.currentStep = 3;
+    },
+
+    getAllergenLabel() {
+        const labels = {
+            'peanut': 'Yer Fıstığı',
+            'cow_milk': 'İnek Sütü',
+            'egg': 'Yumurta',
+            'other': this.patientData.other_allergen_text || 'Diğer'
+        };
+        return labels[this.patientData.allergen] || '';
+    },
+
+    getAsthmaLabel() {
+        const labels = {
+            'none': 'Yok',
+            'well_controlled': 'İyi Kontrollü',
+            'partly_controlled': 'Kısmen Kontrollü',
+            'uncontrolled': 'Kontrolsüz'
+        };
+        return labels[this.patientData.asthma_control] || '';
+    },
+
+    printSummary() {
+        window.print();
+    },
+
+    resetForm() {
+        if (confirm('Formu sıfırlamak istediğinizden emin misiniz?')) {
+            this.currentStep = 1;
+            this.patientData = {
+                age_years: null,
+                weight_kg: null,
+                allergen: '',
+                other_allergen_text: '',
+                asthma_control: 'none',
+                history_of_anaphylaxis: false,
+                history_of_eoe: false,
+                baseline_ofc_threshold: null,
+                specific_ige: null,
+                skin_prick_wheal_mm: null,
+                distance_to_emergency_minutes: null
+            };
+            this.selectedProtocol = null;
+            this.protocolFilter.allergen = null;
+        }
+    }
+}">
     <!-- Header -->
     <div class="mb-6">
         <div class="flex items-center gap-3 mb-4">
@@ -468,181 +640,3 @@
         </div>
     </div>
 </div>
-
-<script>
-function oitProtocolApp() {
-    return {
-        // UI State
-        currentStep: 1,
-        showIntro: false,
-        showHowItWorks: false,
-        showSafety: false,
-        showOptionalFields: false,
-
-        // Patient Data
-        patientData: {
-            age_years: null,
-            weight_kg: null,
-            allergen: '',
-            other_allergen_text: '',
-            asthma_control: 'none',
-            history_of_anaphylaxis: false,
-            history_of_eoe: false,
-            baseline_ofc_threshold: null,
-            specific_ige: null,
-            skin_prick_wheal_mm: null,
-            distance_to_emergency_minutes: null
-        },
-
-        // Protocol Selection
-        protocolFilter: {
-            allergen: null
-        },
-        selectedProtocol: null,
-
-        // Protocols Data (from JSON)
-        protocols: [
-            {
-                id: "varshney2011_peanut_jaci",
-                display_name_tr: "Varshney ve ark., 2011 – Yer fıstığı OIT (JACI)",
-                allergen: "peanut",
-                protocol_speed: "conventional",
-                literature: {
-                    title: "A randomized controlled study of peanut oral immunotherapy: clinical desensitization and modulation of the allergic response",
-                    first_author: "Varshney",
-                    year: 2011,
-                    journal: "Journal of Allergy and Clinical Immunology",
-                    pmid: "21377034"
-                },
-                requires_omalizumab: false,
-                eligibility_summary_tr: "Yer fıstığı ile oral provokasyonla doğrulanmış IgE aracılı yer fıstığı alerjisi olan çocuklarda uygulanan konvansiyonel OIT protokolü. Yaş aralığı, dışlama kriterleri ve ayrıntılar için özgün makaleye bakılmalıdır.",
-                protocol_type_label_tr: "Konvansiyonel yer fıstığı OIT",
-                notes_tr: "Bu şablon, Varshney 2011 çalışmasına dayanmaktadır. Gerçek doz değerleri, artışım lojiği ve gözlem süreleri, özgün makaleden okunarak merkeziniz tarafından 'varshney2011_peanut_jaci_steps' tablosuna elle girilmelidir."
-            },
-            {
-                id: "anagnostou2014_peanut_lancet_stop2",
-                display_name_tr: "Anagnostou ve ark., 2014 – Yer fıstığı OIT (STOP II, Lancet)",
-                allergen: "peanut",
-                protocol_speed: "conventional",
-                literature: {
-                    title: "Assessing the efficacy of oral immunotherapy for the desensitisation of peanut allergy in children (STOP II): a phase 2 randomised controlled trial",
-                    first_author: "Anagnostou",
-                    year: 2014,
-                    journal: "The Lancet",
-                    pmid: "24485709"
-                },
-                requires_omalizumab: false,
-                eligibility_summary_tr: "Çocukluk çağı yer fıstığı alerjisinde, randomize kontrollü faz 2 çalışma protokolüne dayalı konvansiyonel OIT şablonu. Çalışmaya alınma ve dışlama kriterleri için mutlaka orijinal makaleye bakılmalıdır.",
-                protocol_type_label_tr: "Konvansiyonel yer fıstığı OIT (STOP II)",
-                notes_tr: "Bu şablon, STOP II çalışmasının doz ve izlem mantığını temsil eder; mg düzeyleri ve ziyaret sıklığı, özgün Lancet makalesinden alınarak ayrıca tanımlanmalıdır."
-            },
-            {
-                id: "skripak2008_milk_jaci",
-                display_name_tr: "Skripak ve ark., 2008 – Süt OIT (JACI)",
-                allergen: "cow_milk",
-                protocol_speed: "conventional",
-                literature: {
-                    title: "A randomized, double-blind, placebo-controlled study of milk oral immunotherapy for cow's milk allergy",
-                    first_author: "Skripak",
-                    year: 2008,
-                    journal: "Journal of Allergy and Clinical Immunology",
-                    pmid: "18951617"
-                },
-                requires_omalizumab: false,
-                eligibility_summary_tr: "IgE aracılı inek sütü alerjisi olan çocuklarda yapılan randomize, çift kör, plasebo kontrollü süt OIT çalışmasının şablonu. Çalışma tasarımı, OFC protokolleri ve dışlama kriterleri için makaleye başvurulmalıdır.",
-                protocol_type_label_tr: "Konvansiyonel süt OIT",
-                notes_tr: "Bu şablon, Skripak 2008 süt OIT çalışmasına dayanmaktadır. Gerçek doz adımları ve artışım hızları, özgün JACI makalesine göre merkeziniz tarafından ayrıca tanımlanmalıdır."
-            },
-            {
-                id: "burks2012_egg_nejm",
-                display_name_tr: "Burks ve ark., 2012 – Yumurta OIT (NEJM)",
-                allergen: "egg",
-                protocol_speed: "conventional",
-                literature: {
-                    title: "Oral immunotherapy for treatment of egg allergy in children",
-                    first_author: "Burks",
-                    year: 2012,
-                    journal: "New England Journal of Medicine",
-                    pmid: "22808958"
-                },
-                requires_omalizumab: false,
-                eligibility_summary_tr: "Yumurta alerjisi olan çocuklarda yapılan, çok merkezli, çift kör, plasebo kontrollü OIT çalışmasının şablonu. Yaş aralığı, randomizasyon ayrıntıları ve uzun dönem izlem için NEJM makalesine bakılmalıdır.",
-                protocol_type_label_tr: "Konvansiyonel yumurta OIT",
-                notes_tr: "Bu şablon, Burks 2012 NEJM yumurta OIT çalışmasına dayanmaktadır. Doz artışım planları ve hedef bakım dozları, özgün yayından bire bir alınıp 'burks2012_egg_nejm_steps' tablosuna girilmelidir."
-            }
-        ],
-
-        get filteredProtocols() {
-            if (this.protocolFilter.allergen === null) {
-                return this.protocols;
-            }
-            return this.protocols.filter(p => p.allergen === this.protocolFilter.allergen);
-        },
-
-        selectProtocol(protocol) {
-            this.selectedProtocol = protocol;
-        },
-
-        validateAndNext() {
-            if (!this.patientData.age_years || !this.patientData.weight_kg || !this.patientData.allergen) {
-                alert('Lütfen zorunlu alanları doldurun (Yaş, Kilo, Alerjen)');
-                return;
-            }
-            this.currentStep = 2;
-        },
-
-        goToSummary() {
-            if (!this.selectedProtocol) {
-                alert('Lütfen bir protokol seçin');
-                return;
-            }
-            this.currentStep = 3;
-        },
-
-        getAllergenLabel() {
-            const labels = {
-                'peanut': 'Yer Fıstığı',
-                'cow_milk': 'İnek Sütü',
-                'egg': 'Yumurta',
-                'other': this.patientData.other_allergen_text || 'Diğer'
-            };
-            return labels[this.patientData.allergen] || '';
-        },
-
-        getAsthmaLabel() {
-            const labels = {
-                'none': 'Yok',
-                'well_controlled': 'İyi Kontrollü',
-                'partly_controlled': 'Kısmen Kontrollü',
-                'uncontrolled': 'Kontrolsüz'
-            };
-            return labels[this.patientData.asthma_control] || '';
-        },
-
-        printSummary() {
-            window.print();
-        },
-
-        resetForm() {
-            if (confirm('Formu sıfırlamak istediğinizden emin misiniz?')) {
-                this.currentStep = 1;
-                this.patientData = {
-                    age_years: null,
-                    weight_kg: null,
-                    allergen: '',
-                    other_allergen_text: '',
-                    asthma_control: 'none',
-                    history_of_anaphylaxis: false,
-                    history_of_eoe: false,
-                    baseline_ofc_threshold: null,
-                    specific_ige: null,
-                    skin_prick_wheal_mm: null,
-                    distance_to_emergency_minutes: null
-                };
-                this.selectedProtocol = null;
-                this.protocolFilter.allergen = null;
-            }
-        }
-    }
-}
-</script>
