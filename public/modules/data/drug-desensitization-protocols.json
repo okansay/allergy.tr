@@ -1,0 +1,438 @@
+{
+  "version": "1.0",
+  "module_name": "drug_desensitization_protocol_library",
+  "description": "İlaç alerjisi desensitizasyonu için literatüre dayalı protokol arama ve hedef doza göre ölçekleme modülü.",
+  "search_behaviour": {
+    "search_input_fields": ["drug_name", "drug_class", "route"],
+    "search_logic": "Önce ilaca özgü protokoller, yoksa ilaç sınıfı için tanımlı şablon protokoller listelenir. Varsayılan sıralama: guideline/position paper > büyük seri/review > olgu serileri; aynı grupta tahmini atıf sayısına göre azalan."
+  },
+  "protocols": [
+    {
+      "protocol_id": "beta_lactam_iv_12_step",
+      "protocol_label": "IV beta-laktam hızlı desensitizasyon (12 basamak, çok torbalı)",
+      "drug_class": "beta-lactam antibiotic",
+      "example_drugs": ["penicillin G", "ampicillin", "amoxicillin", "piperacillin-tazobactam", "ceftriaxone"],
+      "route": "IV",
+      "main_references": [
+        {
+          "first_author": "Broyles",
+          "year": 2020,
+          "journal": "J Allergy Clin Immunol Pract",
+          "title": "Practical Guidance for the Evaluation and Management of Drug Hypersensitivity",
+          "url": "https://www.aaaai.org/Aaaai/media/MediaLibrary/PDF%20Documents/Practice%20and%20Parameters/Practical-Guidance-for-the-Evaluation-and-Management-of-Drug-Hypersensitivity-2020.pdf",
+          "type": "guideline"
+        },
+        {
+          "first_author": "Legere",
+          "year": 2008,
+          "journal": "J Allergy Clin Immunol",
+          "title": "Successful Implementation of a Standardized Rapid Drug Desensitization Program",
+          "url": "",
+          "type": "case_series"
+        }
+      ],
+      "scaling": {
+        "type": "relative_to_final_dose",
+        "reference_final_dose_mg": 1000.0,
+        "reference_step_doses_mg": [0.02, 0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 4.0, 10.0, 20.0, 40.0, 922.13],
+        "default_step_interval_min": 15,
+        "default_number_of_bags": 3,
+        "dose_formula": "step_dose_i = reference_step_doses_mg[i] * (target_final_dose_mg / reference_final_dose_mg)"
+      },
+      "user_inputs": [
+        {
+          "name": "target_final_dose_mg",
+          "label": "Hedef toplam doz (mg)",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "patient_weight_kg",
+          "label": "Hasta ağırlığı (kg)",
+          "type": "float",
+          "required": false
+        },
+        {
+          "name": "dose_mg_per_kg",
+          "label": "Reçete edilen doz (mg/kg)",
+          "type": "float",
+          "required": false
+        },
+        {
+          "name": "stock_concentration_mg_per_ml",
+          "label": "Stok çözeltinin derişimi (mg/mL)",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "bag_volumes_ml",
+          "label": "Her torba için hedef hacimler (mL)",
+          "type": "array_float",
+          "required": false,
+          "default": [250.0, 250.0, 250.0]
+        },
+        {
+          "name": "custom_total_infusion_time_min",
+          "label": "Toplam infüzyon süresi (dakika)",
+          "type": "float",
+          "required": false
+        },
+        {
+          "name": "pediatric_flag",
+          "label": "Pediatrik hasta mı?",
+          "type": "boolean",
+          "required": false
+        }
+      ],
+      "outputs": [
+        "step_number",
+        "bag_index",
+        "step_dose_mg",
+        "step_volume_ml",
+        "infusion_rate_ml_per_h",
+        "cumulative_dose_mg"
+      ]
+    },
+    {
+      "protocol_id": "beta_lactam_oral_multistep",
+      "protocol_label": "Oral beta-laktam desensitizasyonu (çok basamaklı, tablet/şurup)",
+      "drug_class": "beta-lactam antibiotic",
+      "example_drugs": ["amoxicillin", "amoxicillin-clavulanate", "cephalexin"],
+      "route": "oral",
+      "main_references": [
+        {
+          "first_author": "Chastain",
+          "year": 2019,
+          "journal": "Pharmacy (Basel)",
+          "title": "Antimicrobial Desensitization: A Review of Published Protocols",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6789802/",
+          "type": "systematic_review"
+        }
+      ],
+      "scaling": {
+        "type": "relative_to_final_dose",
+        "reference_final_dose_mg": 500.0,
+        "reference_step_count": 12,
+        "reference_pattern_description": "Genellikle 1/1000–1/2 aralığında artan dozlar; her adımda 2–3 kat artış, 15–30 dakikalık aralar."
+      },
+      "user_inputs": [
+        {
+          "name": "target_single_dose_mg",
+          "label": "Hedef tek doz (mg)",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "patient_weight_kg",
+          "label": "Hasta ağırlığı (kg)",
+          "type": "float",
+          "required": false
+        },
+        {
+          "name": "dose_mg_per_kg",
+          "label": "Reçete edilen doz (mg/kg)",
+          "type": "float",
+          "required": false
+        },
+        {
+          "name": "formulation_strength_mg",
+          "label": "Tablet/kapsül veya 5 mL içeriği (mg)",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "step_interval_min",
+          "label": "Basamaklar arası süre (dakika)",
+          "type": "float",
+          "required": false,
+          "default": 20.0
+        }
+      ],
+      "outputs": [
+        "step_number",
+        "oral_dose_mg",
+        "oral_volume_ml",
+        "cumulative_dose_mg"
+      ]
+    },
+    {
+      "protocol_id": "aspirin_aerd_oral",
+      "protocol_label": "AERD için aspirin desensitizasyonu (1–3 günlük protokoller)",
+      "drug_class": "NSAID",
+      "example_drugs": ["acetylsalicylic acid"],
+      "route": "oral",
+      "main_references": [
+        {
+          "first_author": "Stevens",
+          "year": 2021,
+          "journal": "J Allergy Clin Immunol",
+          "title": "The role of aspirin desensitization followed by oral aspirin therapy in AERD",
+          "url": "",
+          "type": "review"
+        },
+        {
+          "first_author": "Thiagarajan",
+          "year": 2024,
+          "journal": "Curr Allergy Asthma Rep",
+          "title": "Aspirin Desensitization in Treatment of Chronic Rhinosinusitis with Nasal Polyps",
+          "url": "",
+          "type": "review"
+        }
+      ],
+      "scaling": {
+        "type": "fixed_step_sequence",
+        "reference_final_dose_mg": 325.0,
+        "reference_step_doses_mg": [20.0, 40.0, 60.0, 100.0, 150.0, 325.0],
+        "default_step_interval_min": 90
+      },
+      "user_inputs": [
+        {
+          "name": "target_maintenance_dose_mg",
+          "label": "Hedef günlük idame dozu (mg)",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "baseline_fev1_percent",
+          "label": "Başlangıç FEV1 (% beklenen)",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "min_acceptable_fev1_percent",
+          "label": "Desensitizasyon için kabul edilebilir en düşük FEV1 (%)",
+          "type": "float",
+          "required": false,
+          "default": 70.0
+        },
+        {
+          "name": "number_of_days",
+          "label": "Desensitizasyon gün sayısı (1–3)",
+          "type": "integer",
+          "required": false,
+          "default": 2
+        },
+        {
+          "name": "use_premedication",
+          "label": "Lökotrien antagonisti / antihistamin premedikasyonu kullanılıyor mu?",
+          "type": "boolean",
+          "required": false
+        }
+      ],
+      "outputs": [
+        "day",
+        "step_number",
+        "oral_dose_mg",
+        "cumulative_dose_mg"
+      ]
+    },
+    {
+      "protocol_id": "nsaid_non_aspirin_oral",
+      "protocol_label": "Selektif NSAID desensitizasyonu (oral, çok basamaklı)",
+      "drug_class": "NSAID",
+      "example_drugs": ["celecoxib", "etoricoxib", "meloxicam"],
+      "route": "oral",
+      "main_references": [
+        {
+          "first_author": "Scherer",
+          "year": 2013,
+          "journal": "Allergy",
+          "title": "Desensitization in patients with drug hypersensitivity: an EAACI position paper",
+          "url": "",
+          "type": "position_paper"
+        }
+      ],
+      "scaling": {
+        "type": "relative_to_final_dose",
+        "reference_final_dose_mg": 200.0,
+        "reference_step_count": 8,
+        "reference_pattern_description": "Başlangıçta 1/1000–1/100 doz, her 30 dakikada 2–3 kat artışla idame dozuna ulaşma."
+      },
+      "user_inputs": [
+        {
+          "name": "target_single_dose_mg",
+          "label": "Hedef tek doz (mg)",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "formulation_strength_mg",
+          "label": "Tablet içeriği (mg)",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "step_interval_min",
+          "label": "Basamak aralığı (dakika)",
+          "type": "float",
+          "required": false,
+          "default": 30.0
+        }
+      ],
+      "outputs": [
+        "step_number",
+        "oral_dose_mg",
+        "cumulative_dose_mg"
+      ]
+    },
+    {
+      "protocol_id": "chemo_mab_iv_multibag",
+      "protocol_label": "Kemoterapi / monoklonal antikor RDD (2–4 torbalı, 12–16 basamak)",
+      "drug_class": "chemotherapy_or_mAb",
+      "example_drugs": ["carboplatin", "oxaliplatin", "paclitaxel", "rituximab", "trastuzumab"],
+      "route": "IV",
+      "main_references": [
+        {
+          "first_author": "Castells",
+          "year": 2009,
+          "journal": "Immunol Allergy Clin North Am",
+          "title": "Rapid desensitization for hypersensitivity reactions to medications",
+          "url": "",
+          "type": "review"
+        },
+        {
+          "first_author": "Pagani",
+          "year": 2022,
+          "journal": "Allergy",
+          "title": "Hypersensitivity reactions to chemotherapy: an EAACI position paper",
+          "url": "",
+          "type": "position_paper"
+        },
+        {
+          "first_author": "Vega",
+          "year": 2022,
+          "journal": "Int Arch Allergy Immunol",
+          "title": "Use of Rapid Drug Desensitization in Delayed Hypersensitivity Reactions to Chemotherapeutic Drugs and Monoclonal Antibodies",
+          "url": "",
+          "type": "case_series"
+        }
+      ],
+      "scaling": {
+        "type": "relative_to_final_dose",
+        "reference_final_dose_mg": 300.0,
+        "reference_step_count": 12,
+        "default_number_of_bags": 3,
+        "reference_pattern_description": "Tipik olarak 2–4 torbaya dağıtılmış, her adımda 2–3 kat artan dozlar; toplam süre 4–6 saat."
+      },
+      "user_inputs": [
+        {
+          "name": "target_final_dose_mg",
+          "label": "Hedef toplam doz (mg)",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "use_bsa_dosing",
+          "label": "Doz BSA (m²) üzerinden mi hesaplanıyor?",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "bsa_m2",
+          "label": "Vücut yüzey alanı (m²)",
+          "type": "float",
+          "required": false
+        },
+        {
+          "name": "reaction_grade",
+          "label": "Önceki reaksiyon şiddeti (1–4)",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "number_of_bags",
+          "label": "Torba sayısı (2, 3 veya 4)",
+          "type": "integer",
+          "required": false,
+          "default": 3
+        },
+        {
+          "name": "total_infusion_time_min",
+          "label": "Toplam infüzyon süresi (dakika)",
+          "type": "float",
+          "required": false,
+          "default": 360.0
+        }
+      ],
+      "outputs": [
+        "bag_index",
+        "step_number",
+        "bag_concentration_mg_per_ml",
+        "bag_volume_ml",
+        "step_dose_mg",
+        "step_infusion_time_min",
+        "step_rate_ml_per_h",
+        "cumulative_dose_mg"
+      ]
+    },
+    {
+      "protocol_id": "radiocontrast_iv",
+      "protocol_label": "İyotlu kontrast madde hızlı desensitizasyonu (IV, çok basamaklı)",
+      "drug_class": "iodinated_contrast_media",
+      "example_drugs": ["iohexol", "iopromide", "iodixanol"],
+      "route": "IV",
+      "main_references": [
+        {
+          "first_author": "Uppal",
+          "year": 2018,
+          "journal": "Catheter Cardiovasc Interv",
+          "title": "Rapid Desensitization to Overcome Contrast Allergy Prior to Urgent Coronary Angiography",
+          "url": "",
+          "type": "case_series"
+        },
+        {
+          "first_author": "Sanan",
+          "year": 2019,
+          "journal": "J Investig Allergol Clin Immunol",
+          "title": "Radiologic Contrast Media Desensitization for Delayed Hypersensitivity Reactions",
+          "url": "",
+          "type": "case_series"
+        }
+      ],
+      "scaling": {
+        "type": "relative_to_final_volume",
+        "reference_final_volume_ml": 100.0,
+        "reference_step_count": 10,
+        "reference_pattern_description": "Genellikle 1–2 mL'den başlayıp her 10–15 dakikada 2–3 kat artışla hedef hacme ulaşma."
+      },
+      "user_inputs": [
+        {
+          "name": "contrast_agent_name",
+          "label": "Kontrast madde adı",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "target_total_volume_ml",
+          "label": "Hedef toplam kontrast hacmi (mL)",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "iodine_concentration_mg_per_ml",
+          "label": "Kontrast maddedeki iyot derişimi (mg/mL)",
+          "type": "float",
+          "required": false
+        },
+        {
+          "name": "reaction_severity",
+          "label": "Önceki reaksiyon şiddeti (hafif / orta / ağır)",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "step_interval_min",
+          "label": "Basamak aralığı (dakika)",
+          "type": "float",
+          "required": false,
+          "default": 15.0
+        }
+      ],
+      "outputs": [
+        "step_number",
+        "step_volume_ml",
+        "cumulative_volume_ml"
+      ]
+    }
+  ]
+}

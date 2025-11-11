@@ -50,6 +50,14 @@
                 <span class="material-symbols-outlined text-primary text-lg">science</span>
                 <span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">Deri Testi Konsantrasyonları</span>
             </a>
+            <a
+                @click.prevent="navigateTo('desensitization-protocol-library')"
+                href="#desensitization-protocol-library"
+                class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors cursor-pointer group"
+            >
+                <span class="material-symbols-outlined text-primary text-lg">library_books</span>
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary">Protokol Kütüphanesi</span>
+            </a>
         </div>
     </div>
 
