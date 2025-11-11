@@ -1,3 +1,4 @@
+<!-- OIT Food Protocols Module v1.0.1 -->
 <div class="module-container p-4 sm:p-6 max-w-7xl mx-auto" x-data="{
     // UI State
     currentStep: 1,
