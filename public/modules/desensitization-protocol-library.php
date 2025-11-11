@@ -237,14 +237,14 @@
     
     validateParameters() {
         const protocol = this.selectedProtocol;
-        
+
         for (const input of protocol.user_inputs) {
             if (input.required && !this.protocolParams[input.name]) {
-                alert(\`Lütfen zorunlu alan doldurun: \${input.label}\`);
+                alert('Lütfen zorunlu alan doldurun: ' + input.label);
                 return false;
             }
         }
-        
+
         return true;
     },
     
@@ -264,9 +264,9 @@
         // Check if total matches target
         const finalCumulative = cumulative;
         const tolerance = this.targetDose * 0.05; // 5% tolerance
-        
+
         if (Math.abs(finalCumulative - this.targetDose) > tolerance) {
-            alert(\`Uyarı: Düzenlenen basamakların toplamı (\${finalCumulative.toFixed(2)}) hedef dozdan (\${this.targetDose.toFixed(2)}) çok farklı. Hedef doz bu girdilerle verilemez.\`);
+            alert('Uyarı: Düzenlenen basamakların toplamı (' + finalCumulative.toFixed(2) + ') hedef dozdan (' + this.targetDose.toFixed(2) + ') çok farklı. Hedef doz bu girdilerle verilemez.');
         }
     },
     
