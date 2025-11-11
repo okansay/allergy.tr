@@ -74,15 +74,42 @@
             <p class="text-sm font-semibold truncate">İmmün Yetmezlikler</p>
         </a>
 
-        <a
-            @click.prevent="navigateTo('food-allergies')"
-            href="#food-allergies"
-            :class="currentRoute === 'food-allergies' ? 'bg-primary text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
-            class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer transition-colors"
-        >
-            <span class="material-symbols-outlined text-xl">bakery_dining</span>
-            <p class="text-sm font-semibold truncate">Gıda Alerjileri</p>
-        </a>
+        <!-- Besin Alerjileri - Dropdown Menu -->
+        <div x-data="{ open: false }">
+            <!-- Ana Menü -->
+            <div
+                @click="open = !open"
+                :class="(currentRoute === 'food-allergies' || currentRoute === 'oit-food-protocols') ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
+                class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer transition-colors"
+            >
+                <span class="material-symbols-outlined text-xl">restaurant</span>
+                <p class="text-sm font-semibold truncate flex-1">Besin Alerjileri</p>
+                <span class="material-symbols-outlined text-lg transition-transform" :class="open ? 'rotate-180' : ''">expand_more</span>
+            </div>
+
+            <!-- Alt Menüler -->
+            <div x-show="open" x-collapse class="ml-4 mt-1 space-y-1">
+                <a
+                    @click.prevent="navigateTo('oit-food-protocols')"
+                    href="#oit-food-protocols"
+                    :class="currentRoute === 'oit-food-protocols' ? 'bg-primary text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer transition-colors"
+                >
+                    <span class="material-symbols-outlined text-lg">healing</span>
+                    <p class="text-sm font-medium truncate">Besin Desensitizasyon</p>
+                </a>
+
+                <a
+                    @click.prevent="navigateTo('food-allergies')"
+                    href="#food-allergies"
+                    :class="currentRoute === 'food-allergies' ? 'bg-primary text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer transition-colors"
+                >
+                    <span class="material-symbols-outlined text-lg">bakery_dining</span>
+                    <p class="text-sm font-medium truncate">Genel Bilgiler</p>
+                </a>
+            </div>
+        </div>
 
         <a
             @click.prevent="navigateTo('asthma-rhinitis')"

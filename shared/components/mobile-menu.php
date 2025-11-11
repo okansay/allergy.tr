@@ -78,16 +78,41 @@
             </a>
         </li>
 
-        <li>
-            <a
-                @click.prevent="navigateTo('food-allergies'); menuOpen = false"
-                href="#food-allergies"
-                :class="currentRoute === 'food-allergies' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+        <!-- Besin Alerjileri - Dropdown Menu -->
+        <li x-data="{ open: false }">
+            <!-- Ana Menü -->
+            <div
+                @click="open = !open"
+                :class="(currentRoute === 'food-allergies' || currentRoute === 'oit-food-protocols') ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
                 class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer"
             >
-                <span class="material-symbols-outlined" :class="currentRoute === 'food-allergies' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">bakery_dining</span>
-                <p :class="currentRoute === 'food-allergies' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate">Gıda Alerjileri</p>
-            </a>
+                <span class="material-symbols-outlined" :class="(currentRoute === 'food-allergies' || currentRoute === 'oit-food-protocols') ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">restaurant</span>
+                <p :class="(currentRoute === 'food-allergies' || currentRoute === 'oit-food-protocols') ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate flex-1">Besin Alerjileri</p>
+                <span class="material-symbols-outlined text-lg transition-transform" :class="[open ? 'rotate-180' : '', (currentRoute === 'food-allergies' || currentRoute === 'oit-food-protocols') ? 'text-primary' : 'text-slate-600 dark:text-slate-400']">expand_more</span>
+            </div>
+
+            <!-- Alt Menüler -->
+            <div x-show="open" x-collapse class="ml-4 mt-1 space-y-1">
+                <a
+                    @click.prevent="navigateTo('oit-food-protocols'); menuOpen = false"
+                    href="#oit-food-protocols"
+                    :class="currentRoute === 'oit-food-protocols' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
+                >
+                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'oit-food-protocols' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">healing</span>
+                    <p :class="currentRoute === 'oit-food-protocols' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">Besin Desensitizasyon</p>
+                </a>
+
+                <a
+                    @click.prevent="navigateTo('food-allergies'); menuOpen = false"
+                    href="#food-allergies"
+                    :class="currentRoute === 'food-allergies' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
+                >
+                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'food-allergies' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">bakery_dining</span>
+                    <p :class="currentRoute === 'food-allergies' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">Genel Bilgiler</p>
+                </a>
+            </div>
         </li>
 
         <li>
