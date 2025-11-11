@@ -69,7 +69,7 @@
             allergen: 'cow_milk',
             protocol_speed: 'conventional',
             literature: {
-                title: 'A randomized, double-blind, placebo-controlled study of milk oral immunotherapy for cow\\'s milk allergy',
+                title: 'A randomized, double-blind, placebo-controlled study of milk oral immunotherapy for cow milk allergy',
                 first_author: 'Skripak',
                 year: 2008,
                 journal: 'Journal of Allergy and Clinical Immunology',
