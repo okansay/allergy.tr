@@ -1,0 +1,248 @@
+{
+  "version": "1.0",
+  "app_name": "Besin Alerjisi OIT Protokol Kutuphanesi",
+  "language": "tr",
+  "ui_texts": {
+    "home_title": "Besin Alerjisi Oral Immunoterapi (OIT) Protokol Kutuphanesi",
+    "home_intro_markdown": "Bu sayfa, besin alerjisi icin literatüre dayali oral immunoterapi (OIT) protokollerini hekime okunur ve yapilandirilmis sekilde sunmak icin tasarlanmistir.\\n\\nHer protokol, özgün klinik calismadan alinmis bir sablonu temsil eder; sistem yeni bir tedavi semasi üretmez, sadece secilen makaledeki protokolün hekime uygun bicimde organize edilmesine yardimci olur.",
+    "how_it_works_markdown": "1. Önce hastaya ait temel klinik bilgileri girin (yas, kilo, alerjen, esitlik eden hastaliklar vb.).\\n2. Ardindan, protokolü dayandirmak istediginiz literatürü secin (örnegin Varshney 2011 yer fistigi, Skripak 2008 süt, Burks 2012 yumurta vb.).\\n3. Sistem, secilen yayina ait protokol tipini (konvansiyonel, cluster, rush) ve temel özellikleri gösterir; merkezinizin kendi doz basamaklari bu sablonun icine yerlestirilir.\\n4. Ciktida, yalnizca sizin girdiginiz doz adimlari ve izlem planlari görünür; sistem, günlük klinik kararlarinizi otomatik olarak degistirmez.",
+    "safety_disclaimer_markdown": "Bu arac yalnizca besin alerjisi alaninda deneyimli cocuk veya eriskin alerji-immunoloji uzmani tarafindan kullanilmak üzere tasarlanmistir. OIT endikasyonu, kontrendikasyonlari, hasta secimi, doz basamaklari ve acil durum yönetimi, daima guncel ulusal ve uluslararasi kilavuzlar, yerel mevzuat ve klinik karariniz temelinde belirlenmelidir.\\n\\nSistem, hicbir sekilde otomatik tedavi önerisi, doz hesaplayici ya da ruhsatli ürünün resmi özetini ikame etmez. Her bir protokol icin mutlaka özgün makalenin tam metnine ve ilgili ürün bilgilerinin resmi özetlerine yeniden basvurun.",
+    "patient_form_help_markdown": "Hasta formu, protokol secimi icin gerekli temel klinik parametreleri toplar (yas, kilo, alerjen, astim kontrol durumu, anafilaksi ve EoE öyküsü vb.). Bu bilgiler yalnizca protokol listesini filtrelemek ve hekime risk profilini hatirlatmak amaciyla kullanilir; sistem tek basina uygunluk karari vermez.",
+    "protocol_selection_help_markdown": "Protokol listesinde her satir, belirli bir yayina dayali sablonu temsil eder. Önce alerjeni, sonra hiz profilini (konvansiyonel, cluster, rush) filtreleyin; daha sonra merkezinize, hastanin risk profilinize ve ulusal ruhsat durumuna en uygun literatür calismasini secin. Secimden sonra, ilgili doz basamaklarini makaleden kontrol ederek sablona kendiniz girmeniz gerekir.",
+    "output_help_markdown": "Olusturulan protokol plani, merkez icinde kullanilmak üzere taslak niteliktedir. Hekim; her vizit öncesi hastanin güncel klinik durumuna göre adimlari degistirmek, dozu ertelemek veya tedaviyi durdurmakta tam yetkili ve sorumludur. Ciktiyi hasta dosyasina eklemeden önce mutlaka gözden gecirin."
+  },
+  "common_patient_fields": [
+    {
+      "name": "age_years",
+      "label_tr": "Yaş (yıl)",
+      "type": "number",
+      "required": true,
+      "min": 0,
+      "max": 99
+    },
+    {
+      "name": "weight_kg",
+      "label_tr": "Kilo (kg)",
+      "type": "number",
+      "required": true,
+      "min": 3,
+      "max": 200
+    },
+    {
+      "name": "allergen",
+      "label_tr": "Besin alerjeni",
+      "type": "select",
+      "required": true,
+      "options": [
+        { "value": "peanut", "label_tr": "Yer fıstığı" },
+        { "value": "cow_milk", "label_tr": "İnek sütü" },
+        { "value": "egg", "label_tr": "Yumurta" },
+        { "value": "other", "label_tr": "Diğer (serbest metin)" }
+      ]
+    },
+    {
+      "name": "other_allergen_text",
+      "label_tr": "Diğer alerjen açıklaması",
+      "type": "text",
+      "required": false
+    },
+    {
+      "name": "asthma_control",
+      "label_tr": "Astım kontrol durumu",
+      "type": "select",
+      "required": false,
+      "options": [
+        { "value": "none", "label_tr": "Astım yok" },
+        { "value": "well_controlled", "label_tr": "İyi kontrollü" },
+        { "value": "partly_controlled", "label_tr": "Kısmen kontrollü" },
+        { "value": "uncontrolled", "label_tr": "Kontrolsüz" }
+      ]
+    },
+    {
+      "name": "history_of_anaphylaxis",
+      "label_tr": "Anafilaksi öyküsü",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "name": "history_of_eoe",
+      "label_tr": "Eozinofilik özofajit / EoE öyküsü",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "name": "baseline_ofc_threshold",
+      "label_tr": "Başlangıç OFC eşiği (mg protein)",
+      "type": "number",
+      "required": false
+    },
+    {
+      "name": "specific_ige",
+      "label_tr": "Spesifik IgE (kU/L)",
+      "type": "number",
+      "required": false
+    },
+    {
+      "name": "skin_prick_wheal_mm",
+      "label_tr": "Prik testi kabarıklık çapı (mm)",
+      "type": "number",
+      "required": false
+    },
+    {
+      "name": "distance_to_emergency_minutes",
+      "label_tr": "En yakın acil servise ulaşım süresi (dakika)",
+      "type": "number",
+      "required": false
+    }
+  ],
+  "protocols": [
+    {
+      "id": "varshney2011_peanut_jaci",
+      "display_name_tr": "Varshney ve ark., 2011 – Yer fıstığı OIT (JACI)",
+      "allergen": "peanut",
+      "protocol_speed": "conventional",
+      "literature": {
+        "title": "A randomized controlled study of peanut oral immunotherapy: clinical desensitization and modulation of the allergic response",
+        "first_author": "Varshney",
+        "year": 2011,
+        "journal": "Journal of Allergy and Clinical Immunology",
+        "pmid": "21377034"
+      },
+      "age_range_years": {
+        "min": null,
+        "max": null
+      },
+      "requires_omalizumab": false,
+      "eligibility_summary_tr": "Yer fıstığı ile oral provokasyonla doğrulanmış IgE aracılı yer fıstığı alerjisi olan çocuklarda uygulanan konvansiyonel OIT protokolü. Yaş aralığı, dışlama kriterleri ve ayrıntılar için özgün makaleye bakılmalıdır.",
+      "protocol_type_label_tr": "Konvansiyonel yer fıstığı OIT",
+      "dose_config": {
+        "dose_source": "manual_from_literature",
+        "dose_unit": "mg_protein_veya_besin_formu",
+        "scaling_allowed": true,
+        "step_table_key": "varshney2011_peanut_jaci_steps"
+      },
+      "dose_steps_template": [
+        {
+          "step_no": 1,
+          "visit_type": "clinic",
+          "dose_value": null,
+          "dose_unit": "mg",
+          "frequency": "tek_gün_icinde_kademeli_artis_veya_ilk_bakim_dozu",
+          "observation_minutes": null
+        }
+      ],
+      "notes_tr": "Bu şablon, Varshney 2011 çalışmasına dayanmaktadır. Gerçek doz değerleri, artışım lojiği ve gözlem süreleri, özgün makaleden okunarak merkeziniz tarafından 'varshney2011_peanut_jaci_steps' tablosuna elle girilmelidir."
+    },
+    {
+      "id": "anagnostou2014_peanut_lancet_stop2",
+      "display_name_tr": "Anagnostou ve ark., 2014 – Yer fıstığı OIT (STOP II, Lancet)",
+      "allergen": "peanut",
+      "protocol_speed": "conventional",
+      "literature": {
+        "title": "Assessing the efficacy of oral immunotherapy for the desensitisation of peanut allergy in children (STOP II): a phase 2 randomised controlled trial",
+        "first_author": "Anagnostou",
+        "year": 2014,
+        "journal": "The Lancet",
+        "pmid": "24485709"
+      },
+      "age_range_years": {
+        "min": null,
+        "max": null
+      },
+      "requires_omalizumab": false,
+      "eligibility_summary_tr": "Çocukluk çağı yer fıstığı alerjisinde, randomize kontrollü faz 2 çalışma protokolüne dayalı konvansiyonel OIT şablonu. Çalışmaya alınma ve dışlama kriterleri için mutlaka orijinal makaleye bakılmalıdır.",
+      "protocol_type_label_tr": "Konvansiyonel yer fıstığı OIT (STOP II)",
+      "dose_config": {
+        "dose_source": "manual_from_literature",
+        "dose_unit": "mg_protein_veya_besin_formu",
+        "scaling_allowed": true,
+        "step_table_key": "anagnostou2014_peanut_lancet_stop2_steps"
+      },
+      "dose_steps_template": [
+        {
+          "step_no": 1,
+          "visit_type": "clinic",
+          "dose_value": null,
+          "dose_unit": "mg",
+          "frequency": "kademeli_build_up_ve_bakim",
+          "observation_minutes": null
+        }
+      ],
+      "notes_tr": "Bu şablon, STOP II çalışmasının doz ve izlem mantığını temsil eder; mg düzeyleri ve ziyaret sıklığı, özgün Lancet makalesinden alınarak ayrıca tanımlanmalıdır."
+    },
+    {
+      "id": "skripak2008_milk_jaci",
+      "display_name_tr": "Skripak ve ark., 2008 – Süt OIT (JACI)",
+      "allergen": "cow_milk",
+      "protocol_speed": "conventional",
+      "literature": {
+        "title": "A randomized, double-blind, placebo-controlled study of milk oral immunotherapy for cow's milk allergy",
+        "first_author": "Skripak",
+        "year": 2008,
+        "journal": "Journal of Allergy and Clinical Immunology",
+        "pmid": "18951617"
+      },
+      "age_range_years": {
+        "min": null,
+        "max": null
+      },
+      "requires_omalizumab": false,
+      "eligibility_summary_tr": "IgE aracılı inek sütü alerjisi olan çocuklarda yapılan randomize, çift kör, plasebo kontrollü süt OIT çalışmasının şablonu. Çalışma tasarımı, OFC protokolleri ve dışlama kriterleri için makaleye başvurulmalıdır.",
+      "protocol_type_label_tr": "Konvansiyonel süt OIT",
+      "dose_config": {
+        "dose_source": "manual_from_literature",
+        "dose_unit": "mg_protein_veya_hacim",
+        "scaling_allowed": true,
+        "step_table_key": "skripak2008_milk_jaci_steps"
+      },
+      "dose_steps_template": [
+        {
+          "step_no": 1,
+          "visit_type": "clinic",
+          "dose_value": null,
+          "dose_unit": "mg",
+          "frequency": "kademeli_build_up",
+          "observation_minutes": null
+        }
+      ],
+      "notes_tr": "Bu şablon, Skripak 2008 süt OIT çalışmasına dayanmaktadır. Gerçek doz adımları ve artışım hızları, özgün JACI makalesine göre merkeziniz tarafından ayrıca tanımlanmalıdır."
+    },
+    {
+      "id": "burks2012_egg_nejm",
+      "display_name_tr": "Burks ve ark., 2012 – Yumurta OIT (NEJM)",
+      "allergen": "egg",
+      "protocol_speed": "conventional",
+      "literature": {
+        "title": "Oral immunotherapy for treatment of egg allergy in children",
+        "first_author": "Burks",
+        "year": 2012,
+        "journal": "New England Journal of Medicine",
+        "pmid": "22808958"
+      },
+      "age_range_years": {
+        "min": null,
+        "max": null
+      },
+      "requires_omalizumab": false,
+      "eligibility_summary_tr": "Yumurta alerjisi olan çocuklarda yapılan, çok merkezli, çift kör, plasebo kontrollü OIT çalışmasının şablonu. Yaş aralığı, randomizasyon ayrıntıları ve uzun dönem izlem için NEJM makalesine bakılmalıdır.",
+      "protocol_type_label_tr": "Konvansiyonel yumurta OIT",
+      "dose_config": {
+        "dose_source": "manual_from_literature",
+        "dose_unit": "mg_protein_veya_besin_formu",
+        "scaling_allowed": true,
+        "step_table_key": "burks2012_egg_nejm_steps"
+      },
+      "dose_steps_template": [
+        {
+          "step_no": 1,
+          "visit_type": "clinic",
+          "dose_value": null,
+          "dose_unit": "mg",
+          "frequency": "kademeli_build_up_ve_bakim",
+          "observation_minutes": null
+        }
+      ],
+      "notes_tr": "Bu şablon, Burks 2012 NEJM yumurta OIT çalışmasına dayanmaktadır. Doz artışım planları ve hedef bakım dozları, özgün yayından bire bir alınıp 'burks2012_egg_nejm_steps' tablosuna girilmelidir."
+    }
+  ]
+}
