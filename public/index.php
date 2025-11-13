@@ -55,7 +55,7 @@ $pageTitle = 'Allergy.tr - Alerji & İmmünoloji Portalı';
         x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
-        class="fixed inset-0 z-40 bg-black/40 dark:bg-black/60 lg:hidden"
+        class="fixed inset-0 z-[60] bg-black/40 dark:bg-black/60 lg:hidden"
         style="display: none;"
     >
         <div
@@ -66,7 +66,7 @@ $pageTitle = 'Allergy.tr - Alerji & İmmünoloji Portalı';
             x-transition:leave="transition ease-in duration-200 transform"
             x-transition:leave-start="translate-x-0"
             x-transition:leave-end="-translate-x-full"
-            class="flex h-full w-10/12 max-w-sm flex-col gap-4 bg-background-light dark:bg-background-dark p-4 shadow-xl"
+            class="flex h-full w-10/12 max-w-sm flex-col gap-4 bg-background-light dark:bg-background-dark p-4 shadow-xl z-[70]"
         >
             <?php include __DIR__ . '/shared/components/mobile-menu.php'; ?>
         </div>
