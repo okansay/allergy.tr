@@ -39,7 +39,17 @@
 <script src="/modules/js/desensitization/protocol.js?v=20250108-008"></script>
 <script src="/modules/js/desensitization/ui.js?v=20250108-008"></script>
 
-<!-- GINA Module Global Functions (must be available before module loads) -->
+<!-- Beta-Lactam Module Scripts -->
+<script src="/modules/js/betalactam/data.js?v=20250108-001"></script>
+<script src="/modules/js/betalactam/ui.js?v=20250108-001"></script>
+
+<!-- RegiSCAR Score Calculator Scripts -->
+<script src="/modules/js/regiscar/calculator.js?v=20250109-007"></script>
+
+<!-- SCORAD Index Calculator Scripts -->
+<script src="/modules/js/scorad/calculator.js?v=20250109-003"></script>
+
+<!-- GINA Module Global Functions -->
 <script>
 // GINA module state
 let ginaCurrentStep = 1;
