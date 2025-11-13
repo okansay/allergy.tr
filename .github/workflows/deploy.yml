@@ -3,6 +3,7 @@ name: Deploy to Hostinger
 on:
   push:
     branches:
+      - claude/github-actions-workflow-01N5jzmAiCD6ZZKsKzU5GLPp
       - claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ
       - claude/add-betalactam-cross-reactivity-011CUw79egEQy8kz8cAYD4yd
       - main
