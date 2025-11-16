@@ -1,21 +1,14 @@
-<!-- Search Bar -->
-<div class="px-0 py-3">
-    <label class="flex flex-col min-w-40 h-12 w-full">
-        <div class="flex w-full flex-1 items-stretch rounded-xl h-full shadow-sm">
-            <div class="text-slate-500 dark:text-slate-400 flex bg-white dark:bg-slate-800 items-center justify-center pl-4 rounded-l-xl border-y border-l border-slate-300 dark:border-slate-700">
-                <span class="material-symbols-outlined">search</span>
-            </div>
-            <input
-                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-xl text-slate-900 dark:text-slate-50 bg-white dark:bg-slate-800 h-full placeholder:text-slate-500 dark:placeholder:text-slate-400 px-4 text-base font-normal leading-normal border-y border-r border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-primary"
-                placeholder="Konu veya ilaç ara..."
-                value=""
-            />
-        </div>
-    </label>
+<!-- Welcome Message -->
+<div class="flex items-center justify-center min-h-[60vh]">
+    <div class="text-center">
+        <span class="material-symbols-outlined text-primary text-8xl mb-6">health_and_safety</span>
+        <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-50 mb-4">Hoş Geldiniz</h1>
+        <p class="text-lg text-slate-600 dark:text-slate-400">Lütfen sol menüden bir modül seçiniz</p>
+    </div>
 </div>
 
-<!-- Category Grid -->
-<div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-4 py-4">
+<!-- Hidden Category Grid (for future use) -->
+<div class="hidden grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-4 py-4">
     <!-- İlaç Alerjileri -->
     <div class="flex flex-1 gap-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/50 p-4 flex-col shadow-sm">
         <div class="flex items-center gap-3">

@@ -93,26 +93,16 @@
             <!-- Ana Menü -->
             <div
                 @click="open = !open"
-                :class="(currentRoute === 'food-allergies' || currentRoute === 'oit-food-protocols') ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                :class="currentRoute === 'oit-food-protocols' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
                 class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer"
             >
-                <span class="material-symbols-outlined" :class="(currentRoute === 'food-allergies' || currentRoute === 'oit-food-protocols') ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">bakery_dining</span>
-                <p :class="(currentRoute === 'food-allergies' || currentRoute === 'oit-food-protocols') ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate flex-1">Besin Alerjileri</p>
-                <span class="material-symbols-outlined text-lg transition-transform" :class="[open ? 'rotate-180' : '', (currentRoute === 'food-allergies' || currentRoute === 'oit-food-protocols') ? 'text-primary' : 'text-slate-600 dark:text-slate-400']">expand_more</span>
+                <span class="material-symbols-outlined" :class="currentRoute === 'oit-food-protocols' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">bakery_dining</span>
+                <p :class="currentRoute === 'oit-food-protocols' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate flex-1">Besin Alerjileri</p>
+                <span class="material-symbols-outlined text-lg transition-transform" :class="[open ? 'rotate-180' : '', currentRoute === 'oit-food-protocols' ? 'text-primary' : 'text-slate-600 dark:text-slate-400']">expand_more</span>
             </div>
 
             <!-- Alt Menüler -->
             <div x-show="open" x-collapse class="ml-4 mt-1 space-y-1">
-                <a
-                    @click.prevent="navigateTo('food-allergies'); menuOpen = false"
-                    href="#food-allergies"
-                    :class="currentRoute === 'food-allergies' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
-                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
-                >
-                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'food-allergies' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">info</span>
-                    <p :class="currentRoute === 'food-allergies' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">Besin Alerjileri Ana Sayfa</p>
-                </a>
-
                 <a
                     @click.prevent="navigateTo('oit-food-protocols'); menuOpen = false"
                     href="#oit-food-protocols"
@@ -130,26 +120,16 @@
             <!-- Ana Menü -->
             <div
                 @click="open = !open"
-                :class="(currentRoute === 'asthma-rhinitis' || currentRoute === 'gina-asthma-step-advisor') ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                :class="currentRoute === 'gina-asthma-step-advisor' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
                 class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer"
             >
-                <span class="material-symbols-outlined" :class="(currentRoute === 'asthma-rhinitis' || currentRoute === 'gina-asthma-step-advisor') ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">air</span>
-                <p :class="(currentRoute === 'asthma-rhinitis' || currentRoute === 'gina-asthma-step-advisor') ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate flex-1">Astım ve Rinit</p>
-                <span class="material-symbols-outlined text-lg transition-transform" :class="[open ? 'rotate-180' : '', (currentRoute === 'asthma-rhinitis' || currentRoute === 'gina-asthma-step-advisor') ? 'text-primary' : 'text-slate-600 dark:text-slate-400']">expand_more</span>
+                <span class="material-symbols-outlined" :class="currentRoute === 'gina-asthma-step-advisor' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">air</span>
+                <p :class="currentRoute === 'gina-asthma-step-advisor' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate flex-1">Astım ve Rinit</p>
+                <span class="material-symbols-outlined text-lg transition-transform" :class="[open ? 'rotate-180' : '', currentRoute === 'gina-asthma-step-advisor' ? 'text-primary' : 'text-slate-600 dark:text-slate-400']">expand_more</span>
             </div>
 
             <!-- Alt Menüler -->
             <div x-show="open" x-collapse class="ml-4 mt-1 space-y-1">
-                <a
-                    @click.prevent="navigateTo('asthma-rhinitis'); menuOpen = false"
-                    href="#asthma-rhinitis"
-                    :class="currentRoute === 'asthma-rhinitis' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
-                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
-                >
-                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'asthma-rhinitis' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">info</span>
-                    <p :class="currentRoute === 'asthma-rhinitis' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">Astım ve Rinit Ana Sayfa</p>
-                </a>
-
                 <a
                     @click.prevent="navigateTo('gina-asthma-step-advisor'); menuOpen = false"
                     href="#gina-asthma-step-advisor"
@@ -198,16 +178,51 @@
             </div>
         </li>
 
-        <li>
-            <a
-                @click.prevent="navigateTo('calculators'); menuOpen = false"
-                href="#calculators"
-                :class="currentRoute === 'calculators' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+        <!-- AI-Destek - Dropdown Menu -->
+        <li x-data="{ open: false }">
+            <!-- Ana Menü -->
+            <div
+                @click="open = !open"
+                :class="(currentRoute === 'ai-flow-cytometry' || currentRoute === 'ai-immunotherapy' || currentRoute === 'ai-pid-diagnosis') ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
                 class="flex h-12 items-center gap-4 rounded-lg px-4 cursor-pointer"
             >
-                <span class="material-symbols-outlined" :class="currentRoute === 'calculators' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">calculate</span>
-                <p :class="currentRoute === 'calculators' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate">Hesaplayıcılar</p>
-            </a>
+                <span class="material-symbols-outlined" :class="(currentRoute === 'ai-flow-cytometry' || currentRoute === 'ai-immunotherapy' || currentRoute === 'ai-pid-diagnosis') ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">psychology</span>
+                <p :class="(currentRoute === 'ai-flow-cytometry' || currentRoute === 'ai-immunotherapy' || currentRoute === 'ai-pid-diagnosis') ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-base font-bold truncate flex-1">AI-Destek</p>
+                <span class="material-symbols-outlined text-lg transition-transform" :class="[open ? 'rotate-180' : '', (currentRoute === 'ai-flow-cytometry' || currentRoute === 'ai-immunotherapy' || currentRoute === 'ai-pid-diagnosis') ? 'text-primary' : 'text-slate-600 dark:text-slate-400']">expand_more</span>
+            </div>
+
+            <!-- Alt Menüler -->
+            <div x-show="open" x-collapse class="ml-4 mt-1 space-y-1">
+                <a
+                    @click.prevent="navigateTo('ai-flow-cytometry'); menuOpen = false"
+                    href="#ai-flow-cytometry"
+                    :class="currentRoute === 'ai-flow-cytometry' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
+                >
+                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'ai-flow-cytometry' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">biotech</span>
+                    <p :class="currentRoute === 'ai-flow-cytometry' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">AI Flow Sitometri Yorum</p>
+                </a>
+
+                <a
+                    @click.prevent="navigateTo('ai-immunotherapy'); menuOpen = false"
+                    href="#ai-immunotherapy"
+                    :class="currentRoute === 'ai-immunotherapy' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
+                >
+                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'ai-immunotherapy' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">vaccines</span>
+                    <p :class="currentRoute === 'ai-immunotherapy' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">AI İmmunoterapi</p>
+                </a>
+
+                <a
+                    @click.prevent="navigateTo('ai-pid-diagnosis'); menuOpen = false"
+                    href="#ai-pid-diagnosis"
+                    :class="currentRoute === 'ai-pid-diagnosis' ? 'bg-primary/20' : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50'"
+                    class="flex h-10 items-center gap-3 rounded-lg px-4 cursor-pointer"
+                >
+                    <span class="material-symbols-outlined text-lg" :class="currentRoute === 'ai-pid-diagnosis' ? 'text-primary' : 'text-slate-600 dark:text-slate-400'">diagnostic</span>
+                    <p :class="currentRoute === 'ai-pid-diagnosis' ? 'text-primary' : 'text-slate-800 dark:text-slate-200'" class="text-sm font-medium truncate">AI PID Tanı Destek</p>
+                </a>
+            </div>
         </li>
 
         <li class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
