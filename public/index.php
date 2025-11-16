@@ -24,6 +24,7 @@ $pageTitle = 'Allergy.tr - Alerji & İmmünoloji Portalı';
     <!-- Top App Bar -->
     <header class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-20 border-b border-slate-200/80 dark:border-slate-800/80">
         <button
+            x-show="user"
             @click="menuOpen = !menuOpen"
             class="text-slate-800 dark:text-slate-200 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 lg:hidden">
             <span class="material-symbols-outlined">menu</span>
@@ -47,7 +48,7 @@ $pageTitle = 'Allergy.tr - Alerji & İmmünoloji Portalı';
 
     <!-- Navigation Drawer (Mobile Overlay) -->
     <div
-        x-show="menuOpen"
+        x-show="menuOpen && user"
         @click.away="menuOpen = false"
         x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0"
@@ -74,8 +75,8 @@ $pageTitle = 'Allergy.tr - Alerji & İmmünoloji Portalı';
 
     <!-- Desktop Sidebar + Content Layout -->
     <div class="flex flex-1 overflow-hidden">
-        <!-- Desktop Sidebar (Hidden on mobile) -->
-        <aside class="hidden lg:block w-64 border-r border-slate-200 dark:border-slate-800 overflow-y-auto">
+        <!-- Desktop Sidebar (Hidden on mobile and when not logged in) -->
+        <aside x-show="user" class="hidden lg:block w-64 border-r border-slate-200 dark:border-slate-800 overflow-y-auto">
             <?php include __DIR__ . '/shared/components/sidebar.php'; ?>
         </aside>
 

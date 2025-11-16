@@ -226,13 +226,13 @@
         </li>
 
         <li class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
-            <a
-                href="/api/auth.php?action=logout"
-                class="flex h-12 items-center gap-4 rounded-lg px-4 hover:bg-red-100 dark:hover:bg-red-900/20 cursor-pointer"
+            <button
+                @click="logout()"
+                class="w-full flex h-12 items-center gap-4 rounded-lg px-4 hover:bg-red-100 dark:hover:bg-red-900/20 cursor-pointer"
             >
                 <span class="material-symbols-outlined text-red-600 dark:text-red-400">logout</span>
                 <p class="text-red-600 dark:text-red-400 text-base font-bold truncate">Çıkış Yap</p>
-            </a>
+            </button>
         </li>
     </ul>
 </nav>
