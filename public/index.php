@@ -99,27 +99,10 @@ $pageTitle = 'Allergy.tr - Alerji & İmmünoloji Portalı';
                     </div>
 
                     <!-- Description -->
-                    <div class="mb-12 space-y-4">
+                    <div class="mb-12">
                         <p class="text-lg text-gray-700 dark:text-gray-300">
                             Türkiye'nin önde gelen alerji ve immünoloji bilgi platformu
                         </p>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                            <div class="p-6 bg-white dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-800">
-                                <span class="material-symbols-outlined text-primary text-5xl mb-3">biotech</span>
-                                <h3 class="font-semibold text-gray-900 dark:text-white mb-2">İlaç Duyarsızlaştırma</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Güncel protokoller ve tedavi rehberleri</p>
-                            </div>
-                            <div class="p-6 bg-white dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-800">
-                                <span class="material-symbols-outlined text-primary text-5xl mb-3">shield</span>
-                                <h3 class="font-semibold text-gray-900 dark:text-white mb-2">İmmün Yetmezlikler</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Tanı ve takip kılavuzları</p>
-                            </div>
-                            <div class="p-6 bg-white dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-800">
-                                <span class="material-symbols-outlined text-primary text-5xl mb-3">science</span>
-                                <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Laboratuvar</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Test değerlendirme ve yorumlama</p>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- CTA Buttons -->
@@ -138,7 +121,7 @@ $pageTitle = 'Allergy.tr - Alerji & İmmünoloji Portalı';
                     <div class="mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg inline-block">
                         <p class="text-sm font-medium text-blue-900 dark:text-blue-100 mb-1">Demo Hesap ile Deneyin</p>
                         <p class="text-xs text-blue-800 dark:text-blue-200">
-                            E-posta: demo@allergy.tr | Şifre: password123
+                            E-posta: dene@allergy.tr | Şifre: sifre123
                         </p>
                     </div>
                 </div>
