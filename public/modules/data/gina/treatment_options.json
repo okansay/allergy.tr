@@ -1,0 +1,713 @@
+{
+  "version": "GINA_2024_with_2025_child_update",
+  "last_reviewed": "2025-11-13",
+  "notes": "Kural özetleri GINA 2024 Global Strategy Report ve 2025 <5 yaş güncellemeleri temel alınarak, dozlar ise sayısal aralıklar yerine nitel (low/medium/high) kategoriler şeklinde özetlenmiştir. Molekül-spesifik mcg dozları için güncel GINA doz tablolarına ve ürün prospektüsüne bakılmalıdır.",
+  "treatment_options": [
+    {
+      "age_group": "12_plus",
+      "step": 1,
+      "track": "track_1",
+      "label": "As-needed-only low-dose ICS-formoterol (AIR-only)",
+      "controller_type": "none_daily",
+      "reliever_type": "ics_formoterol",
+      "ics_dose_category": "low",
+      "example_regimens": [
+        {
+          "molecule": "budesonide/formoterol",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Low-dose strength combination inhaler. 1 inhalation as needed for symptoms; maksimum günlük inhalasyon sayısı ürün prospektüsüne göre sınırlandırılmalıdır.",
+          "age_restriction": ">=12",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "GINA Track 1'de hafif astım için tercih edilen başlangıç seçeneğidir.",
+        "Ayrı bir günlük bakım dozu yoktur; hasta semptom olduğunda ICS-formoterol kullanır."
+      ]
+    },
+    {
+      "age_group": "12_plus",
+      "step": 1,
+      "track": "track_2",
+      "label": "Low-dose ICS taken whenever SABA is taken",
+      "controller_type": "intermittent_ics",
+      "reliever_type": "saba_or_ics_saba",
+      "ics_dose_category": "low",
+      "example_regimens": [
+        {
+          "molecule": "separate_ICS_plus_SABA",
+          "device_type": "pMDI_or_DPI",
+          "dose_text": "Her SABA kullanımında, aynı zamanda düşük doz ICS çekilir. Günlük toplam ICS dozu GINA düşük doz sınırlarını aşmamalıdır.",
+          "age_restriction": ">=12",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "Sadece SABA monoterapisi önerilmez; her SABA kullanımıyla birlikte ICS verilmelidir.",
+        "Semptom sıklığı arttığında günlük ICS rejimine geçiş düşünülmelidir."
+      ]
+    },
+    {
+      "age_group": "12_plus",
+      "step": 2,
+      "track": "track_1",
+      "label": "As-needed-only low-dose ICS-formoterol (AIR-only)",
+      "controller_type": "none_daily",
+      "reliever_type": "ics_formoterol",
+      "ics_dose_category": "low",
+      "example_regimens": [
+        {
+          "molecule": "budesonide/formoterol",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Low-dose ICS-formoterol, yalnızca semptom olduğunda 1 inhalasyon şeklinde kullanılır. Maksimum günlük inhalasyon sayısı ürün prospektüsüne göre sınırlandırılır.",
+          "age_restriction": ">=12",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "GINA 2024'te hafif astım (Step 1–2) için Track 1'inkiyle aynı AIR rejimidir.",
+        "Semptom sıklığı ve alevlenme riski arttığında Step 3'e geçiş düşünülmelidir."
+      ]
+    },
+    {
+      "age_group": "12_plus",
+      "step": 2,
+      "track": "track_2",
+      "label": "Daily low-dose ICS with as-needed SABA",
+      "controller_type": "daily_ics",
+      "reliever_type": "saba",
+      "ics_dose_category": "low",
+      "example_regimens": [
+        {
+          "molecule": "budesonide",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Günde 1–2 kez düşük doz ICS (GINA düşük doz aralığına uygun toplam günlük mikrogram). Gerektiğinde SABA eklenir.",
+          "age_restriction": ">=12",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "Klasik günlük ICS + SABA rejimidir.",
+        "Eğer hasta Step 1'de ICS + SABA eş zamanlı kullanıyorsa ve semptomlar sıklaşıyorsa bu rejime geçilir."
+      ]
+    },
+    {
+      "age_group": "12_plus",
+      "step": 3,
+      "track": "track_1",
+      "label": "Low-dose ICS-formoterol maintenance and reliever therapy (MART)",
+      "controller_type": "mart_low_dose",
+      "reliever_type": "ics_formoterol",
+      "ics_dose_category": "low",
+      "example_regimens": [
+        {
+          "molecule": "budesonide/formoterol",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Düşük doz kombinasyon: günde 1–2 kez bakım inhalasyonu + semptom olduğunda ek inhalasyon. Toplam maksimum günlük inhalasyon sayısı ürün prospektüsüne göre sınırlanır.",
+          "age_restriction": ">=12",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "GINA'da Step 3 için tercih edilen Track 1 tedavisidir.",
+        "Bakım ve rahatlatıcı aynı inhalerdir; ağır alevlenme riskini azaltır."
+      ]
+    },
+    {
+      "age_group": "12_plus",
+      "step": 3,
+      "track": "track_2",
+      "label": "Low-dose ICS-LABA or medium-dose ICS with as-needed SABA",
+      "controller_type": "daily_ics_laba_or_medium_ics",
+      "reliever_type": "saba",
+      "ics_dose_category": "low_or_medium",
+      "example_regimens": [
+        {
+          "molecule": "fluticasone/salmeterol",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Düşük doz ICS-LABA kombinasyonu, günde 2 kez. Gerektiğinde SABA eklenir.",
+          "age_restriction": ">=12",
+          "weight_condition": "any"
+        },
+        {
+          "molecule": "budesonide",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Tek başına orta doz ICS, günde 1–2 kez. Gerektiğinde SABA eklenir.",
+          "age_restriction": ">=12",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "Step 3'te Track 1'e alternatif seçenektir.",
+        "MART kullanılamıyorsa veya tolere edilmiyorsa tercih edilebilir."
+      ]
+    },
+    {
+      "age_group": "12_plus",
+      "step": 4,
+      "track": "track_1",
+      "label": "Medium-dose ICS-formoterol MART",
+      "controller_type": "mart_medium_dose",
+      "reliever_type": "ics_formoterol",
+      "ics_dose_category": "medium",
+      "example_regimens": [
+        {
+          "molecule": "budesonide/formoterol",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Bakım dozu artırılmış ICS-formoterol (örneğin bakım inhalasyon sayısı artırılır), semptomlarda ek inhalasyon ile MART rejimi sürdürülür.",
+          "age_restriction": ">=12",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [
+        "LAMA_optional"
+      ],
+      "notes": [
+        "Step 3 MART altında kontrolsüz kalan hastalarda bakım dozunun artırılmasıdır.",
+        "Bazı hastalarda buna ek olarak LAMA eklenebilir."
+      ]
+    },
+    {
+      "age_group": "12_plus",
+      "step": 4,
+      "track": "track_2",
+      "label": "Medium/high-dose ICS-LABA with as-needed SABA",
+      "controller_type": "daily_ics_laba_medium_or_high",
+      "reliever_type": "saba",
+      "ics_dose_category": "medium_or_high",
+      "example_regimens": [
+        {
+          "molecule": "fluticasone/salmeterol",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Orta veya yüksek doz aralığında ICS-LABA kombinasyonu, genellikle günde 2 kez. Gerektiğinde SABA eklenir.",
+          "age_restriction": ">=12",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [
+        "LAMA"
+      ],
+      "notes": [
+        "Step 3'te düşük doz ICS-LABA altında kontrolsüz kalan hastalar için bir üst basamaktır.",
+        "Ek olarak LAMA eklenmesi düşünülebilir."
+      ]
+    },
+    {
+      "age_group": "12_plus",
+      "step": 5,
+      "track": "track_1",
+      "label": "Medium/high-dose ICS-formoterol MART + add-on therapy",
+      "controller_type": "mart_medium_or_high_with_addons",
+      "reliever_type": "ics_formoterol",
+      "ics_dose_category": "medium_or_high",
+      "example_regimens": [
+        {
+          "molecule": "budesonide/formoterol",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Orta-yüksek doz ICS-formoterol MART (bakım doz sayısı artırılmış). Gerektiğinde aynı inhalerden ek inhalasyon yapılır.",
+          "age_restriction": ">=12",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [
+        "LAMA",
+        "anti_IgE",
+        "anti_IL5_or_IL5R",
+        "anti_IL4Ra",
+        "anti_TSLP",
+        "low_dose_maintenance_OCS_last_resort"
+      ],
+      "notes": [
+        "Fenotipe yönelik biyolojik tedaviler ve LAMA eklenmesi bu basamakta değerlendirilir.",
+        "İdame oral steroid yalnızca son çare olarak, en düşük etkili dozda düşünülmelidir."
+      ]
+    },
+    {
+      "age_group": "12_plus",
+      "step": 5,
+      "track": "track_2",
+      "label": "High-dose ICS-LABA + add-on therapy",
+      "controller_type": "daily_ics_laba_high_with_addons",
+      "reliever_type": "saba_or_ics_saba",
+      "ics_dose_category": "high",
+      "example_regimens": [
+        {
+          "molecule": "fluticasone/salmeterol",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Yüksek doz ICS-LABA kombinasyonu, genellikle günde 2 kez. Gerektiğinde SABA veya ICS-SABA eklenir.",
+          "age_restriction": ">=12",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [
+        "LAMA",
+        "anti_IgE",
+        "anti_IL5_or_IL5R",
+        "anti_IL4Ra",
+        "anti_TSLP",
+        "low_dose_maintenance_OCS_last_resort"
+      ],
+      "notes": [
+        "Fenotipik değerlendirme sonrası uygun biyolojik tedaviler ve LAMA eklenebilir.",
+        "Bakım oral steroidler zorunlu değilse kullanılmamalıdır."
+      ]
+    },
+    {
+      "age_group": "6_11",
+      "step": 1,
+      "track": "track_1",
+      "label": "Low-dose ICS taken whenever SABA is taken",
+      "controller_type": "intermittent_ics",
+      "reliever_type": "saba",
+      "ics_dose_category": "low",
+      "example_regimens": [
+        {
+          "molecule": "budesonide",
+          "device_type": "pMDI_or_DPI",
+          "dose_text": "Her SABA inhalasyonu ile birlikte 1 inhalasyon düşük doz ICS. Toplam günlük ICS dozu, bu yaş için GINA düşük doz sınırını aşmamalıdır.",
+          "age_restriction": "6-11",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "Semptomları ayda birkaç kez olan, ancak daha sık gün içi ICS kullanımı gerekmeyen çocuklarda kullanılabilir.",
+        "Sadece SABA monoterapisine göre alevlenme riskini azaltmak için ICS eklenmesi önerilir."
+      ]
+    },
+    {
+      "age_group": "6_11",
+      "step": 1,
+      "track": "track_2",
+      "label": "As-needed SABA with early consideration of ICS initiation",
+      "controller_type": "none_or_short_ics_trial",
+      "reliever_type": "saba",
+      "ics_dose_category": "none_or_trial",
+      "example_regimens": [
+        {
+          "molecule": "salbutamol",
+          "device_type": "pMDI_with_spacer",
+          "dose_text": "Alevlenme dönemlerinde kısa etkili bronkodilatör. Yılda üçten fazla epizot veya ağır atak varsa günlük ICS'e geçiş önerilir.",
+          "age_restriction": "6-11",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "GINA, mümkün oldukça ICS içeren rejimlerin kullanılmasını önerdiğinden SABA monoterapisi kısa süreli olmalıdır.",
+        "Sık atak veya risk faktörü varsa Step 2'ye çıkılmalıdır."
+      ]
+    },
+    {
+      "age_group": "6_11",
+      "step": 2,
+      "track": "track_1",
+      "label": "Daily low-dose ICS with as-needed SABA",
+      "controller_type": "daily_ics",
+      "reliever_type": "saba",
+      "ics_dose_category": "low",
+      "example_regimens": [
+        {
+          "molecule": "budesonide",
+          "device_type": "pMDI_or_DPI",
+          "dose_text": "GINA çocuk düşük doz aralığına uygun toplam günlük ICS, genellikle günde 1–2 kez. Gerektiğinde SABA eklenir.",
+          "age_restriction": "6-11",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "Sık semptomu veya yılda ≥1 alevlenmesi olan çocuklarda ilk seçim bakım tedavisidir.",
+        "Büyüme izlemi ve yan etki değerlendirmesi düzenli yapılmalıdır."
+      ]
+    },
+    {
+      "age_group": "6_11",
+      "step": 2,
+      "track": "track_2",
+      "label": "Daily low-dose ICS (± LTRA) with as-needed SABA",
+      "controller_type": "daily_ics_or_ics_plus_ltra",
+      "reliever_type": "saba",
+      "ics_dose_category": "low",
+      "example_regimens": [
+        {
+          "molecule": "budesonide",
+          "device_type": "pMDI_or_DPI",
+          "dose_text": "Düşük doz günlük ICS. Alternatif veya ek olarak LTRA düşünülebilir; nöropsikiyatrik yan etkiler için uyarı gereklidir.",
+          "age_restriction": "6-11",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [
+        "LTRA"
+      ],
+      "notes": [
+        "ICS'e alternatif olarak veya ICS ile kombine LTRA kullanılabilir, ancak ICS kadar güçlü değildir.",
+        "LTRA için olası nöropsikiyatrik yan etkiler konusunda aile bilgilendirilmelidir."
+      ]
+    },
+    {
+      "age_group": "6_11",
+      "step": 3,
+      "track": "track_1",
+      "label": "Very low-dose ICS-formoterol MART (preferred for some children)",
+      "controller_type": "mart_very_low_dose",
+      "reliever_type": "ics_formoterol_or_saba",
+      "ics_dose_category": "very_low",
+      "example_regimens": [
+        {
+          "molecule": "budesonide/formoterol",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Çok düşük doz ICS-formoterol, günde 1 kez bakım + semptom olduğunda ek inhalasyonlar. Toplam günlük inhalasyon sayısı yaşa uygun maksimumu aşmamalıdır.",
+          "age_restriction": "6-11",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "GINA 2024'te Step 3 için çok düşük doz ICS-formoterol MART, seçilmiş çocuklarda tercih edilebilir.",
+        "Uzun dönem güvenlilik verileri sınırlı olduğundan yakın izlem önerilir."
+      ]
+    },
+    {
+      "age_group": "6_11",
+      "step": 3,
+      "track": "track_2",
+      "label": "Medium-dose ICS or low-dose ICS-LABA with as-needed SABA",
+      "controller_type": "medium_ics_or_low_ics_laba",
+      "reliever_type": "saba",
+      "ics_dose_category": "medium_or_low",
+      "example_regimens": [
+        {
+          "molecule": "budesonide",
+          "device_type": "pMDI_or_DPI",
+          "dose_text": "Orta doz ICS, günde 1–2 kez. Gerektiğinde SABA eklenir.",
+          "age_restriction": "6-11",
+          "weight_condition": "any"
+        },
+        {
+          "molecule": "fluticasone/salmeterol",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Düşük doz ICS-LABA kombinasyonu, günde 2 kez. Gerektiğinde SABA eklenir.",
+          "age_restriction": "6-11",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "Step 2 düşük doz ICS altında yetersiz kontrolü olan çocuklarda bir üst basamaktır.",
+        "ICS-LABA kombinasyonu kullanılıyorsa, ICS-formoterol reliever ile kombine edilmemelidir."
+      ]
+    },
+    {
+      "age_group": "6_11",
+      "step": 4,
+      "track": "track_1",
+      "label": "Low-dose ICS-formoterol MART or medium-dose ICS-LABA",
+      "controller_type": "mart_low_dose_or_medium_ics_laba",
+      "reliever_type": "ics_formoterol_or_saba",
+      "ics_dose_category": "low_or_medium",
+      "example_regimens": [
+        {
+          "molecule": "budesonide/formoterol",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Düşük doz ICS-formoterol MART (bakım + rahatlatıcı aynı inhaler).",
+          "age_restriction": "6-11",
+          "weight_condition": "any"
+        },
+        {
+          "molecule": "fluticasone/salmeterol",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Orta doz ICS-LABA, günde 2 kez. Gerektiğinde SABA eklenir.",
+          "age_restriction": "6-11",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "Step 3 altında iyi kontrol sağlanamayan çocuklarda değerlendirilir.",
+        "Bu basamaktaki çocuklar tercihen pediatrik astım uzmanına yönlendirilmelidir."
+      ]
+    },
+    {
+      "age_group": "6_11",
+      "step": 4,
+      "track": "track_2",
+      "label": "Medium-dose ICS-LABA ± LAMA or LTRA with as-needed SABA",
+      "controller_type": "medium_ics_laba_with_addons",
+      "reliever_type": "saba",
+      "ics_dose_category": "medium",
+      "example_regimens": [
+        {
+          "molecule": "fluticasone/salmeterol",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Orta doz ICS-LABA, günde 2 kez. Gerektiğinde SABA eklenir.",
+          "age_restriction": "6-11",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [
+        "LAMA",
+        "LTRA"
+      ],
+      "notes": [
+        "Step 3'te optimize edilmiş tedaviye rağmen kontrolsüz kalan çocuklarda düşünülür.",
+        "Bu basamaktaki tüm hastalar çocuk astım uzmanına yönlendirilmelidir."
+      ]
+    },
+    {
+      "age_group": "6_11",
+      "step": 5,
+      "track": "track_1",
+      "label": "Phenotypic assessment and add-on biologics with optimized ICS-containing therapy",
+      "controller_type": "high_or_optimized_ics_with_biologics",
+      "reliever_type": "saba_or_ics_formoterol",
+      "ics_dose_category": "medium_or_high",
+      "example_regimens": [
+        {
+          "molecule": "optimized_ICS_LABA_or_MART",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Çocuğa uygun maksimum tolere edilen ICS içeren kombinasyon tedavisi; buna tipik olarak LAMA veya biyolojik tedavi eklenir.",
+          "age_restriction": "6-11",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [
+        "LAMA",
+        "anti_IgE",
+        "anti_IL5_or_IL5R",
+        "anti_IL4Ra"
+      ],
+      "notes": [
+        "Fenotipik değerlendirme (eozinofilik astım, alerjik fenotip vb.) sonrası uygun biyolojik seçimi yapılır.",
+        "Bu basamak mutlaka deneyimli bir pediatrik astım uzmanı tarafından yönetilmelidir."
+      ]
+    },
+    {
+      "age_group": "6_11",
+      "step": 5,
+      "track": "track_2",
+      "label": "High-dose ICS-LABA with add-on biologics",
+      "controller_type": "high_ics_laba_with_biologics",
+      "reliever_type": "saba",
+      "ics_dose_category": "high",
+      "example_regimens": [
+        {
+          "molecule": "high_dose_ICS_LABA",
+          "device_type": "DPI_or_pMDI",
+          "dose_text": "Yüksek doz ICS-LABA kombinasyonu; fenotipe göre biyolojik eklenir. Gerektiğinde SABA kullanılır.",
+          "age_restriction": "6-11",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [
+        "LAMA",
+        "anti_IgE",
+        "anti_IL5_or_IL5R",
+        "anti_IL4Ra"
+      ],
+      "notes": [
+        "GINA 2024'te ağır astımı olan 6–11 yaş çocuklar için biyolojik seçenekler (omalizumab, mepolizumab, dupilumab vb.) tanımlanmıştır.",
+        "Tedavi kararı, yan etki profili ve yerel geri ödeme koşulları dikkate alınarak uzman merkezde verilmelidir."
+      ]
+    },
+    {
+      "age_group": "0_5",
+      "step": 1,
+      "track": "track_1",
+      "label": "As-needed SABA for infrequent viral wheeze",
+      "controller_type": "none",
+      "reliever_type": "saba",
+      "ics_dose_category": "none",
+      "example_regimens": [
+        {
+          "molecule": "salbutamol",
+          "device_type": "pMDI_with_spacer_and_mask",
+          "dose_text": "Aralıklı hışıltı epizotlarında, sağlık profesyonelinin belirlediği dozda SABA. Ayda birkaç kısa süreli epizoddan fazlası varsa ICS değerlendirilmelidir.",
+          "age_restriction": "<6",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "Tekrarlayan viral hışıltısı olan, aralarda tamamen iyi olan ve risk faktörü düşük çocuklar için kullanılabilir.",
+        "Daha sık veya ağır ataklarda Step 2'ye geçiş düşünülmelidir."
+      ]
+    },
+    {
+      "age_group": "0_5",
+      "step": 1,
+      "track": "track_2",
+      "label": "As-needed SABA plus short diagnostic trial of daily low-dose ICS",
+      "controller_type": "short_ics_trial",
+      "reliever_type": "saba",
+      "ics_dose_category": "low_trial",
+      "example_regimens": [
+        {
+          "molecule": "budesonide",
+          "device_type": "pMDI_with_spacer_and_mask",
+          "dose_text": "2–3 ay süreyle düşük doz günlük ICS, eşlik eden epizotlarda SABA. Yanıt varsa astım tanısı lehine yorum yapılabilir.",
+          "age_restriction": "<6",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "GINA 2025, <5 yaşta ICS deneme tedavisi ile tanıya yardımcı olunabileceğini vurgular.",
+        "Plasebo yanıtı ve spontan düzelme olasılığı akılda tutulmalıdır."
+      ]
+    },
+    {
+      "age_group": "0_5",
+      "step": 2,
+      "track": "track_1",
+      "label": "Daily low-dose ICS with as-needed SABA",
+      "controller_type": "daily_ics",
+      "reliever_type": "saba",
+      "ics_dose_category": "low",
+      "example_regimens": [
+        {
+          "molecule": "budesonide",
+          "device_type": "pMDI_with_spacer_and_mask",
+          "dose_text": "Yaşa uygun düşük doz ICS (örneğin günde 1–2 kez), ataklarda SABA eklenir.",
+          "age_restriction": "<6",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "Yılda üçten fazla hışıltı epizodu veya ağır atak öyküsü olan çocuklarda önerilir.",
+        "Büyüme izlemi ve ICS yan etkileri yakından takip edilmelidir."
+      ]
+    },
+    {
+      "age_group": "0_5",
+      "step": 2,
+      "track": "track_2",
+      "label": "Intermittent high-dose ICS during viral episodes plus SABA",
+      "controller_type": "intermittent_high_dose_ics",
+      "reliever_type": "saba",
+      "ics_dose_category": "high_short_course",
+      "example_regimens": [
+        {
+          "molecule": "budesonide_or_fluticasone",
+          "device_type": "pMDI_with_spacer_and_mask",
+          "dose_text": "Virüs ilişkili hışıltı başlangıcında kısa süreli (örneğin 7–10 gün) yüksek doz ICS kürü + SABA. Toplam yıllık ICS yükü ve yan etkiler dikkatle izlenmelidir.",
+          "age_restriction": "<6",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "Bazı kılavuzlarda sık viral hışıltıda alternatif olarak yer alır; yan etki riski nedeniyle dikkatli seçilmelidir.",
+        "Aileye doğru inhaler tekniği ve tetikleyici önleme eğitimi şarttır."
+      ]
+    },
+    {
+      "age_group": "0_5",
+      "step": 3,
+      "track": "track_1",
+      "label": "Medium-dose daily ICS with as-needed SABA",
+      "controller_type": "daily_ics_medium",
+      "reliever_type": "saba",
+      "ics_dose_category": "medium",
+      "example_regimens": [
+        {
+          "molecule": "budesonide_or_fluticasone",
+          "device_type": "pMDI_with_spacer_and_mask",
+          "dose_text": "Düşük dozla kontrol sağlanamayan çocuklarda, orta doz ICS'e yükseltme; gerektiğinde SABA eklenir.",
+          "age_restriction": "<6",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [],
+      "notes": [
+        "Bu basamakta ICS dozu artar; yan etki riski belirginleşebilir.",
+        "Tanının doğruluğu ve inhaler tekniği yeniden gözden geçirilmelidir."
+      ]
+    },
+    {
+      "age_group": "0_5",
+      "step": 3,
+      "track": "track_2",
+      "label": "Low-dose ICS plus LTRA with as-needed SABA",
+      "controller_type": "daily_ics_plus_ltra",
+      "reliever_type": "saba",
+      "ics_dose_category": "low",
+      "example_regimens": [
+        {
+          "molecule": "budesonide_plus_montelukast",
+          "device_type": "pMDI_with_spacer_and_mask_plus_oral",
+          "dose_text": "Düşük doz günlük ICS'e ek olarak ağızdan LTRA; ataklarda SABA eklenir.",
+          "age_restriction": "<6",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [
+        "LTRA"
+      ],
+      "notes": [
+        "Büyüme endişesi olan veya orta doz ICS'i tolere edemeyen çocuklarda düşünülebilir.",
+        "LTRA için nöropsikiyatrik yan etkiler açısından aile bilgilendirilmelidir."
+      ]
+    },
+    {
+      "age_group": "0_5",
+      "step": 4,
+      "track": "track_1",
+      "label": "Specialist referral with optimized ICS-based regimen",
+      "controller_type": "specialist_managed_high_ics_or_addons",
+      "reliever_type": "saba",
+      "ics_dose_category": "medium_or_high",
+      "example_regimens": [
+        {
+          "molecule": "optimized_ICS_based_regimen",
+          "device_type": "pMDI_with_spacer_and_mask",
+          "dose_text": "Takip eden uzman tarafından belirlenen, çocuk için tolere edilebilir en düşük ICS dozu ve gerekirse ek tedaviler.",
+          "age_restriction": "<6",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [
+        "LTRA",
+        "intermittent_OCS_for_severe_exacerbations"
+      ],
+      "notes": [
+        "Step 3 altında optimize tedaviye rağmen kontrolsüz kalan <5 yaş çocuklar mutlaka uzman merkeze yönlendirilmelidir.",
+        "Bu yaş grubunda biyolojik tedavilerin rolü sınırlıdır ve araştırma aşamasındadır."
+      ]
+    },
+    {
+      "age_group": "0_5",
+      "step": 4,
+      "track": "track_2",
+      "label": "Specialist-managed alternative combinations (ICS ± LTRA, intermittent OCS)",
+      "controller_type": "specialist_alternative_combinations",
+      "reliever_type": "saba",
+      "ics_dose_category": "medium_or_high",
+      "example_regimens": [
+        {
+          "molecule": "ICS_plus_LTRA_or_other_addon",
+          "device_type": "pMDI_with_spacer_and_mask_plus_oral",
+          "dose_text": "Uzman tarafından belirlenen ICS + diğer ek tedaviler; sadece gerektiğinde kısa süreli oral steroid kürü.",
+          "age_restriction": "<6",
+          "weight_condition": "any"
+        }
+      ],
+      "add_on_options": [
+        "LTRA",
+        "intermittent_OCS_for_severe_exacerbations"
+      ],
+      "notes": [
+        "Bu basamakta tedavi tümüyle uzman merkezde kişiselleştirilir.",
+        "Uzun süreli oral steroid kullanımı mümkün olduğunca kaçınılmalıdır."
+      ]
+    }
+  ]
+}
