@@ -82,8 +82,8 @@ $pageTitle = 'Giriş Yap - Allergy.tr';
             <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
                 <p class="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2">Demo Hesap:</p>
                 <p class="text-xs text-blue-800 dark:text-blue-200">
-                    E-posta: demo@allergy.tr<br>
-                    Şifre: password123
+                    E-posta: dene@allergy.tr<br>
+                    Şifre: sifre123
                 </p>
             </div>
         </div>
