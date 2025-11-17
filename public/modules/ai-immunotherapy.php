@@ -1,5 +1,5 @@
 <!-- AI İmmünoterapi Karar Destek Sistemi -->
-<div x-data="aiImmunotherapy" class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800 p-4 md:p-8">
+<div x-data="window.aiImmunotherapyInit()" class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800 p-4 md:p-8">
     <div class="max-w-7xl mx-auto">
         <!-- Header -->
         <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 mb-6">
@@ -298,8 +298,9 @@
 </div>
 
 <script>
-document.addEventListener('alpine:init', () => {
-    Alpine.data('aiImmunotherapy', () => ({
+// Global function for dynamic module loading
+window.aiImmunotherapyInit = function() {
+    return {
         currentStep: 'select_method',
         reportText: '',
         aiProcessing: false,
@@ -528,6 +529,6 @@ document.addEventListener('alpine:init', () => {
             this.aiInterpretation = '';
             this.clearAllSelections();
         }
-    }));
-});
+    };
+};
 </script>
