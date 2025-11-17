@@ -58,6 +58,41 @@ allergy.tr/
     └── styles/          # Ortak stiller
 ```
 
+## 🚀 Otomatik Deployment (GitHub Actions)
+
+Proje, GitHub Actions ile Hostinger'e otomatik olarak deploy edilir.
+
+### GitHub Secrets Ayarlama
+
+GitHub repository ayarlarından **Settings > Secrets and variables > Actions** bölümüne gidin ve şu secrets'ları ekleyin:
+
+| Secret İsmi | Açıklama | Örnek |
+|------------|----------|-------|
+| `HOSTINGER_HOST` | Hostinger SSH host adresi | `srv123.hostinger.com` |
+| `HOSTINGER_USERNAME` | SSH kullanıcı adı | `u647793141` |
+| `HOSTINGER_PASSWORD` | SSH şifresi | `your-password` |
+| `HOSTINGER_PORT` | SSH port (genellikle 22) | `22` |
+| `HOSTINGER_PATH` | Deployment path (public_html'in üst dizini) | `/home/u647793141/domains/allergy.tr` |
+
+### Deployment Nasıl Çalışır?
+
+1. **Otomatik Tetikleme:** `main`, `master` veya `claude/*` branch'lerine push yapıldığında otomatik deploy edilir
+2. **SSH Bağlantısı:** GitHub Actions, Hostinger'e SSH ile bağlanır
+3. **Git Pull:** Son değişiklikler Hostinger'a çekilir
+4. **Dosya Senkronizasyonu:** `public/`, `api/`, `shared/`, `database/` klasörleri `public_html` yapısına kopyalanır
+5. **İzin Ayarlama:** Gerekli dosya izinleri otomatik ayarlanır
+
+### Manuel Deployment
+
+SSH ile Hostinger'e bağlanıp manuel deployment yapmak için:
+
+```bash
+ssh u647793141@srv123.hostinger.com
+cd /home/u647793141/domains/allergy.tr
+git pull origin main
+# Deployment script otomatik çalışacak
+```
+
 ## 🚀 Kurulum
 
 ### 1. Dosyaları Yükleme

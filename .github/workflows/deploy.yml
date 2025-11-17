@@ -3,7 +3,7 @@ name: Deploy to Hostinger
 on:
   push:
     branches:
-      - claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ
+      - claude/**
       - main
       - master
 
@@ -24,16 +24,19 @@ jobs:
         port: ${{ secrets.HOSTINGER_PORT }}
         script: |
           echo "🚀 Starting deployment..."
+          echo "📌 Branch: ${{ github.ref_name }}"
           cd ${{ secrets.HOSTINGER_PATH }}
 
           # Check if git repository exists
           if [ ! -d ".git" ]; then
               echo "📦 Cloning repository..."
-              git clone -b claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ https://github.com/okansay/allergy.tr.git .
+              git clone https://github.com/okansay/allergy.tr.git .
+              git checkout ${{ github.ref_name }}
           else
               echo "📥 Pulling latest changes..."
               git fetch origin
-              git reset --hard origin/claude/allergy-portal-dashboard-011CUoRQwKL75DR6xs1K8yHJ
+              git checkout ${{ github.ref_name }}
+              git reset --hard origin/${{ github.ref_name }}
           fi
 
           echo "📂 Current directory: $(pwd)"
