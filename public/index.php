@@ -98,13 +98,6 @@ $pageTitle = 'Allergy.tr - Alerji & İmmünoloji Portalı';
                         </p>
                     </div>
 
-                    <!-- Description -->
-                    <div class="mb-12">
-                        <p class="text-lg text-gray-700 dark:text-gray-300">
-                            Türkiye'nin önde gelen alerji ve immünoloji bilgi platformu
-                        </p>
-                    </div>
-
                     <!-- CTA Buttons -->
                     <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                         <a href="/login.php"
